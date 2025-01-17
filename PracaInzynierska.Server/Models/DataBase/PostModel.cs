@@ -4,7 +4,8 @@
     {
         public string Id { get; set; }
         public string userID { get; set; }
-        public FishModel Fish { get; set; }
+        public FishModel fish { get; set; }
+        public double rate { get; set; }
 
     }
 }
