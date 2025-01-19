@@ -11,7 +11,9 @@ namespace FishSpotter.Server.Models.DataBase
         public string Name { get; set; }
 
         public List<MapModel> Maps { get; set; }
+  
         public List<PostModel> Posts { get; set; }
+  
         public List<SpotModel> Spots { get; set; }
     }
 }
