@@ -11,7 +11,7 @@ interface IInputs {
 
 const inputStyles = `bg-amber-50 text-stone-800 border-none px-1.5 py-0.5 text-semibold rounded-[0.125rem] transition-all duration-500 outline-2 outline-offset-1 outline-transparent focus-within:outline-2 focus-within:outline-offset-1 focus-within:outline-amber-50 text-xl`;
 
-function Login({ toggleModal }: { toggleModal: () => void }) {
+function Register({ toggleModal }: { toggleModal: () => void }) {
   const {
     register,
     handleSubmit,
@@ -61,20 +61,24 @@ function Login({ toggleModal }: { toggleModal: () => void }) {
 
       <LineDivider />
 
-      <button className="w-full bg-amber-100 text-2xl py-1 rounded-sm ">
-        Login
-      </button>
-
-      <div className="flex justify-center">
+      <div className="flex justify-between">
         <button
           onClick={toggleModal}
-          className="mx-auto text-center underline cursor-pointer mt-3"
+          type="button"
+          className=" bg-amber-100  px-5 text-2xl py-1 rounded-sm cursor-pointer"
         >
-          You don't have account? Register now!
+          Back
+        </button>
+
+        <button
+          type="submit"
+          className=" bg-amber-100 px-5 text-2xl py-1 rounded-sm cursor-pointer"
+        >
+          Register
         </button>
       </div>
     </form>
   );
 }
 
-export default Login;
+export default Register;
