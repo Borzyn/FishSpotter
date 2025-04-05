@@ -1,5 +1,22 @@
+import { lazy, Suspense } from "react";
+import { BrowserRouter, Route, Routes } from "react-router";
+import LoaderFull from "./components/Loaders/LoaderFull/LoaderFull";
+
+const Layout = lazy(() => import("./layouts/Layout/Layout"));
+const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
+
 function App() {
-  return <div className="text-9xl">App</div>;
+  return (
+    <BrowserRouter>
+      <Suspense fallback={<LoaderFull />}>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route index element={<HomePage />} />
+          </Route>
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
+  );
 }
 
 export default App;
