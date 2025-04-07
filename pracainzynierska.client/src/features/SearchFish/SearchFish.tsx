@@ -11,7 +11,7 @@ function SearchFish() {
         onChange={(e) => setFishQuery(e.target.value)}
         type="text"
         placeholder="Find your fish..."
-        className="bg-amber-50 min-w-16 text-stone-800 border-none px-1.5 py-0.5 text-semibold rounded-[0.125rem] transition-all duration-500 outline-2 outline-offset-1 outline-transparent focus-within:outline-2 focus-within:outline-offset-1 focus-within:outline-amber-50 text-xl"
+        className="inline-block bg-white border-transparent shadow-md shadow-slate-900/50 border-2 py-0.5 px-3 w-full transition-colors duration-500 rounded-sm text-lg outline-none focus:border-sky-500 focus-visible:border-sky-500"
       />
       <Button buttonType="button" type="primary" onClick={() => {}}>
         Search

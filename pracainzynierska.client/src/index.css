@@ -1,4 +1,15 @@
 @import "tailwindcss";
 
 @theme {
+  --color-text-light: #f8fafc;
+  --color-text-dark: #0f172a;
+
+  --color-btn: #0ea5e9;
+  --color-btn-hover: #0284c7;
+  --color-btn-active: #0369a1;
+
+  --color-btn-secondary: transparent;
+  --color-btn-border: #0c4a6e;
+  --color-btn-secondary-hover: #075985;
+  --color-btn-secondary-active: #0c4a6e;
 }

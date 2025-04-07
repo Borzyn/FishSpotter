@@ -9,7 +9,7 @@ interface IInputs {
   password: string;
 }
 
-const inputStyles = `bg-amber-50 text-stone-800 border-none px-1.5 py-0.5 text-semibold rounded-[0.125rem] transition-all duration-500 outline-2 outline-offset-1 outline-transparent focus-within:outline-2 focus-within:outline-offset-1 focus-within:outline-amber-50 text-xl`;
+const inputStyles = `bg-white text-slate-900 placeholder:text-slate-400 border-2 border-blue-200 focus:border-sky-500 px-1.5 py-0.5 text-semibold rounded-[0.125rem] transition-all duration-500 outline-2 outline-offset-1 outline-transparent focus-within:outline-2 focus-within:outline-offset-1 focus-within:outline-amber-50 text-xl shadow-sm shadow-slate-900/50`;
 
 function Register({ toggleModal }: { toggleModal: () => void }) {
   const {
@@ -52,27 +52,27 @@ function Register({ toggleModal }: { toggleModal: () => void }) {
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="cursor-pointer absolute bottom-0.25 right-2 transition-colors duration-300 text-stone-800 hover:text-stone-500"
+            className="cursor-pointer absolute bottom-0.75 right-2 transition-colors duration-500 text-slate-900 hover:text-sky-500"
           >
             {showPassword ? <Eye size={28} /> : <EyeOff size={28} />}
           </button>
         </>
       </FormRow>
 
-      <LineDivider />
+      <LineDivider color="bg-slate-900" margin="3.5" height="0.5" />
 
       <div className="flex justify-between">
         <button
           onClick={toggleModal}
           type="button"
-          className=" bg-amber-100  px-5 text-2xl py-1 rounded-sm cursor-pointer"
+          className="bg-transparent text-2xl py-0.5 cursor-pointer border-2 border-sky-900 rounded-sm text-sky-900  font-semibold px-4 shadow-md  shadow-slate-900/50 transition-colors duration-500 hover:bg-sky-800 hover:text-blue-50 active:bg-sky-900 active:text-blue-50 hover:border-sky-800 active:border-sky-900"
         >
           Back
         </button>
 
         <button
           type="submit"
-          className=" bg-amber-100 px-5 text-2xl py-1 rounded-sm cursor-pointer"
+          className=" bg-sky-500 text-2xl py-1 rounded-sm cursor-pointer text-blue-50  font-semibold px-4  shadow-md transition-colors duration-500 shadow-slate-900/50 hover:bg-sky-600 active:bg-sky-700"
         >
           Register
         </button>

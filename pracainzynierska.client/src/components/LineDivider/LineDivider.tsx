@@ -1,5 +1,18 @@
-function LineDivider() {
-  return <div className="w-full h-0.5 bg-amber-200 my-3"></div>;
+function LineDivider({
+  color,
+  height,
+  margin,
+}: {
+  color: string;
+  height: string;
+  margin: string;
+}) {
+  return (
+    <div
+      aria-hidden="true"
+      className={`w-full h-${height} ${color} my-${margin}`}
+    ></div>
+  );
 }
 
 export default LineDivider;

@@ -16,6 +16,7 @@ function AuthModal() {
   }
 
   function handleCloseModal() {
+    setIsModalRegister(false);
     setModalStatus(false);
   }
 
@@ -35,14 +36,14 @@ function AuthModal() {
             {!isModalRegister && (
               <>
                 <ModalHeader onClick={handleCloseModal} title="Login" />
-                <LineDivider />
+                <LineDivider color="bg-slate-900" margin="3.5" height="0.5" />
                 <Login toggleModal={toggleModalRegister} />
               </>
             )}
             {isModalRegister && (
               <>
                 <ModalHeader onClick={handleCloseModal} title="Register" />
-                <LineDivider />
+                <LineDivider color="bg-slate-900" margin="3.5" height="0.5" />
                 <Register toggleModal={toggleModalRegister} />
               </>
             )}

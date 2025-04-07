@@ -9,10 +9,12 @@ function ModalHeader({
 }) {
   return (
     <>
-      <h2 className="text-center text-2xl px-4">{title}</h2>
+      <h2 className="text-center text-3xl font-semibold tracking-wide text-slate-900 px-4">
+        {title}
+      </h2>
       <button
         onClick={onClick}
-        className="cursor-pointer absolute right-2 top-2"
+        className="cursor-pointer absolute right-2 top-2 transition-colors duration-500 text-slate-900 hover:text-sky-500"
       >
         <X size={28} />
       </button>
