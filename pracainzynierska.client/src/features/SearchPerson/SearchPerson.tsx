@@ -22,7 +22,7 @@ function SearchPerson() {
       <input
         type="text"
         placeholder="Find person..."
-        className="inline-block bg-red-400 py-1 px-9.5 w-full rounded-sm text-lg"
+        className="inline-block bg-white border-transparent border-2 py-0.5 px-9.5 w-full transition-colors duration-500 rounded-sm text-lg outline-none focus:border-sky-500 focus-visible:border-sky-500"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />

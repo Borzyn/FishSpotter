@@ -18,7 +18,7 @@ function Button({ children, buttonType, type, onClick }: IButton) {
     <button
       type={buttonType}
       onClick={onClick}
-      className="cursor-pointer bg-teal-400 text-lg font-semibold px-4 py-1 rounded-sm"
+      className="cursor-pointer bg-sky-500 text-blue-50 text-lg font-semibold px-4 py-1 rounded-sm"
     >
       {children}
     </button>
