@@ -26,7 +26,6 @@ function Login({ toggleModal }: { toggleModal: () => void }) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormRow label="Login" error={errors.login?.message as string}>
         <input
-          placeholder="Login..."
           type="text"
           className={inputStyles}
           id="login"
@@ -43,7 +42,6 @@ function Login({ toggleModal }: { toggleModal: () => void }) {
       >
         <>
           <input
-            placeholder="Password..."
             type={`${showPassword ? "text" : "password"}`}
             className={`${inputStyles} pr-11`}
             id="password"
