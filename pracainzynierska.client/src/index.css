@@ -14,12 +14,17 @@
   --color-btn-secondary-active: #0c4a6e;
 }
 
-tr:nth-child(odd) {
+thead tr {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+tr:nth-child(even) {
   background-color: #0f172a;
   color: #f8fafc;
 }
 
-tr:nth-child(even) {
+tr:nth-child(odd) {
   background-color: #f8fafc;
   color: #0f172a;
 }

@@ -3,9 +3,9 @@ import Header from "../../components/Header/Header";
 
 function Layout() {
   return (
-    <div className="max-w-dvw min-h-dvh grid grid-rows-[max-content_1fr] bg-blue-50 text-light">
+    <div className="min-h-dvh flex flex-col bg-blue-50 text-light">
       <Header />
-      <main className="px-3 py-8">
+      <main className="px-3 grow py-8 ">
         <Outlet />
       </main>
     </div>
