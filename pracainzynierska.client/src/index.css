@@ -13,3 +13,13 @@
   --color-btn-secondary-hover: #075985;
   --color-btn-secondary-active: #0c4a6e;
 }
+
+tr:nth-child(odd) {
+  background-color: #0f172a;
+  color: #f8fafc;
+}
+
+tr:nth-child(even) {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
