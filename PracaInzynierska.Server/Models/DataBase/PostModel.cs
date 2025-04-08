@@ -13,13 +13,37 @@ namespace FishSpotter.Server.Models.DataBase
         [Required]
         [DataType(DataType.Text)]
         [Column(TypeName = "varchar(36)")]
-        public string userID { get; set; }
-       
-        public FishModel fish { get; set; }
+        public string UserId { get; set; }
+
+        // public FishModel fish { get; set; }
+        [DataType(DataType.Text)]
+        [Column(TypeName = "varchar(24)")]
+        public string FishName { get; set; }
 
         [DataType(DataType.Text)]
-        [Column(TypeName = "varchar(8)")]
-        public double rate { get; set; }
+        [Column(TypeName = "varchar(24)")]
+        public string MapName { get; set; }
+
+        public SpotModel Spot { get; set; }
+
+        public MethodModel Method { get; set; }
+
+        [ForeignKey(nameof(BaitModel))]
+        public string BaitId { get; set; }
+        public BaitModel Bait { get; set; }
+
+
+        [ForeignKey(nameof(GroundbaitModel))]
+        public string groundbaitId { get; set; }
+        public GroundbaitModel groundbait { get; set; }
+
+        [DataType(DataType.Text)]
+        [Column(TypeName = "varchar(24)")]
+        public int rateSum { get; set; }
+
+        [DataType(DataType.Text)]
+        [Column(TypeName = "varchar(24)")]
+        public int rateAmount { get; set; }
 
     }
 }

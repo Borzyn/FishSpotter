@@ -13,5 +13,9 @@ namespace FishSpotter.Server.Models.DataBase
         [DataType(DataType.Text)]
         [Column(TypeName = "varchar(36)")]
         public string Name { get; set; }
+
+        [DataType(DataType.Text)]
+        public string GroundbaitModelId { get; set; }
+
     }
 }

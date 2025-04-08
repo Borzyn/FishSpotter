@@ -10,8 +10,9 @@ using FishSpotter.Server.Data;
 namespace FishSpotter.Server.Controllers
 {
     [ApiController]
+    [Route("api/[controller]/[action]")]
 
-    public class AccountModelsController : Controller
+    public class AccountModelsController : ControllerBase
     {
         private readonly FishSpotterServerContext _context;
 
@@ -22,28 +23,37 @@ namespace FishSpotter.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> Login([Bind("login,password")] string login, string password)
         {
+            if (login ==null || password == null) {  return BadRequest(); }
             var account = _context.AccountModel.FirstOrDefault(acc => acc.Username == login);
             if (account == null || account.Password != password) { return BadRequest(); }
             return Ok();
         }
 
         [HttpGet]
-        public async Task<IActionResult> CheckProfile (string user, string accountName)
+        public async Task<IActionResult> CheckProfile (string user, string accountCheckedName)
         {
-            var accountToCheck = _context.AccountModel.FirstOrDefault(acc => acc.Username == accountName);
-            if (accountToCheck == null || accountName == null) { return BadRequest(); }
+            var accountToCheck = _context.AccountModel.FirstOrDefault(acc => acc.Username == accountCheckedName);
+            if (accountToCheck == null || accountCheckedName == null) { return BadRequest(); }
 
             return Ok();
         }
 
         [HttpGet]
-        public async Task<IActionResult> RateProfile(string user, string accountName)
+        public async Task<IActionResult> RateProfile(string user, string accountRatedName, string rate)
         {
-            if (user == null || user == accountName) { return BadRequest(); }
+            if (user == null || user == accountRatedName || accountRatedName==null) { return BadRequest(); }
+            int rating;
+            if (!int.TryParse(rate, out rating) || rating >5 || rating <1) { return BadRequest(); }
+            var account = _context.AccountModel.FirstOrDefault(u => u.Username == accountRatedName);
+            if (account == null) { return BadRequest(); }
+            account.RateSum += rating;
+            account.RateAmount++;
+            await _context.SaveChangesAsync();
             return Ok();
         }
 
-        public IActionResult ShowPosts (string user, string accountName)
+        [HttpGet]
+        public IActionResult ShowPosts ( string accountName)
         {
             var accountToCheck = _context.AccountModel.FirstOrDefault(acc => acc.Username == accountName);
             if (accountName == null || accountToCheck == null) { return BadRequest(); }

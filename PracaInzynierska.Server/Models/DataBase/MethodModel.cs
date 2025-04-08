@@ -8,12 +8,21 @@ namespace FishSpotter.Server.Models.DataBase
         [Key]
         [DataType(DataType.Text)]
         [Column(TypeName = "varchar(36)")]
+        public string Id { get; set; }
+
+        [DataType(DataType.Text)]
+        [Column(TypeName = "varchar(36)")]
         public string Name { get; set; }
-   
-        public List<FishModel> Fish { get; set; }
-    
-        public List<GroundbaitModel> Groundbait { get; set; }
-      
-        public List<BaitModel> Bait { get; set; }
+
+        public List<string> BaitIds { get; set; }
+
+
+        [ForeignKey(nameof(GroundBaitId))]
+        public string GroundBaitId { get; set; }
+
+        //public List<FishModel> Fish { get; set; }
+
+        // public bool UseGroundbait { get; set; }
+
     }
 }

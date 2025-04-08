@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace FishSpotter.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class HomeController : ControllerBase
     {
@@ -19,7 +19,7 @@ namespace FishSpotter.Server.Controllers
         [HttpGet]
         public IActionResult login(string userId)
         {
-                return Ok();
+                return Ok(userId);
         }
 
         [HttpGet]
@@ -28,17 +28,17 @@ namespace FishSpotter.Server.Controllers
             return Ok();
         }
 
-        [HttpGet]
-        public IActionResult SearchFish(string fishname)
-        {
-            return Ok();
-        }
+        //[HttpGet]
+        //public IActionResult SearchFish(string fishname)
+        //{
+        //    return Ok();
+        //}
 
-        [HttpGet]
-        public IActionResult Searchuser(string userName)
-        {
-            return Ok();
-        }
+        //[HttpGet]
+        //public IActionResult Searchuser(string userName)
+        //{
+        //    return Ok();
+        //}
 
     }
 }

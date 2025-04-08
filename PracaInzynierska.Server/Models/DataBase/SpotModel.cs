@@ -11,17 +11,16 @@ namespace FishSpotter.Server.Models.DataBase
         public string Id { get; set; }
 
         [DataType(DataType.Text)]
-        [Column(TypeName = "varchar(4)")]
-        public int X { get; set; }
+        [Column(TypeName = "varchar(10)")]
+        public string XY { get; set; }
 
-        [DataType(DataType.Text)]
-        [Column(TypeName = "varchar(4)")]
-        public int Y { get; set; }
 
         [DataType(DataType.Text)]
         [Column(TypeName = "varchar(4)")]
         public int AdditionalInfo { get; set; }
 
-        public MapModel Map { get; set; }
+        [DataType(DataType.Text)]
+        [Column(TypeName = "varchar(36)")]
+        public  string Map { get; set; }
     }
 }
