@@ -12,7 +12,11 @@ namespace FishSpotter.Server.Models.DataBase
 
         [DataType(DataType.Text)]
         [Column(TypeName = "varchar(10)")]
-        public double Score { get; set; }
+        public int RateSum { get; set; }
+
+        [DataType(DataType.Text)]
+        [Column(TypeName = "varchar(10)")]
+        public int RateAmount { get; set; }
 
         [DataType(DataType.Text)]
         [Column(TypeName = "varchar(8)")]
