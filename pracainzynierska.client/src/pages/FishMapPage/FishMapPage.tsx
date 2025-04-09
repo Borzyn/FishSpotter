@@ -11,8 +11,8 @@ const tableHeaders = [
 
 function FishMapPage() {
   return (
-    <section className="w-full h-full">
-      <div className="w-full max-h-80 min-h-80 h-full bg-amber-200">Map</div>
+    <section className="w-full h-full mx-auto max-w-7xl">
+      <div className="w-full max-h-80 min-h-100 h-full bg-amber-200">Map</div>
       <div className="mt-6 text-center">
         <p className="text-lg font-medium">Ryba</p>
         <p className="text-3xl font-semibold">Łosoś</p>

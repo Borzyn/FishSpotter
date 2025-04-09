@@ -1,6 +1,6 @@
 function FishPage() {
   return (
-    <section className="w-full h-full">
+    <section className="w-full h-full mx-auto max-w-7xl">
       <table className="m-auto min-w-80 text-center grid grid-cols-1 rounded-sm overflow-hidden">
         <tr className="">
           <th className="text-2xl block font-bold text-center py-3" colSpan={2}>

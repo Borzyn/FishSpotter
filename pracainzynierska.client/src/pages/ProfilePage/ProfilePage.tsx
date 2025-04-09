@@ -11,8 +11,8 @@ const tableHeaders = [
 
 function ProfilePage() {
   return (
-    <section className="w-full h-full">
-      <div className="flex gap-5 flex-col items-center mb-8.5">
+    <section className="w-full h-full mx-auto max-w-7xl">
+      <div className="flex gap-5 flex-col items-center mb-8.5 sm:flex-row justify-between sm:mb-15">
         <div className="flex gap-1 flex-col justify-center items-center">
           <h3 className="text-xl ">Ilość postów</h3>
           <p className="text-4xl font-semibold">423</p>
