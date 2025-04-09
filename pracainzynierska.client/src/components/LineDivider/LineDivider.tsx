@@ -10,7 +10,7 @@ function LineDivider({
   return (
     <div
       aria-hidden="true"
-      className={`w-full h-${height} ${color} my-${margin}`}
+      className={`w-full ${height} ${color} ${margin}`}
     ></div>
   );
 }

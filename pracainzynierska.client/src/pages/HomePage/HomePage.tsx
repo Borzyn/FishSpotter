@@ -9,7 +9,7 @@ function HomePage() {
         <h2 className="text-3xl text-slate-900 uppercase text-center font-semibold">
           Maps
         </h2>
-        <LineDivider color="bg-slate-900" margin="4" height="1" />
+        <LineDivider color="bg-slate-900" margin="my-4" height="h-1" />
         <ul className="flex flex-col gap-4 max-h-[464px] overflow-auto">
           <ListLink />
           <ListLink />
@@ -31,7 +31,7 @@ function HomePage() {
           </h2>
           <SearchFish />
         </div>
-        <LineDivider color="bg-slate-900" margin="4" height="1" />
+        <LineDivider color="bg-slate-900" margin="my-4" height="h-1" />
         <ul className="flex flex-col gap-4 max-h-[464px] overflow-auto">
           <ListLink />
           <ListLink />

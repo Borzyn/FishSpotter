@@ -59,7 +59,7 @@ function Login({ toggleModal }: { toggleModal: () => void }) {
         </>
       </FormRow>
 
-      <LineDivider color="bg-slate-900" margin="3.5" height="0.5" />
+      <LineDivider color="bg-slate-900" margin="my-3.5" height="h-0.5" />
 
       <button className="w-full cursor-pointer bg-sky-500 text-2xl py-1 rounded-sm text-blue-50  font-semibold px-4  shadow-md transition-colors duration-500 shadow-slate-900/50 hover:bg-sky-600 active:bg-sky-700">
         Login

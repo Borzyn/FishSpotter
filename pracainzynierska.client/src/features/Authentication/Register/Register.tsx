@@ -59,7 +59,7 @@ function Register({ toggleModal }: { toggleModal: () => void }) {
         </>
       </FormRow>
 
-      <LineDivider color="bg-slate-900" margin="3.5" height="0.5" />
+      <LineDivider color="bg-slate-900" margin="my-3.5" height="h-0.5" />
 
       <div className="flex justify-between">
         <button

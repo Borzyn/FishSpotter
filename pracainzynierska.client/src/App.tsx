@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import LoaderFull from "./components/Loaders/LoaderFull/LoaderFull";
 import FishPage from "./pages/FishPage/FishPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import FishMapPage from "./pages/FishMapPage/FishMapPage";
 
 const Layout = lazy(() => import("./layouts/Layout/Layout"));
 const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
@@ -15,6 +16,7 @@ function App() {
           <Route element={<Layout />}>
             <Route index element={<HomePage />} />
             <Route path="/fish" element={<FishPage />} />
+            <Route path="/fishmap" element={<FishMapPage />} />
             <Route path="/profile" element={<ProfilePage />} />
           </Route>
         </Routes>

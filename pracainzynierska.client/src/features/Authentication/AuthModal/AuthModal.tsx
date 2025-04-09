@@ -36,14 +36,22 @@ function AuthModal() {
             {!isModalRegister && (
               <>
                 <ModalHeader onClick={handleCloseModal} title="Login" />
-                <LineDivider color="bg-slate-900" margin="3.5" height="0.5" />
+                <LineDivider
+                  color="bg-slate-900"
+                  margin="my-3.5"
+                  height="h-0.5"
+                />
                 <Login toggleModal={toggleModalRegister} />
               </>
             )}
             {isModalRegister && (
               <>
                 <ModalHeader onClick={handleCloseModal} title="Register" />
-                <LineDivider color="bg-slate-900" margin="3.5" height="0.5" />
+                <LineDivider
+                  color="bg-slate-900"
+                  margin="my-3.5"
+                  height="h-0.5"
+                />
                 <Register toggleModal={toggleModalRegister} />
               </>
             )}
