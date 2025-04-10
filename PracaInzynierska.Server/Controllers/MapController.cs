@@ -15,7 +15,7 @@ namespace FishSpotter.Server.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult showMapMain(string mapName)
         {
             var map = _context.MapModel.FirstOrDefault(x => x.Name == mapName);

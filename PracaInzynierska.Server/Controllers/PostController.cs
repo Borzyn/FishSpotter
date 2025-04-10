@@ -16,7 +16,7 @@ namespace FishSpotter.Server.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult Create(string user, string fishname, string mapname, string xyname, string addInfo,string methodname,string groundbaitid)
         {
             var editor = _context.AccountModel.FirstOrDefault(x => x.Username == user);
@@ -76,7 +76,7 @@ namespace FishSpotter.Server.Controllers
             return Ok();
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult Rate(string user, string postId, int rate)
         {
             if (rate >5 || rate<1) { return BadRequest(); }
@@ -94,7 +94,7 @@ namespace FishSpotter.Server.Controllers
             return Ok();
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult Remove(string user, string postId)
         {
             var post = _context.PostModel.FirstOrDefault(x => x.Id == postId);

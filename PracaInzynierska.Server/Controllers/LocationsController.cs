@@ -14,13 +14,13 @@ namespace FishSpotter.Server.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult Index()
         {
             return Ok();
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult SelectLocation()
         {
             return Ok();

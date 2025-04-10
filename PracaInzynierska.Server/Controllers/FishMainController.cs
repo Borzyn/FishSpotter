@@ -1,6 +1,7 @@
 ﻿using FishSpotter.Server.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
@@ -17,7 +18,7 @@ namespace FishSpotter.Server.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult ShowPostswithFish(string fishName)
         {
             string fname = fishName.ToLower();
@@ -30,7 +31,36 @@ namespace FishSpotter.Server.Controllers
             return Ok(posts);
         }
 
-        [HttpGet]
+        [HttpPost]
+        public IActionResult ShowFishMain(string fishName)
+        {
+            string fname = fishName.ToLower();
+
+            var fish = _context.FishModel.Where(fish => fish.Name.ToLower() == fname).FirstOrDefault();
+            
+            if (fish == null) return BadRequest();
+
+            var maps = fish.Maps;
+
+            if (maps == null) return BadRequest();
+
+            return Ok(maps);
+        }
+
+        //[HttpPost]
+        //public IActionResult ShowPostsAmountOnMap(string fishName,string mapName)
+        //{
+        //    var fish = _context.FishModel.FirstOrDefault(f => f.Name == fishName);
+        //    var map = _context.MapModel.FirstOrDefault(x => x.Name == mapName);
+        //    if (fish == null || map == null) return BadRequest();
+        //    var m = map.Name.ToLower();
+        //    var f = fish.Name.ToLower();
+        //    var posts = _context.PostModel.Where(p => p.FishName.ToLower() == f & p.MapName.ToLower() == m).Count;
+        //    return Ok(posts);
+
+        //}
+
+        [HttpPost]
         public IActionResult ShowPostsWithFishAndMap(string fishName, string mapName)
         {
             var fish = _context.FishModel.FirstOrDefault(f => f.Name == fishName);
@@ -38,11 +68,11 @@ namespace FishSpotter.Server.Controllers
             if (fish == null || map == null) return BadRequest();
             var m= map.Name.ToLower();
             var f = fish.Name.ToLower();
-            var posts = _context.PostModel.All(p => p.FishName.ToLower() == f & p.MapName.ToLower() == m);
+            var posts = _context.PostModel.Where(p => p.FishName.ToLower() == f & p.MapName.ToLower() == m);
             return Ok(posts);
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult ShowFishOnMap(string mapName) // Do przetestowania relacji nowej
         {
             var map = _context.MapModel.FirstOrDefault(x => x.Name == mapName);

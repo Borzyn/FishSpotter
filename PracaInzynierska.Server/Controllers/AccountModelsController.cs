@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FishSpotter.Server.Data;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace FishSpotter.Server.Controllers
 {
@@ -20,25 +21,27 @@ namespace FishSpotter.Server.Controllers
         {
             _context = context;
         }
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Login([Bind("login,password")] string login, string password)
         {
             if (login ==null || password == null) {  return BadRequest(); }
             var account = _context.AccountModel.FirstOrDefault(acc => acc.Username == login);
             if (account == null || account.Password != password) { return BadRequest(); }
-            return Ok();
+            var acc = _context.AccountModel.FirstOrDefault(ac => ac.Username == login);
+            return Ok(acc);
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> CheckProfile (string user, string accountCheckedName)
         {
             var accountToCheck = _context.AccountModel.FirstOrDefault(acc => acc.Username == accountCheckedName);
             if (accountToCheck == null || accountCheckedName == null) { return BadRequest(); }
 
-            return Ok();
+            return Ok(accountToCheck);
         }
 
-        [HttpGet]
+
+        [HttpPost]
         public async Task<IActionResult> RateProfile(string user, string accountRatedName, string rate)
         {
             if (user == null || user == accountRatedName || accountRatedName==null) { return BadRequest(); }
@@ -52,12 +55,15 @@ namespace FishSpotter.Server.Controllers
             return Ok();
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult ShowPosts ( string accountName)
         {
             var accountToCheck = _context.AccountModel.FirstOrDefault(acc => acc.Username == accountName);
             if (accountName == null || accountToCheck == null) { return BadRequest(); }
-            return Ok();
+
+            var posts = _context.PostModel.Where(id => id.UserId == accountName).ToList();
+            return Ok(posts);
         }
+
     }
 }

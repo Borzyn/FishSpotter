@@ -1,6 +1,7 @@
 ﻿using FishSpotter.Server.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace FishSpotter.Server.Controllers
@@ -14,17 +15,25 @@ namespace FishSpotter.Server.Controllers
         public HomeController(FishSpotterServerContext context)
         {
             _context = context;
-        }   
+        }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult login(string userId)
         {
                 return Ok(userId);
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult ShowMaps()
         {
+            var maps = _context.MapModel.Include(map =>map.Name).ToList();
+            return Ok(maps);
+        }
+
+        [HttpPost]
+        public IActionResult ShowFishes()
+        {
+            var fishes = _context.FishModel.Include(f =>f.Name).ToList();
             return Ok();
         }
 
