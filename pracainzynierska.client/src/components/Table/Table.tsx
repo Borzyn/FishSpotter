@@ -1,6 +1,18 @@
-function Table({ tableHeaders, tableCells }: { tableHeaders: string[] }) {
+function Table({
+  tableHeaders,
+  tableCells,
+  title,
+}: {
+  tableHeaders: string[];
+  title?: string;
+}) {
   return (
     <div className="w-full overflow-auto">
+      {title && (
+        <h2 className="text-3xl block font-bold text-center py-3 mb-1.5">
+          {title}
+        </h2>
+      )}
       <div className="min-w-6xl overflow-hidden">
         <table className="m-auto text-center grid grid-cols-1 rounded-sm overflow-auto">
           <thead>
