@@ -83,5 +83,18 @@ namespace FishSpotter.Server.Controllers
             return Ok(fishes);
         }
 
+        [HttpPost]
+        public IActionResult GetFishName(string fishName, string mapName)
+        {
+            var map = _context.MapModel.FirstOrDefault(x => x.Name == mapName);
+            if (map == null) return BadRequest();
+
+            string fish = map.Fishes.FirstOrDefault(f => f.Name == fishName).Name;
+            if (fish == null) return BadRequest();
+
+            return Ok(fish);
+        }
+
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FishSpotter.Server.Data;
+using FishSpotter.Server.Models.DataBase;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,7 @@ namespace FishSpotter.Server.Controllers
         public IActionResult ShowMaps()
         {
             var maps = _context.MapModel.Include(map =>map.Name).ToList();
+            if (maps == null) return BadRequest();
             return Ok(maps);
         }
 
@@ -34,6 +36,7 @@ namespace FishSpotter.Server.Controllers
         public IActionResult ShowFishes()
         {
             var fishes = _context.FishModel.Include(f =>f.Name).ToList();
+            if (fishes == null) return BadRequest();
             return Ok(fishes);
         }
 
