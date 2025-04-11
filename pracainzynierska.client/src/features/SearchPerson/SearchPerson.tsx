@@ -1,20 +1,47 @@
 import { Search, X } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useSearchUser } from "./useSearchUser";
+import { useNavigate } from "react-router";
 
 function SearchPerson() {
+  const { isSearchingUser, searchUser } = useSearchUser();
+  const navigate = useNavigate();
   const [query, setQuery] = useState<string>("");
 
   function clearQuery() {
     setQuery("");
   }
 
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (isSearchingUser) return;
+    if (!query) return;
+
+    searchUser(
+      { accountCheckedName: query },
+      {
+        onError: () => setQuery(""),
+        onSuccess: () => {
+          setQuery("");
+          navigate("/ab");
+        },
+      }
+    );
+  }
+
   return (
-    <form className="relative w-full">
-      <button className="absolute top-6/12 left-1.5 -translate-y-6/12 cursor-pointer duration-500 text-slate-900 hover:text-sky-500">
+    <form className="relative w-full" onSubmit={handleSubmit}>
+      <button
+        type="submit"
+        className="absolute top-6/12 left-1.5 -translate-y-6/12 cursor-pointer duration-500 text-slate-900 hover:text-sky-500"
+        disabled={isSearchingUser}
+      >
         <Search />
       </button>
       <button
+        type="button"
         onClick={clearQuery}
+        disabled={isSearchingUser}
         className="absolute top-6/12 right-1.5 -translate-y-6/12 cursor-pointer transition-colors duration-500 text-slate-900 hover:text-sky-500"
       >
         <X />

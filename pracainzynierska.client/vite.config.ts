@@ -54,7 +54,15 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "^/weatherforecast": {
+      "^/api/Home": {
+        target,
+        secure: false,
+      },
+      "^/api/AccountModels": {
+        target,
+        secure: false,
+      },
+      "^/api/FishMain": {
         target,
         secure: false,
       },

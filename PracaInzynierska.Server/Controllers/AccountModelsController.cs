@@ -32,7 +32,7 @@ namespace FishSpotter.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CheckProfile (string user, string accountCheckedName)
+        public async Task<IActionResult> CheckProfile (string accountCheckedName)
         {
             var accountToCheck = _context.AccountModel.FirstOrDefault(acc => acc.Username == accountCheckedName);
             if (accountToCheck == null || accountCheckedName == null) { return BadRequest(); }

@@ -23,18 +23,18 @@ namespace FishSpotter.Server.Controllers
                 return Ok(userId);
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult ShowMaps()
         {
             var maps = _context.MapModel.Include(map =>map.Name).ToList();
             return Ok(maps);
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult ShowFishes()
         {
             var fishes = _context.FishModel.Include(f =>f.Name).ToList();
-            return Ok();
+            return Ok(fishes);
         }
 
         //[HttpGet]
