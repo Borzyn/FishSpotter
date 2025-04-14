@@ -24,39 +24,40 @@ namespace FishSpotter.Server.Controllers
                 return Ok(userId);
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult ShowMaps()
         {
-            //var maps = _context.MapModel.Include(map =>map.Name).ToList();
-            var maps = _context.MapModel.Include(map => map.Name).ToList();
+            var maps = _context.MapModel.Select(map => map.Name).ToList();
             if (maps == null) return BadRequest();
-            string[] x;
-            foreach (var map in maps)
-            {
-              //  x.in
-            }
             return Ok(maps);
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult ShowFishes()
         {
-            var fishes = _context.FishModel.Include(f =>f.Name).ToList();
+            var fishes = _context.FishModel.Select(fish => fish.Name).ToList();
             if (fishes == null) return BadRequest();
             return Ok(fishes);
         }
 
-        //[HttpGet]
-        //public IActionResult SearchFish(string fishname)
-        //{
-        //    return Ok();
-        //}
+        [HttpPost]
+        public IActionResult SearchFish(string fishname)
+        {
+            var fish = _context.FishModel.Where(fishh => fishh.Name == fishname).FirstOrDefault();
+            if (fish == null) return BadRequest();
+            return Ok(fish);
+        }
 
-        //[HttpGet]
-        //public IActionResult Searchuser(string userName)
-        //{
-        //    return Ok();
-        //}
+        [HttpPost]
+        public IActionResult Searchuser(string userName)
+        {
+            var user = _context.AccountModel.Where(usero => usero.Username == userName).FirstOrDefault();
+            if  (user == null)
+            {
+                return BadRequest();
+            }
+            return Ok(user);
+        }
 
     }
 }
