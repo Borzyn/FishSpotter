@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FishSpotter.Server.Data;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using FishSpotter.Server.Models.AdditionalModels;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using FishSpotter.Server.Models.DataBase;
 
 namespace FishSpotter.Server.Controllers
 {
@@ -63,6 +66,74 @@ namespace FishSpotter.Server.Controllers
 
             var posts = _context.PostModel.Where(id => id.UserId == accountName).ToList();
             return Ok(posts);
+        }
+
+
+        //rejestracja
+
+
+        [HttpPost]
+        public IActionResult registercontrol(RegisterModel model)
+        {
+            if (model.Password == null || model.PasswordConfirmed == null || model.Username == null)
+            {
+                model.ErrorCode = ErrorCode.EmptySpace;
+                return BadRequest(model);
+            }
+            if (model.Username.Length < 4 || model.Username.Length > 22)
+            {
+                model.ErrorCode = ErrorCode.UsernameWrong;
+                return BadRequest(model);
+            }
+            if (model.Password != model.PasswordConfirmed)
+            {
+                model.ErrorCode = ErrorCode.PasswordsDifference;
+                return BadRequest(model);
+            }
+
+            //if (!model.Email.Contains("@"))
+            //{
+            //    model.ErrorCode = ErrorCode.EmailWrong;
+            //    return BadRequest(model);
+            //}
+            if (model.TermsAccept != true)
+            {
+                model.ErrorCode = ErrorCode.TermsNotAccepted;
+                return BadRequest(model);
+            }
+            Models.DataBase.AccountModel user = _context.AccountModel.Where(g => g.Username == model.Username).FirstOrDefault();
+
+            if (user != null)
+            {
+                model.ErrorCode = ErrorCode.UsernameUsed;
+                return BadRequest(model);
+            }
+            //Models.DataBase.AccountModel usere = _context.User.Where(g => g.PhoneNumber == model.PhoneNumber).FirstOrDefault();
+            //if (usere != null)
+            //{
+            //    model.ErrorCode = ErrorCode.PhoneUsed;
+            //    return View("/Views/MainPage/MainContent/Register/RegisterPage.cshtml", model);
+            //}
+
+            return RedirectToAction("register", "AccountModels", model);
+
+        }
+
+        [HttpPost]
+        public IActionResult register (RegisterModel model)
+        {
+            AccountModel user = new AccountModel();
+
+            user.Username = model.Username;
+            user.Password = model.Password;
+            user.RateSum = 0;
+            user.RateAmount = 0;
+            user.PostsCount = 0;
+            user.Posts = new List<PostModel>();
+
+            _context.AccountModel.Add(user);
+            _context.SaveChanges();
+            return Ok(user);
         }
 
     }

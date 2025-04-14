@@ -27,8 +27,14 @@ namespace FishSpotter.Server.Controllers
         [HttpGet]
         public IActionResult ShowMaps()
         {
-            var maps = _context.MapModel.Include(map =>map.Name).ToList();
+            //var maps = _context.MapModel.Include(map =>map.Name).ToList();
+            var maps = _context.MapModel.Include(map => map.Name).ToList();
             if (maps == null) return BadRequest();
+            string[] x;
+            foreach (var map in maps)
+            {
+              //  x.in
+            }
             return Ok(maps);
         }
 
