@@ -22,8 +22,8 @@ function SearchPerson() {
       {
         onError: () => setQuery(""),
         onSuccess: () => {
+          navigate(`/${query}`);
           setQuery("");
-          navigate("/ab");
         },
       }
     );

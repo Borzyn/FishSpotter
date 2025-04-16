@@ -20,7 +20,7 @@ function App() {
           <Routes>
             <Route element={<Layout />}>
               <Route index element={<HomePage />} />
-              <Route path="/fish" element={<FishPage />} />
+              <Route path="/fish/:fishName" element={<FishPage />} />
               <Route path="/fishmap" element={<FishMapPage />} />
               <Route path="/addpost" element={<AddPostPage />} />
               <Route path="/profile" element={<ProfilePage />} />

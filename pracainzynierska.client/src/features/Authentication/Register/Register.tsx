@@ -90,10 +90,10 @@ function Register({ toggleModal }: { toggleModal: () => void }) {
       >
         <>
           <input
-            type={`${showPassword ? "text" : "password"}`}
+            type={`${showPasswordConfirmation ? "text" : "password"}`}
             className={`${inputStyles} pr-11`}
             id="confirm_password"
-            {...register("password", {
+            {...register("confirm_password", {
               required: "Password Confirmation field is required",
             })}
           />

@@ -1,30 +1,38 @@
+import { useParams } from "react-router";
+import { useFishMaps } from "../../features/AboutFish/useFishMaps";
+import { useEffect } from "react";
+import FishRow from "./FishRow";
+
 function FishPage() {
+  const { fishName } = useParams();
+  const { isSearchingFishMaps, getFishMaps, fishMaps } = useFishMaps();
+
+  if (isSearchingFishMaps) {
+    <p>Loading</p>;
+  }
+
+  useEffect(() => {
+    if (fishName) getFishMaps({ fishName });
+  }, [fishName, getFishMaps]);
+
   return (
     <section className="w-full h-full mx-auto max-w-7xl">
       <table className="m-auto min-w-80 text-center grid grid-cols-1 rounded-sm overflow-hidden">
-        <tr className="">
-          <th className="text-2xl block font-bold text-center py-3" colSpan={2}>
-            Fish Name
-          </th>
-        </tr>
-        <tr className="grid grid-cols-2 text-xl py-3">
-          <th>Maps</th>
-          <th>Number of Posts</th>
-        </tr>
-        <tr className="grid grid-cols-2 text-lg font-medium py-3">
-          <td>Pond</td>
-          <td>4</td>
-        </tr>
-
-        <tr className="grid grid-cols-2 text-lg font-medium py-3">
-          <td>Pond</td>
-          <td>4</td>
-        </tr>
-
-        <tr className="grid grid-cols-2 text-lg font-medium py-3">
-          <td>Pond</td>
-          <td>4</td>
-        </tr>
+        <caption className="text-3xl mb-5 font-medium tracking-wide">
+          {fishName}
+        </caption>
+        <thead>
+          <tr className="grid grid-cols-2 text-xl py-3">
+            <th>Maps</th>
+            <th>Number of Posts</th>
+          </tr>
+        </thead>
+        <tbody>
+          {fishMaps &&
+            fishMaps.map((map) => (
+              <FishRow fishName={fishName} mapName={map.name} />
+            ))}
+        </tbody>
       </table>
     </section>
   );

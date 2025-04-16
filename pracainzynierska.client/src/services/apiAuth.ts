@@ -11,6 +11,10 @@ export async function loginToAccountApi(accountData: ILoginData) {
       body: JSON.stringify(accountData),
     });
 
+    console.log(accountData);
+
+    console.log(res);
+
     if (!res.ok) {
       throw new Error("Invalid credentials");
     }
