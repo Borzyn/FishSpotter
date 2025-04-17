@@ -94,7 +94,7 @@ namespace FishSpotter.Server.Controllers
 
 
         [HttpPost]
-        public IActionResult registercontrol(RegisterModel model)
+        public IActionResult registerCheck([FromBody] RegisterModel model)
         {
             if (model.Password == null || model.PasswordConfirmed == null || model.Username == null)
             {
