@@ -25,7 +25,7 @@ namespace FishSpotter.Server.Controllers
             return Ok(userId);
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult ShowMaps()
         {
             var maps = _context.MapModel.Select(map => map.Name).ToList();
@@ -33,7 +33,7 @@ namespace FishSpotter.Server.Controllers
             return Ok(maps);
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult ShowFishes()
         {
             var fishes = _context.FishModel.Select(fish => fish.Name).ToList();
