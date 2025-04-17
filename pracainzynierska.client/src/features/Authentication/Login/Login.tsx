@@ -11,7 +11,7 @@ interface IInputs {
   password: string;
 }
 
-const inputStyles = `bg-white text-slate-900 placeholder:text-slate-400 border-2 border-blue-200 focus:border-sky-500 px-1.5 py-0.5 text-semibold rounded-[0.125rem] transition-all duration-500 outline-2 outline-offset-1 outline-transparent focus-within:outline-2 focus-within:outline-offset-1 focus-within:outline-amber-50 text-xl shadow-sm shadow-slate-900/50`;
+const inputStyles = `bg-white text-slate-900 placeholder:text-slate-400 border-2 border-blue-200 focus:border-sky-500 px-1.5 py-0.5 text-semibold rounded-[0.125rem] transition-all duration-500 outline-2 outline-offset-1 outline-transparent focus-within:outline-2 focus-within:outline-offset-1 focus-within:outline-amber-50 text-xl shadow-sm shadow-slate-900/50 w-full`;
 
 function Login({ toggleModal }: { toggleModal: () => void }) {
   const { isLoggingToAccount, loginToAccount } = useLogin();
@@ -55,7 +55,7 @@ function Login({ toggleModal }: { toggleModal: () => void }) {
         inputId="password"
         error={errors.password?.message as string}
       >
-        <>
+        <div className="relative">
           <input
             type={`${showPassword ? "text" : "password"}`}
             className={`${inputStyles} pr-11`}
@@ -71,7 +71,7 @@ function Login({ toggleModal }: { toggleModal: () => void }) {
           >
             {showPassword ? <Eye size={28} /> : <EyeOff size={28} />}
           </button>
-        </>
+        </div>
       </FormRow>
 
       <LineDivider color="bg-slate-900" margin="my-3.5" height="h-0.5" />

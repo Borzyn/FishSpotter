@@ -29,13 +29,17 @@ export async function loginToAccountApi(accountData: ILoginData) {
 
 export async function createAccountApi(accountData: IRegisterData) {
   try {
-    const res = await fetch("api/AccountModels/registercontrol", {
+    console.log(accountData);
+
+    const res = await fetch("api/AccountModels/registerCheck", {
       headers: {
         "Content-Type": "application/json",
       },
       method: "POST",
       body: JSON.stringify(accountData),
     });
+
+    console.log(res);
 
     if (!res.ok) {
       throw new Error("Creating account went wrong!");

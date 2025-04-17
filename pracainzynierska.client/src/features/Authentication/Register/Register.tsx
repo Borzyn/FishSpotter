@@ -12,7 +12,7 @@ interface IInputs {
   terms_accept: boolean;
 }
 
-const inputStyles = `bg-white text-slate-900 placeholder:text-slate-400 border-2 border-blue-200 focus:border-sky-500 px-1.5 py-0.5 text-semibold rounded-[0.125rem] transition-all duration-500 outline-2 outline-offset-1 outline-transparent focus-within:outline-2 focus-within:outline-offset-1 focus-within:outline-amber-50 text-xl shadow-sm shadow-slate-900/50`;
+const inputStyles = `bg-white text-slate-900 placeholder:text-slate-400 border-2 border-blue-200 focus:border-sky-500 px-1.5 py-0.5 text-semibold rounded-[0.125rem] transition-all duration-500 outline-2 outline-offset-1 outline-transparent focus-within:outline-2 focus-within:outline-offset-1 focus-within:outline-amber-50 text-xl shadow-sm shadow-slate-900/50 w-full`;
 
 function Register({ toggleModal }: { toggleModal: () => void }) {
   const { isCreatingAccount, createAccount } = useRegister();
@@ -65,7 +65,7 @@ function Register({ toggleModal }: { toggleModal: () => void }) {
         inputId="password"
         error={errors.password?.message as string}
       >
-        <>
+        <div className="relative">
           <input
             type={`${showPassword ? "text" : "password"}`}
             className={`${inputStyles} pr-11`}
@@ -81,7 +81,7 @@ function Register({ toggleModal }: { toggleModal: () => void }) {
           >
             {showPassword ? <Eye size={28} /> : <EyeOff size={28} />}
           </button>
-        </>
+        </div>
       </FormRow>
 
       <FormRow
@@ -89,7 +89,7 @@ function Register({ toggleModal }: { toggleModal: () => void }) {
         inputId="confirm_password"
         error={errors.confirm_password?.message as string}
       >
-        <>
+        <div className="relative">
           <input
             type={`${showPasswordConfirmation ? "text" : "password"}`}
             className={`${inputStyles} pr-11`}
@@ -111,7 +111,7 @@ function Register({ toggleModal }: { toggleModal: () => void }) {
               <EyeOff size={28} />
             )}
           </button>
-        </>
+        </div>
       </FormRow>
 
       <div className="flex flex-col justify-start gap-2 text-xl font-medium relative mb-3">
