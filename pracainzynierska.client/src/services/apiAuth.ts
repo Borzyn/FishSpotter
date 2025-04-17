@@ -11,10 +11,6 @@ export async function loginToAccountApi(accountData: ILoginData) {
       body: JSON.stringify(accountData),
     });
 
-    console.log(accountData);
-
-    console.log(res);
-
     if (!res.ok) {
       const error = await res.json();
       console.log(error);
@@ -32,8 +28,6 @@ export async function loginToAccountApi(accountData: ILoginData) {
 
 export async function createAccountApi(accountData: IRegisterData) {
   try {
-    console.log(accountData);
-
     const res = await fetch("api/AccountModels/registerCheck", {
       headers: {
         "Content-Type": "application/json",
@@ -41,8 +35,6 @@ export async function createAccountApi(accountData: IRegisterData) {
       method: "POST",
       body: JSON.stringify(accountData),
     });
-
-    console.log(res);
 
     if (!res.ok) {
       throw new Error("Creating account went wrong!");

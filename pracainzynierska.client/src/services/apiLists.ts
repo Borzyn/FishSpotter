@@ -28,19 +28,14 @@ export async function getListFishApi() {
       method: "GET",
     });
 
-    console.log(res);
-
     if (!res.ok) {
       throw new Error("Fetching fish went wrong!");
     }
 
     const data = await res.json();
 
-    console.log(data);
-
     return data;
   } catch (error) {
-    console.log(error);
-    console.error();
+    console.error(error);
   }
 }
