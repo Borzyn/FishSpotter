@@ -17,10 +17,16 @@ namespace FishSpotter.Server.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(string user, string fishname, string mapname, string xyname, string addInfo,string methodname,string groundbaitid)
+
+        public IActionResult Create(string user, string fishname, string mapname, string xyname, string addInfo, string methodname, string groundbaitid)
         {
             var editor = _context.AccountModel.FirstOrDefault(x => x.Username == user);
             if (user == null || editor == null) { return BadRequest(); }
+
+        //    public IActionResult Create(string fishname, string mapname, string xyname, string addInfo,string methodname,string groundbaitid)
+        //{
+        //    string UserID = Request.Cookies["Username"];
+        //    if (UserID == null || UserID == "0") { return BadRequest() ; }
 
 
             var fish = _context.FishModel.FirstOrDefault(f => f.Name == fishname);
@@ -56,6 +62,7 @@ namespace FishSpotter.Server.Controllers
 
             var u = new PostModel();
             u.Id = Guid.NewGuid().ToString();
+            //u.UserId = UserID ;
             u.UserId = user;
             u.FishName = fishname;
             u.MapName = mapname;
@@ -77,9 +84,28 @@ namespace FishSpotter.Server.Controllers
         }
 
         [HttpPost]
+
+        //public IActionResult Rate(string postId, int rate)
+        //{
+        //    string UserID = Request.Cookies["Username"];
+        //    if (UserID == null || UserID == "0") { return BadRequest(); }
+        //    if (rate >5 || rate<1) { return BadRequest(); }
+
+        //    var validUser = _context.AccountModel.FirstOrDefault(u => u.Username == UserID);
+        //    if (validUser == null) { return BadRequest(); }
+
+        //    var post = _context.PostModel.FirstOrDefault(x => x.Id == postId);
+        //    if (post == null || post.UserId == UserID) { return BadRequest(); }
+        //    post.rateSum += rate;
+        //    post.rateAmount++;
+
+        //    _context.SaveChanges();
+
+        //    return Ok();
+        //}
         public IActionResult Rate(string user, string postId, int rate)
         {
-            if (rate >5 || rate<1) { return BadRequest(); }
+            if (rate > 5 || rate < 1) { return BadRequest(); }
 
             var validUser = _context.AccountModel.FirstOrDefault(u => u.Username == user);
             if (validUser == null) { return BadRequest(); }
@@ -99,13 +125,28 @@ namespace FishSpotter.Server.Controllers
         {
             var post = _context.PostModel.FirstOrDefault(x => x.Id == postId);
             if (post == null) { return BadRequest(); }
-            var correctuser = _context.AccountModel.FirstOrDefault(y=> y.Username == post.UserId);
-            if(correctuser == null || user != correctuser.Username) { return BadRequest(); }
+            var correctuser = _context.AccountModel.FirstOrDefault(y => y.Username == post.UserId);
+            if (correctuser == null || user != correctuser.Username) { return BadRequest(); }
             _context.PostModel.Remove(post);
             correctuser.PostsCount--;
-            _context.SaveChanges();    
+            _context.SaveChanges();
             return Ok();
         }
+
+        //[HttpPost]
+        //public IActionResult Remove( string postId)
+        //{
+        //    string UserID = Request.Cookies["Username"];
+        //    if (UserID == null || UserID == "0") { return BadRequest(); }
+        //    var post = _context.PostModel.FirstOrDefault(x => x.Id == postId);
+        //    if (post == null) { return BadRequest(); }
+        //    if (post.UserId != UserID) { return BadRequest(); }
+        //    var correctuser = _context.AccountModel.Where(x => x.Username == UserID).FirstOrDefault();
+        //    correctuser.Posts.Remove(post);
+        //    _context.PostModel.Remove(post);
+        //    _context.SaveChanges();    
+        //    return Ok();
+        //}
 
     }
 }
