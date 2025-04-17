@@ -34,17 +34,18 @@ namespace FishSpotter.Server.Controllers
 
         //}
         [HttpPost]
-        public async Task<IActionResult> Login([Bind("login,password")] string login, string password)
+        public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
-            if (login ==null || password == null) {  return BadRequest(); }
-            var account = _context.AccountModel.Where(acc => acc.Username == login).FirstOrDefault();
-            if (account == null || account.Password != password) { return BadRequest(); }
+            if (model.login == null || model.password == null) { return BadRequest(); }
+            var account = _context.AccountModel.Where(acc => acc.Username == model.login).FirstOrDefault();
+            if (account == null || account.Password != model.password) { return BadRequest(); }
+            account.Posts= _context.PostModel.Where(p => p.UserId == model.login).ToList();
             //var acc = _context.AccountModel.FirstOrDefault(ac => ac.Username == login);
             return Ok(account);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CheckProfile (string accountCheckedName)
+        public async Task<IActionResult> CheckProfile(string accountCheckedName)
         {
             var accountToCheck = _context.AccountModel.FirstOrDefault(acc => acc.Username == accountCheckedName);
             if (accountToCheck == null || accountCheckedName == null) { return BadRequest(); }
@@ -56,9 +57,9 @@ namespace FishSpotter.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> RateProfile(string user, string accountRatedName, string rate)
         {
-            if (user == null || user == accountRatedName || accountRatedName==null) { return BadRequest(); }
+            if (user == null || user == accountRatedName || accountRatedName == null) { return BadRequest(); }
             int rating;
-            if (!int.TryParse(rate, out rating) || rating >5 || rating <1) { return BadRequest(); }
+            if (!int.TryParse(rate, out rating) || rating > 5 || rating < 1) { return BadRequest(); }
             var account = _context.AccountModel.FirstOrDefault(u => u.Username == accountRatedName);
             if (account == null) { return BadRequest(); }
             account.RateSum += rating;
@@ -68,7 +69,7 @@ namespace FishSpotter.Server.Controllers
         }
 
         [HttpPost]
-        public IActionResult ShowPosts ( string accountName)
+        public IActionResult ShowPosts(string accountName)
         {
             var accountToCheck = _context.AccountModel.FirstOrDefault(acc => acc.Username == accountName);
             if (accountName == null || accountToCheck == null) { return BadRequest(); }
@@ -90,12 +91,14 @@ namespace FishSpotter.Server.Controllers
         //    return Ok();
         //}
 
-            //rejestracja
+        //rejestracja
 
 
-            [HttpPost]
-        public IActionResult registercontrol(RegisterModel model)
+        [HttpPost]
+        public IActionResult registerCheck([FromBody] RegisterModel model)
         {
+
+
             if (model.Password == null || model.PasswordConfirmed == null || model.Username == null)
             {
                 model.ErrorCode = ErrorCode.EmptySpace;
@@ -129,9 +132,9 @@ namespace FishSpotter.Server.Controllers
                 model.ErrorCode = ErrorCode.TermsNotAccepted;
                 return BadRequest(model);
             }
-            Models.DataBase.AccountModel user = _context.AccountModel.Where(g => g.Username == model.Username).FirstOrDefault();
+            Models.DataBase.AccountModel usero = _context.AccountModel.Where(g => g.Username == model.Username).FirstOrDefault();
 
-            if (user != null)
+            if (usero != null)
             {
                 model.ErrorCode = ErrorCode.UsernameUsed;
                 return BadRequest(model);
@@ -143,7 +146,19 @@ namespace FishSpotter.Server.Controllers
             //    return View("/Views/MainPage/MainContent/Register/RegisterPage.cshtml", model);
             //}
 
-            return RedirectToAction("register", "AccountModels", model);
+            //  return RedirectToAction("register", "AccountModels", model);
+            AccountModel user = new AccountModel();
+
+            user.Username = model.Username;
+            user.Password = model.Password;
+            user.RateSum = 0;
+            user.RateAmount = 0;
+            user.PostsCount = 0;
+            user.Posts = new List<PostModel>();
+
+            _context.AccountModel.Add(user);
+            _context.SaveChanges();
+            return Ok(user);
 
         }
 

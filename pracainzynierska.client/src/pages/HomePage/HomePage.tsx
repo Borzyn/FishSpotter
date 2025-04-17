@@ -3,8 +3,11 @@ import LineDivider from "../../components/LineDivider/LineDivider";
 import ListFish from "../../features/HomepageLists/ListFish/ListFish";
 import ListMaps from "../../features/HomepageLists/ListMaps/ListMaps";
 import SearchFish from "../../features/SearchFish/SearchFish";
+import { useUserStore } from "../../stores/useUserStore";
 
 function HomePage() {
+    const { user } = useUserStore();
+    console.log(user);
   return (
     <section className="grid grid-cols-1 gap-y-13 justify-items-center  mx-auto max-w-7xl md:grid-cols-2 md:gap-x-4">
       <div className="bg-white border-blue-100 border-4 max-w-11/12 w-full py-3 px-4 rounded-sm md:max-w-[450px] max-h-[732px] overflow-hidden">
