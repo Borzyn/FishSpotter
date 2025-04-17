@@ -21,7 +21,8 @@ namespace FishSpotter.Server.Controllers
         [HttpPost]
         public IActionResult login(string userId)
         {
-                return Ok(userId);
+            //string Username = Request.Cookies["Username"];
+            return Ok(userId);
         }
 
         [HttpPost]
@@ -51,11 +52,13 @@ namespace FishSpotter.Server.Controllers
         [HttpPost]
         public IActionResult Searchuser(string userName)
         {
+            //string User = Request.Cookies["Username"];
             var user = _context.AccountModel.Where(usero => usero.Username == userName).FirstOrDefault();
             if  (user == null)
             {
                 return BadRequest();
             }
+            //if (user.Username == User) { return Ok(); }
             return Ok(user);
         }
 

@@ -24,14 +24,23 @@ namespace FishSpotter.Server.Controllers
         {
             _context = context;
         }
+
+        //public IActionResult LoginCheck()
+        //{
+        //    string UserID = Request.Cookies["Username"];
+        //    if (UserID != null)
+        //        return DownloadUserInfo(UserID);
+        //    return BadRequest();
+
+        //}
         [HttpPost]
         public async Task<IActionResult> Login([Bind("login,password")] string login, string password)
         {
             if (login ==null || password == null) {  return BadRequest(); }
-            var account = _context.AccountModel.FirstOrDefault(acc => acc.Username == login);
+            var account = _context.AccountModel.Where(acc => acc.Username == login).FirstOrDefault();
             if (account == null || account.Password != password) { return BadRequest(); }
-            var acc = _context.AccountModel.FirstOrDefault(ac => ac.Username == login);
-            return Ok(acc);
+            //var acc = _context.AccountModel.FirstOrDefault(ac => ac.Username == login);
+            return Ok(account);
         }
 
         [HttpPost]
@@ -68,11 +77,23 @@ namespace FishSpotter.Server.Controllers
             return Ok(posts);
         }
 
+        //public IActionResult DownloadUserInfo (string accountName)
+        //{
+        //    var user = _context.AccountModel.Where(u => u.Username == accountName).FirstOrDefault();
+        //    if (user == null) { return BadRequest(); }
+        //    return Ok(user);
+        //    }
 
-        //rejestracja
+        //public IActionResult Logout()
+        //{
+        //    Response.Cookies.Append("Username", "0");
+        //    return Ok();
+        //}
+
+            //rejestracja
 
 
-        [HttpPost]
+            [HttpPost]
         public IActionResult registercontrol(RegisterModel model)
         {
             if (model.Password == null || model.PasswordConfirmed == null || model.Username == null)
@@ -90,6 +111,13 @@ namespace FishSpotter.Server.Controllers
                 model.ErrorCode = ErrorCode.PasswordsDifference;
                 return BadRequest(model);
             }
+
+            if (model.Password.Length <8 || model.Password.Length >24)
+            {
+                model.ErrorCode = ErrorCode.PasswordWrong;
+                return BadRequest(model);
+            }
+
 
             //if (!model.Email.Contains("@"))
             //{
