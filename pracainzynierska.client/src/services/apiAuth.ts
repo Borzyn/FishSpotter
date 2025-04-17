@@ -25,6 +25,7 @@ export async function loginToAccountApi(accountData: ILoginData) {
     return data;
   } catch (error) {
     console.error(error);
+    throw new Error(error as string);
   }
 }
 
@@ -51,5 +52,6 @@ export async function createAccountApi(accountData: IRegisterData) {
     return data;
   } catch (error) {
     console.error(error);
+    throw new Error(error as string);
   }
 }
