@@ -16,6 +16,8 @@ export async function loginToAccountApi(accountData: ILoginData) {
     console.log(res);
 
     if (!res.ok) {
+      const error = await res.json();
+      console.log(error);
       throw new Error("Invalid credentials");
     }
 

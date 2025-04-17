@@ -68,11 +68,11 @@ export const useUserStore = create<IUserState>((set) => ({
 
   login: (userData: IUser) => {
     set(() => ({ user: userData }));
-    sessionStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem("user", JSON.stringify(userData));
   },
 
   logout: () => {
     set(() => ({ user: null }));
-    sessionStorage.removeItem("user");
+    localStorage.removeItem("user");
   },
 }));
