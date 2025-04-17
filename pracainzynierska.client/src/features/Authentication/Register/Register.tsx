@@ -37,6 +37,7 @@ function Register({ toggleModal }: { toggleModal: () => void }) {
       },
       {
         onSuccess: () => {
+          console.log("Git");
           toggleModal();
         },
         onError: () => {
