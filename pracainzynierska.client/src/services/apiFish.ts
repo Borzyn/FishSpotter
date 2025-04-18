@@ -1,11 +1,11 @@
 export async function getFishMapsApi(fishName: string) {
   try {
-    const res = await fetch(`api/FishMain/ShowFishMain?fishName=${fishName}`, {
+    const res = await fetch(`api/FishMain/ShowFishMain`, {
       headers: {
         "Content-Type": "application/json",
       },
       method: "POST",
-      body: JSON.stringify({}),
+      body: JSON.stringify(fishName),
     });
     console.log(fishName);
     console.log(res);
