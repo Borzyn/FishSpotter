@@ -27,7 +27,7 @@ namespace FishSpotter.Server.Controllers
 
             if (fish == null) return BadRequest();
 
-            var posts = _context.PostModel.All(p => p.FishName == fname);
+            var posts = _context.PostModel.Where(p => p.FishName == fname).ToList();
             return Ok(posts);
         }
 
