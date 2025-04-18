@@ -22,7 +22,7 @@ function SearchPerson() {
       {
         onError: () => setQuery(""),
         onSuccess: () => {
-          navigate(`/${query}`);
+          navigate(`/profile/${query}`);
           setQuery("");
         },
       }
@@ -38,16 +38,21 @@ function SearchPerson() {
       >
         <Search />
       </button>
-      <button
-        type="button"
-        onClick={clearQuery}
-        disabled={isSearchingUser}
-        className="absolute top-6/12 right-1.5 -translate-y-6/12 cursor-pointer transition-colors duration-500 text-slate-900 hover:text-sky-500"
-      >
-        <X />
-      </button>
+
+      {query.length >= 1 && (
+        <button
+          type="button"
+          onClick={clearQuery}
+          disabled={isSearchingUser}
+          className="absolute top-6/12 right-1.5 -translate-y-6/12 cursor-pointer transition-colors duration-500 text-slate-900 hover:text-sky-500"
+        >
+          <X />
+        </button>
+      )}
+
       <input
         type="text"
+        disabled={isSearchingUser}
         placeholder="Find person..."
         className="inline-block bg-white border-transparent shadow-md shadow-slate-900/50 border-2 py-0.5 px-9.5 w-full transition-colors duration-500 rounded-sm text-lg outline-none focus:border-sky-500 focus-visible:border-sky-500"
         value={query}

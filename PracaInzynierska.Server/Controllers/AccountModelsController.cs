@@ -44,7 +44,7 @@ namespace FishSpotter.Server.Controllers
             return Ok(account);
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> CheckProfile(string accountCheckedName)
         {
             var accountToCheck = _context.AccountModel.FirstOrDefault(acc => acc.Username == accountCheckedName);
