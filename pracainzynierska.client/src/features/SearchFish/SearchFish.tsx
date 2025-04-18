@@ -8,7 +8,8 @@ function SearchFish() {
   const navigate = useNavigate();
   const [fishQuery, setFishQuery] = useState<string>("");
 
-  function handleSearch() {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     if (!fishQuery) return;
 
     searchFish(
@@ -23,7 +24,7 @@ function SearchFish() {
   }
 
   return (
-    <div className="flex gap-2">
+    <form className="flex gap-2" onSubmit={handleSubmit}>
       <input
         value={fishQuery}
         disabled={isSearchingFish}
@@ -32,15 +33,10 @@ function SearchFish() {
         placeholder="Find your fish..."
         className="inline-block bg-white border-transparent shadow-sm shadow-slate-900/50 border-2 py-0.5 px-3 w-full transition-colors duration-500 rounded-sm text-lg outline-none focus:border-sky-500 focus-visible:border-sky-500"
       />
-      <Button
-        isDisable={isSearchingFish}
-        buttonType="button"
-        type="primary"
-        onClick={handleSearch}
-      >
+      <Button isDisable={isSearchingFish} buttonType="submit" type="primary">
         Search
       </Button>
-    </div>
+    </form>
   );
 }
 

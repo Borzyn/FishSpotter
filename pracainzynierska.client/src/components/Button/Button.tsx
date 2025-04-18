@@ -6,7 +6,7 @@ interface IButton {
   children: ReactElement | string;
   buttonType: "button" | "submit" | "reset";
   type: string;
-  onClick: () => void;
+  onClick?: () => void;
   isDisable?: boolean;
 }
 
