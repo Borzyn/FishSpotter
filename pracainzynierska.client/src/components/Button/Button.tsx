@@ -7,9 +7,10 @@ interface IButton {
   buttonType: "button" | "submit" | "reset";
   type: string;
   onClick: () => void;
+  isDisable?: boolean;
 }
 
-function Button({ children, buttonType, type, onClick }: IButton) {
+function Button({ children, buttonType, type, onClick, isDisable }: IButton) {
   if (type === "primary") {
     classType =
       "cursor-pointer bg-sky-500 text-blue-50 text-lg font-semibold px-4 py-1 rounded-sm shadow-md transition-colors duration-500 shadow-slate-900/50 hover:bg-sky-600 active:bg-sky-700 lg:text-xl";
@@ -18,7 +19,12 @@ function Button({ children, buttonType, type, onClick }: IButton) {
   }
 
   return (
-    <button type={buttonType} onClick={onClick} className={classType}>
+    <button
+      disabled={isDisable}
+      type={buttonType}
+      onClick={onClick}
+      className={classType}
+    >
       {children}
     </button>
   );

@@ -1,3 +1,4 @@
+import ListButton from "../../../components/ListButton/ListButton";
 import { useListMaps } from "../useListMaps";
 
 function ListMaps() {
@@ -11,10 +12,12 @@ function ListMaps() {
     return <p>Loading</p>;
   }
 
-  console.log(listMapsData);
-
   return (
-    <ul className="flex flex-col gap-4 h-full max-h-[625px] overflow-y-scroll"></ul>
+    <ul className="flex flex-col gap-4 h-full max-h-[625px] overflow-y-auto">
+      {listMapsData.map((map: string) => (
+        <ListButton key={map} map={map} />
+      ))}
+    </ul>
   );
 }
 
