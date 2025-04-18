@@ -32,7 +32,7 @@ namespace FishSpotter.Server.Controllers
         }
 
         [HttpPost]
-        public IActionResult ShowFishMain(string fishName)
+        public IActionResult ShowFishMain([FromBody] string fishName)
         {
             string fname = fishName.ToLower();
 
