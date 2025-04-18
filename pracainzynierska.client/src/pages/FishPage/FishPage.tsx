@@ -15,6 +15,8 @@ function FishPage() {
     if (fishName) getFishMaps({ fishName });
   }, [fishName, getFishMaps]);
 
+  console.log(fishMaps);
+
   return (
     <section className="w-full h-full mx-auto max-w-7xl">
       <table className="m-auto min-w-80 text-center grid grid-cols-1 rounded-sm overflow-hidden">
@@ -29,6 +31,7 @@ function FishPage() {
         </thead>
         <tbody>
           {fishMaps &&
+            fishName &&
             fishMaps.map((map) => (
               <FishRow fishName={fishName} mapName={map.name} />
             ))}

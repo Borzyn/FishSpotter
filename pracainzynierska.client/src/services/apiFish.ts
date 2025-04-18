@@ -1,12 +1,14 @@
 export async function getFishMapsApi(fishName: string) {
   try {
-    const res = await fetch("api/FishMain/ShowFishMain?fishName=${fishName}", {
+    const res = await fetch(`api/FishMain/ShowFishMain?fishName=${fishName}`, {
       headers: {
         "Content-Type": "application/json",
       },
       method: "POST",
-      body: JSON.stringify(fishName),
+      body: JSON.stringify({}),
     });
+    console.log(fishName);
+    console.log(res);
 
     if (!res.ok) {
       throw new Error("Fetching fish maps went wrong!");
@@ -17,6 +19,7 @@ export async function getFishMapsApi(fishName: string) {
     return data;
   } catch (error) {
     console.error(error);
+    throw new Error("Fetching fish maps went wront");
   }
 }
 
@@ -45,6 +48,7 @@ export async function getFishMapPostsNumberApi({
     return data;
   } catch (error) {
     console.error(error);
+    throw new Error("Fetching fish maps went wront");
   }
 }
 
@@ -73,5 +77,6 @@ export async function getFishMapPostsApi({
     return data;
   } catch (error) {
     console.error(error);
+    throw new Error("Fetching fish maps went wront");
   }
 }
