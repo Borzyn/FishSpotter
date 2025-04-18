@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
@@ -40,11 +41,13 @@ namespace FishSpotter.Server.Controllers
             
             if (fish == null) return BadRequest();
 
-            var maps = fish.Maps;
+            //to do naprawienia żeby dawało mapy dla danej ryby
+            //var maps = fish.Maps;
 
+            //if (maps == null) return BadRequest();
+            var maps = _context.MapModel.Select(map => map.Name).ToList();
             if (maps == null) return BadRequest();
-
-            return Ok(maps);
+            return Ok(maps.ToJson());
         }
 
         //[HttpPost]
