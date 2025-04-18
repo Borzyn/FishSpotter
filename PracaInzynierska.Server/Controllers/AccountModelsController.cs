@@ -55,12 +55,12 @@ namespace FishSpotter.Server.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> RateProfile(string user, string accountRatedName, string rate)
+        public async Task<IActionResult> RateProfile([FromBody] RateProfileModel model)
         {
-            if (user == null || user == accountRatedName || accountRatedName == null) { return BadRequest(); }
+            if (model.user == null || model.user == model.ratedUser || model.ratedUser == null) { return BadRequest(); }
             int rating;
-            if (!int.TryParse(rate, out rating) || rating > 5 || rating < 1) { return BadRequest(); }
-            var account = _context.AccountModel.FirstOrDefault(u => u.Username == accountRatedName);
+            if (!int.TryParse(model.rate, out rating) || rating > 5 || rating < 1) { return BadRequest(); }
+            var account = _context.AccountModel.FirstOrDefault(u => u.Username == model.ratedUser);
             if (account == null) { return BadRequest(); }
             account.RateSum += rating;
             account.RateAmount++;
