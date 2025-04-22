@@ -51,3 +51,23 @@ export async function createAccountApi(accountData: IRegisterData) {
     throw new Error(error as string);
   }
 }
+
+export async function logoutFromAccountApi() {
+  try {
+    const res = await fetch("api/AccountModels/logout", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    });
+
+    if (!res.ok) {
+      throw new Error("Logout from account went wrong!");
+    }
+
+    return null;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error as string);
+  }
+}
