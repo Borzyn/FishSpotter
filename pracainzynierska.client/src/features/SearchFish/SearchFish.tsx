@@ -16,7 +16,7 @@ function SearchFish() {
       { fishName: fishQuery },
       {
         onSuccess: () => {
-          navigate(`$/fish/${fishQuery}`);
+          navigate(`/fish/${fishQuery}`);
         },
         onError: () => setFishQuery(""),
       }

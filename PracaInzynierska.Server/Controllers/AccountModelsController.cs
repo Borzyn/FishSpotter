@@ -44,8 +44,8 @@ namespace FishSpotter.Server.Controllers
             return Ok(account);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> CheckProfile(string accountCheckedName)
+        [HttpPost]
+        public async Task<IActionResult> CheckProfile([FromBody] string accountCheckedName)
         {
             var accountToCheck = _context.AccountModel.FirstOrDefault(acc => acc.Username == accountCheckedName);
             if (accountToCheck == null || accountCheckedName == null) { return BadRequest(); }
@@ -69,7 +69,7 @@ namespace FishSpotter.Server.Controllers
         }
 
         [HttpPost]
-        public IActionResult ShowPosts(string accountName)
+        public IActionResult ShowPosts([FromBody] string accountName)
         {
             var accountToCheck = _context.AccountModel.FirstOrDefault(acc => acc.Username == accountName);
             if (accountName == null || accountToCheck == null) { return BadRequest(); }

@@ -64,7 +64,7 @@ interface IUserState {
 }
 
 export const useUserStore = create<IUserState>((set) => ({
-  user: null,
+  user: JSON.parse(localStorage.getItem("user") as string) || null,
 
   login: (userData: IUser) => {
     set(() => ({ user: userData }));

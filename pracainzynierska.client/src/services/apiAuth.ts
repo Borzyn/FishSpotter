@@ -3,7 +3,7 @@ import { IRegisterData } from "../features/Authentication/useRegister";
 
 export async function loginToAccountApi(accountData: ILoginData) {
   try {
-    const res = await fetch("api/AccountModels/Login", {
+    const res = await fetch("/api/AccountModels/Login", {
       headers: {
         "Content-Type": "application/json",
       },
@@ -31,7 +31,7 @@ export async function loginToAccountApi(accountData: ILoginData) {
 
 export async function createAccountApi(accountData: IRegisterData) {
   try {
-    const res = await fetch("api/AccountModels/registerCheck", {
+    const res = await fetch("/api/AccountModels/registerCheck", {
       headers: {
         "Content-Type": "application/json",
       },
@@ -54,7 +54,7 @@ export async function createAccountApi(accountData: IRegisterData) {
 
 export async function logoutFromAccountApi() {
   try {
-    const res = await fetch("api/AccountModels/logout", {
+    const res = await fetch("/api/AccountModels/logout", {
       headers: {
         "Content-Type": "application/json",
       },

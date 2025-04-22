@@ -1,6 +1,6 @@
 export async function getListMapsApi() {
   try {
-    const res = await fetch("api/Home/ShowMaps", {
+    const res = await fetch("/api/Home/ShowMaps", {
       headers: {
         "Content-Type": "application/json",
       },
@@ -22,7 +22,7 @@ export async function getListMapsApi() {
 
 export async function getListFishApi() {
   try {
-    const res = await fetch("api/Home/ShowFishes", {
+    const res = await fetch("/api/Home/ShowFishes", {
       headers: {
         "Content-Type": "application/json",
       },

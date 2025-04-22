@@ -1,6 +1,6 @@
 export async function getFishMapsApi(fishName: string) {
   try {
-    const res = await fetch(`api/FishMain/ShowFishMain`, {
+    const res = await fetch(`/api/FishMain/ShowFishMain`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -31,7 +31,7 @@ export async function getFishMapPostsNumberApi({
   mapName: string;
 }) {
   try {
-    const res = await fetch("api/FishMain/ShowPostsWithFishAndMap", {
+    const res = await fetch("/api/FishMain/ShowPostsWithFishAndMap", {
       headers: {
         "Content-Type": "application/json",
       },
@@ -60,7 +60,7 @@ export async function getFishMapPostsApi({
   mapName: string;
 }) {
   try {
-    const res = await fetch("api/FishMain/ShowPostsWithFishAndMap", {
+    const res = await fetch("/api/FishMain/ShowPostsWithFishAndMap", {
       headers: {
         "Content-Type": "application/json",
       },

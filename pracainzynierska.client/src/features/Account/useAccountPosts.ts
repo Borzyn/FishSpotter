@@ -3,7 +3,11 @@ import toast from "react-hot-toast";
 import { getAccountPostsApi } from "../../services/apiAccount";
 
 export function useAccountPosts() {
-  const { isPending: isGettingPosts, mutate: getUserPosts } = useMutation({
+  const {
+    isPending: isGettingPosts,
+    mutate: getUserPosts,
+    data: userPostsData,
+  } = useMutation({
     mutationFn: ({ accountName }: { accountName: string }) =>
       getAccountPostsApi(accountName),
     onError: () => {
@@ -11,5 +15,5 @@ export function useAccountPosts() {
     },
   });
 
-  return { isGettingPosts, getUserPosts };
+  return { isGettingPosts, getUserPosts, userPostsData };
 }

@@ -1,6 +1,6 @@
 export async function getAccountInformationsApi(accountCheckedName: string) {
   try {
-    const res = await fetch("api/AccountModels/CheckProfile", {
+    const res = await fetch("/api/AccountModels/CheckProfile", {
       headers: {
         "Content-Type": "application/json",
       },
@@ -8,11 +8,14 @@ export async function getAccountInformationsApi(accountCheckedName: string) {
       body: JSON.stringify(accountCheckedName),
     });
 
+    console.log(res);
+
     if (!res.ok) {
-      throw new Error("Fetching maps went wrong!");
+      throw new Error("Fetching account informations went wrong!");
     }
 
     const data = await res.json();
+    console.log(data);
 
     return data;
   } catch (error) {
@@ -22,16 +25,20 @@ export async function getAccountInformationsApi(accountCheckedName: string) {
 
 export async function getAccountPostsApi(accountName: string) {
   try {
-    const res = await fetch("api/AccountModels/ShowPosts", {
+    const res = await fetch("/api/AccountModels/ShowPosts", {
       headers: {
         "Content-Type": "application/json",
       },
       method: "POST",
-      body: JSON.stringify(accountName),
+      body: JSON.stringify({ accountName }),
     });
 
+    console.log(res);
+
     if (!res.ok) {
-      throw new Error("Fetching maps went wrong!");
+      const data = await res.json();
+      console.log(data);
+      throw new Error("Fetching account posts went wrong!");
     }
 
     const data = await res.json();

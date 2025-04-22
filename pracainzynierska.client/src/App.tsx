@@ -24,7 +24,7 @@ function App() {
               <Route path="/fish/:fishName" element={<FishPage />} />
               <Route path="/fishmap" element={<FishMapPage />} />
               <Route path="/addpost" element={<AddPostPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/profile/:username" element={<ProfilePage />} />
             </Route>
           </Routes>
         </Suspense>
