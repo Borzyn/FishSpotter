@@ -3,7 +3,7 @@ import Button from "../../components/Button/Button";
 import Table from "../../components/Table/Table";
 import { useUserStore } from "../../stores/useUserStore";
 import { useAccountInformations } from "../../features/Account/useAccountInformations";
-import { useAccountPosts } from "../../features/Account/useAccountPosts";
+
 import { useEffect } from "react";
 import Loader from "../../components/Loaders/Loader/Loader";
 
@@ -23,24 +23,24 @@ function ProfilePage() {
 
   const { isGettingInformations, getUserInformations, userInformationsData } =
     useAccountInformations();
-  const { isGettingPosts, getUserPosts, userPostsData } = useAccountPosts();
 
   useEffect(() => {
     if (username) {
-      getUserPosts({ accountName: username });
       getUserInformations({ accountCheckedName: username });
     }
-  }, [username, getUserInformations, getUserPosts]);
+  }, [username, getUserInformations]);
 
-  if (isGettingInformations || isGettingPosts) {
+  if (isGettingInformations) {
     return <Loader />;
   }
 
-  if (!userInformationsData || !userPostsData) {
+  if (!userInformationsData) {
     return <Loader />;
   }
 
-  const { rateSum, postsCount } = userInformationsData;
+  const { rateSum, postsCount, posts } = userInformationsData;
+
+  console.log(userInformationsData);
 
   return (
     <section className="w-full h-full mx-auto max-w-7xl">
@@ -64,7 +64,13 @@ function ProfilePage() {
         </div>
       </div>
 
-      <Table title="Twoje ostatnie posty" tableHeaders={tableHeaders} />
+      {posts && (
+        <Table
+          title="Twoje ostatnie posty"
+          tableCells={posts}
+          tableHeaders={tableHeaders}
+        />
+      )}
     </section>
   );
 }

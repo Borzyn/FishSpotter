@@ -1,20 +1,22 @@
 import { LogOut } from "lucide-react";
-import { useLogout } from "../../features/Authentication/useLogout";
+// import { useLogout } from "../../features/Authentication/useLogout";
 import { useNavigate } from "react-router";
+import { useUserStore } from "../../stores/useUserStore";
 
 function UserProfile({ username }: { username: string }) {
   const navigate = useNavigate();
-  const { logoutFromAccount, isLoggingOut } = useLogout();
+  const { logout } = useUserStore();
+  // const { logoutFromAccount, isLoggingOut } = useLogout();
 
   function handleLogout() {
-    logoutFromAccount();
+    logout();
   }
 
   return (
     <div className="flex gap-3 items-center">
       <button
         onClick={() => navigate(`/profile/${username}`)}
-        disabled={isLoggingOut}
+        // disabled={isLoggingOut}
         className="text-white w-full h-full block text-lg bg-sky-500 px-2.5 py-1 rounded-md text-nowrap cursor-pointer"
       >
         {username}
@@ -22,7 +24,7 @@ function UserProfile({ username }: { username: string }) {
 
       <button
         onClick={handleLogout}
-        disabled={isLoggingOut}
+        // disabled={isLoggingOut}
         className="cursor-pointer text-sky-500"
       >
         <LogOut size={32} />

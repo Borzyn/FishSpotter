@@ -27,7 +27,7 @@ export async function getAccountPostsApi(accountName: string) {
         "Content-Type": "application/json",
       },
       method: "POST",
-      body: JSON.stringify({ accountName }),
+      body: JSON.stringify(accountName),
     });
 
     if (!res.ok) {

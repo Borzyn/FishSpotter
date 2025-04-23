@@ -1,9 +1,12 @@
+import { IPost } from "../../stores/useUserStore";
+
 function Table({
   tableHeaders,
   tableCells,
   title,
 }: {
   tableHeaders: string[];
+  tableCells: IPost[];
   title?: string;
 }) {
   return (

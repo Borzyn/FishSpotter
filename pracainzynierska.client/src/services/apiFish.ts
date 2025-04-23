@@ -25,8 +25,6 @@ export async function getFishMapsApi(fishName: string) {
 
 export async function getFishMapPostsNumberApi(dataFish: IFishMapPosts) {
   try {
-    console.log(dataFish);
-
     const res = await fetch("/api/FishMain/ShowPostsWithFishAndMap", {
       headers: {
         "Content-Type": "application/json",
@@ -34,8 +32,6 @@ export async function getFishMapPostsNumberApi(dataFish: IFishMapPosts) {
       method: "POST",
       body: JSON.stringify(dataFish),
     });
-
-    console.log(res);
 
     if (!res.ok) {
       const data = await res.json();
