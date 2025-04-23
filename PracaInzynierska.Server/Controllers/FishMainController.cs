@@ -1,4 +1,5 @@
 ﻿using FishSpotter.Server.Data;
+using FishSpotter.Server.Models.AdditionalModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -64,10 +65,10 @@ namespace FishSpotter.Server.Controllers
         //}
 
         [HttpPost]
-        public IActionResult ShowPostsWithFishAndMap([FromBody] string fishName, string mapName)
+        public IActionResult ShowPostsWithFishAndMap(FishAndMapModel model )
         {
-            var fish = _context.FishModel.FirstOrDefault(f => f.Name == fishName);
-            var map = _context.MapModel.FirstOrDefault(x => x.Name == mapName);
+            var fish = _context.FishModel.FirstOrDefault(f => f.Name == model.fishName);
+            var map = _context.MapModel.FirstOrDefault(x => x.Name == model.mapName);
             if (fish == null || map == null) return BadRequest();
             var m= map.Name.ToLower();
             var f = fish.Name.ToLower();

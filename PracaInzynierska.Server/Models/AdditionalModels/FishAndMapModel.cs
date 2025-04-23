@@ -2,7 +2,7 @@
 {
     public class FishAndMapModel
     {
-        public string fishname {  get; set; }
-        public string mapname { get; set; }
+        public string fishName {  get; set; }
+        public string mapName { get; set; }
     }
 }
