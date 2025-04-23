@@ -1,3 +1,5 @@
+import { IFishMapPosts } from "../features/AboutFish/useMapPostsNumber";
+
 export async function getFishMapsApi(fishName: string) {
   try {
     const res = await fetch(`/api/FishMain/ShowFishMain`, {
@@ -7,8 +9,6 @@ export async function getFishMapsApi(fishName: string) {
       method: "POST",
       body: JSON.stringify(fishName),
     });
-    console.log(fishName);
-    console.log(res);
 
     if (!res.ok) {
       throw new Error("Fetching fish maps went wrong!");
@@ -23,23 +23,23 @@ export async function getFishMapsApi(fishName: string) {
   }
 }
 
-export async function getFishMapPostsNumberApi({
-  fishName,
-  mapName,
-}: {
-  fishName: string;
-  mapName: string;
-}) {
+export async function getFishMapPostsNumberApi(dataFish: IFishMapPosts) {
   try {
+    console.log(dataFish);
+
     const res = await fetch("/api/FishMain/ShowPostsWithFishAndMap", {
       headers: {
         "Content-Type": "application/json",
       },
       method: "POST",
-      body: JSON.stringify({ fishName, mapName }),
+      body: JSON.stringify(dataFish),
     });
 
+    console.log(res);
+
     if (!res.ok) {
+      const data = await res.json();
+      console.log(data);
       throw new Error("Fetching fish maps went wrong!");
     }
 

@@ -8,14 +8,11 @@ export async function getAccountInformationsApi(accountCheckedName: string) {
       body: JSON.stringify(accountCheckedName),
     });
 
-    console.log(res);
-
     if (!res.ok) {
       throw new Error("Fetching account informations went wrong!");
     }
 
     const data = await res.json();
-    console.log(data);
 
     return data;
   } catch (error) {
@@ -32,8 +29,6 @@ export async function getAccountPostsApi(accountName: string) {
       method: "POST",
       body: JSON.stringify({ accountName }),
     });
-
-    console.log(res);
 
     if (!res.ok) {
       const data = await res.json();

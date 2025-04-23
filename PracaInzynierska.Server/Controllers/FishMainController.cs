@@ -64,7 +64,7 @@ namespace FishSpotter.Server.Controllers
         //}
 
         [HttpPost]
-        public IActionResult ShowPostsWithFishAndMap(string fishName, string mapName)
+        public IActionResult ShowPostsWithFishAndMap([FromBody] string fishName, string mapName)
         {
             var fish = _context.FishModel.FirstOrDefault(f => f.Name == fishName);
             var map = _context.MapModel.FirstOrDefault(x => x.Name == mapName);

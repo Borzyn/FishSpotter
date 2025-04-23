@@ -7,6 +7,7 @@ import FishMapPage from "./pages/FishMapPage/FishMapPage";
 import AddPostPage from "./pages/AddPostPage/AddPostPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const Layout = lazy(() => import("./layouts/Layout/Layout"));
 const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
@@ -28,6 +29,7 @@ function App() {
             </Route>
           </Routes>
         </Suspense>
+        <ReactQueryDevtools initialIsOpen={false} />
       </BrowserRouter>
 
       <Toaster

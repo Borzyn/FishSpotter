@@ -2,20 +2,19 @@ import { useParams } from "react-router";
 import { useFishMaps } from "../../features/AboutFish/useFishMaps";
 import { useEffect } from "react";
 import FishRow from "./FishRow";
+import Loader from "../../components/Loaders/Loader/Loader";
 
 function FishPage() {
   const { fishName } = useParams();
   const { isSearchingFishMaps, getFishMaps, fishMaps } = useFishMaps();
 
-  if (isSearchingFishMaps) {
-    <p>Loading</p>;
-  }
-
   useEffect(() => {
     if (fishName) getFishMaps({ fishName });
   }, [fishName, getFishMaps]);
 
-  console.log(fishMaps);
+  if (isSearchingFishMaps) {
+    return <Loader />;
+  }
 
   return (
     <section className="w-full h-full mx-auto max-w-7xl">
@@ -32,8 +31,8 @@ function FishPage() {
         <tbody>
           {fishMaps &&
             fishName &&
-            fishMaps.map((map) => (
-              <FishRow fishName={fishName} mapName={map.name} />
+            fishMaps.map((map: string) => (
+              <FishRow key={map} fishNameProp={fishName} mapNameProp={map} />
             ))}
         </tbody>
       </table>

@@ -1,15 +1,17 @@
+import Error from "../../../components/Error/Error";
 import ListButton from "../../../components/ListButton/ListButton";
+import Loader from "../../../components/Loaders/Loader/Loader";
 import { useListFish } from "../useListFish";
 
 function ListFish() {
   const { isFishError, isLoadingFish, fishError, listFishData } = useListFish();
 
   if (isFishError) {
-    return <p>{fishError?.message}</p>;
+    return <Error error={fishError?.message} />;
   }
 
   if (isLoadingFish) {
-    return <p>Loading</p>;
+    return <Loader />;
   }
 
   return (

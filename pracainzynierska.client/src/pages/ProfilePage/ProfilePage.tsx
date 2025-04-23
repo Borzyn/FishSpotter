@@ -5,6 +5,7 @@ import { useUserStore } from "../../stores/useUserStore";
 import { useAccountInformations } from "../../features/Account/useAccountInformations";
 import { useAccountPosts } from "../../features/Account/useAccountPosts";
 import { useEffect } from "react";
+import Loader from "../../components/Loaders/Loader/Loader";
 
 const tableHeaders = [
   "Ryba",
@@ -32,17 +33,14 @@ function ProfilePage() {
   }, [username, getUserInformations, getUserPosts]);
 
   if (isGettingInformations || isGettingPosts) {
-    return <p>Loading</p>;
+    return <Loader />;
   }
 
-  if (!userInformationsData) {
-    return <p>Loading</p>;
+  if (!userInformationsData || !userPostsData) {
+    return <Loader />;
   }
 
   const { rateSum, postsCount } = userInformationsData;
-
-  console.log(userInformationsData);
-  console.log(userPostsData);
 
   return (
     <section className="w-full h-full mx-auto max-w-7xl">

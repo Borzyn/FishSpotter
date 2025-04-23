@@ -1,15 +1,17 @@
+import Error from "../../../components/Error/Error";
 import ListButton from "../../../components/ListButton/ListButton";
+import Loader from "../../../components/Loaders/Loader/Loader";
 import { useListMaps } from "../useListMaps";
 
 function ListMaps() {
   const { isLoadingMaps, isMapsError, mapsError, listMapsData } = useListMaps();
 
   if (isMapsError) {
-    return <p>{mapsError?.message}</p>;
+    return <Error error={mapsError?.message} />;
   }
 
   if (isLoadingMaps) {
-    return <p>Loading</p>;
+    return <Loader />;
   }
 
   return (
