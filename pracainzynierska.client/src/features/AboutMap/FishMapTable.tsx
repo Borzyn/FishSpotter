@@ -2,6 +2,7 @@ import { useParams } from "react-router";
 import { useFishOnMap } from "./useFishOnMap";
 import Loader from "../../components/Loaders/Loader/Loader";
 import Error from "../../components/Error/Error";
+import FishMapTableRow from "./FishMapTableRow";
 
 function FishMapTable() {
   // const { mapName } = useParams();
@@ -17,7 +18,11 @@ function FishMapTable() {
 
   return (
     <div className="w-full overflow-auto">
-      <div className="min-w-6xl overflow-hidden"></div>
+      <ul className="min-w-6xl overflow-hidden flex flex-col gap-2">
+        <FishMapTableRow />
+        <FishMapTableRow />
+        <FishMapTableRow />
+      </ul>
     </div>
   );
 }
