@@ -76,7 +76,7 @@ namespace FishSpotter.Server.Controllers
             return Ok(posts);
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult ShowFishOnMap(string mapName) // Do przetestowania relacji nowej
         {
             var map = _context.MapModel.FirstOrDefault(x => x.Name == mapName);
