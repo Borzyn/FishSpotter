@@ -8,6 +8,7 @@ import AddPostPage from "./pages/AddPostPage/AddPostPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import PageNotFound from "./pages/PageNotFound/PageNotFound";
 
 const Layout = lazy(() => import("./layouts/Layout/Layout"));
 const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
@@ -26,6 +27,7 @@ function App() {
               <Route path="/map/:mapName" element={<FishMapPage />} />
               <Route path="/profile/:username" element={<ProfilePage />} />
               <Route path="/profile/addpost" element={<AddPostPage />} />
+              <Route path="*" element={<PageNotFound />} />
             </Route>
           </Routes>
         </Suspense>

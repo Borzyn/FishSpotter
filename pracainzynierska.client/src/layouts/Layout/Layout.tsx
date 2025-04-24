@@ -11,7 +11,7 @@ function Layout() {
   return (
     <div className="min-h-dvh flex flex-col bg-blue-50 text-light">
       {isMobile ? <HeaderMobile /> : <Header />}
-      <main className="px-3 grow py-8 ">
+      <main className="flex flex-col px-3 grow py-8 ">
         <Outlet />
       </main>
     </div>
