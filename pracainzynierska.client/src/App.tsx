@@ -24,8 +24,8 @@ function App() {
               <Route index element={<HomePage />} />
               <Route path="/fish/:fishName" element={<FishPage />} />
               <Route path="/map/:mapName" element={<FishMapPage />} />
-              <Route path="/addpost" element={<AddPostPage />} />
               <Route path="/profile/:username" element={<ProfilePage />} />
+              <Route path="/profile/addpost" element={<AddPostPage />} />
             </Route>
           </Routes>
         </Suspense>

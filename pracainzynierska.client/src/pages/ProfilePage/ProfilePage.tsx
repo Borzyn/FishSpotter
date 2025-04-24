@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Button from "../../components/Button/Button";
 import Table from "../../components/Table/Table";
 import { useUserStore } from "../../stores/useUserStore";
@@ -19,6 +19,7 @@ const tableHeaders = [
 function ProfilePage() {
   const { username } = useParams();
   const { user } = useUserStore();
+  const navigate = useNavigate();
   const isOwnProfile = user?.username === username;
 
   const { isGettingInformations, getUserInformations, userInformationsData } =
@@ -40,14 +41,16 @@ function ProfilePage() {
 
   const { rateSum, postsCount, posts } = userInformationsData;
 
-  console.log(userInformationsData);
-
   return (
     <section className="w-full h-full mx-auto max-w-7xl">
       <div className="flex gap-1 justify-between items-center border-2 border-slate-900 bg-slate-900 text-sky-50 rounded-md py-4 px-8 mb-6">
         <h2 className="text-3xl">{username}</h2>
         {isOwnProfile && (
-          <Button buttonType="button" type="primary">
+          <Button
+            onClick={() => navigate("/profile/addpost")}
+            buttonType="button"
+            type="primary"
+          >
             Add post
           </Button>
         )}
