@@ -183,7 +183,7 @@ function AddPost() {
         </div>
       </div>
 
-      <Button type="primary" buttonType="submit">
+      <Button type="full" buttonType="submit">
         Dodaj Post
       </Button>
     </form>
