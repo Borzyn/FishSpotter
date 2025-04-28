@@ -1,7 +1,7 @@
-import { useParams } from "react-router";
-import { useFishOnMap } from "./useFishOnMap";
-import Loader from "../../components/Loaders/Loader/Loader";
-import Error from "../../components/Error/Error";
+//import { useParams } from "react-router";
+//import { useFishOnMap } from "./useFishOnMap";
+//import Loader from "../../components/Loaders/Loader/Loader";
+//import Error from "../../components/Error/Error";
 import FishMapTableRow from "./FishMapTableRow";
 
 function FishMapTable() {

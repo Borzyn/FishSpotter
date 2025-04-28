@@ -24,6 +24,12 @@ namespace FishSpotter.Server.Controllers
             //string Username = Request.Cookies["Username"];
             return Ok(userId);
         }
+        [HttpPost]
+        public IActionResult logout(string userid)
+        {
+            return Ok();
+        }
+
 
         [HttpGet]
         public IActionResult ShowMaps()
@@ -44,6 +50,8 @@ namespace FishSpotter.Server.Controllers
         [HttpPost]
         public IActionResult SearchFish(string fishname)
         {
+
+
             var fish = _context.FishModel.Where(fishh => fishh.Name == fishname).FirstOrDefault();
             if (fish == null) return BadRequest();
             return Ok(fish);

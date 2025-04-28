@@ -22,7 +22,7 @@ namespace FishSpotter.Server.Models.DataBase
         [Column(TypeName = "varchar(8)")]
         public int PostsCount { get; set; }
 
-        public List<PostModel> Posts { get; set; }
+        public List<PostModel> Posts { get; set; } = new List<PostModel>();
 
         [Required]
         [DataType(DataType.Password)]

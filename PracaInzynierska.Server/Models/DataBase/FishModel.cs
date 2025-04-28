@@ -10,11 +10,11 @@ namespace FishSpotter.Server.Models.DataBase
         [Column(TypeName = "varchar(36)")]
         public string Name { get; set; }
 
-        public List<MapModel> Maps { get; set; }
+        public List<MapModel> Maps { get; set; } /*= new List<MapModel>();*/
   
-        public List<PostModel> Posts { get; set; }
+        public List<PostModel> Posts { get; set; } = new List<PostModel>();
   
-        public List<SpotModel> Spots { get; set; }
+        public List<SpotModel> Spots { get; set; } = new List<SpotModel>();
 
         //public SpotModel Spot { get; set; }
     }

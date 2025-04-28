@@ -3,6 +3,7 @@ using FishSpotter.Server.Models.AdditionalModels;
 using FishSpotter.Server.Models.DataBase;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FishSpotter.Server.Controllers
 {
@@ -21,13 +22,13 @@ namespace FishSpotter.Server.Controllers
 
         public IActionResult Create([FromBody] CreatePostModel model)
         {
-            var editor = _context.AccountModel.FirstOrDefault(x => x.Username == model.user);
+            var editor = _context.AccountModel.Include(x=> x.Posts).Where(u=> u.Username == model.user).FirstOrDefault();
             if (model.user == null || editor == null) { return BadRequest(); }
 
-        //    public IActionResult Create(string fishname, string mapname, string xyname, string addInfo,string methodname,string groundbaitid)
-        //{
-        //    string UserID = Request.Cookies["Username"];
-        //    if (UserID == null || UserID == "0") { return BadRequest() ; }
+            //    public IActionResult Create(string fishname, string mapname, string xyname, string addInfo,string methodname,string groundbaitid)
+            //{
+            //    string UserID = Request.Cookies["Username"];
+            //    if (UserID == null || UserID == "0") { return BadRequest() ; }
 
 
             var fish = _context.FishModel.FirstOrDefault(f => f.Name == model.fishname);
@@ -35,19 +36,19 @@ namespace FishSpotter.Server.Controllers
 
             //DO przetestowania TODO
             //var map = _context.MapModel.FirstOrDefault(m => m.Name == mapname && m.Fishes.Contains(fishname));
-            var IsMapValid = _context.MapModel.Any(map =>  map.Name == model.mapname && map.Fishes.Any(fish => fish.Name == model.fishname));
-            if (!IsMapValid) {return BadRequest(); }
+            var IsMapValid = _context.MapModel.Any(map => map.Name == model.mapname && map.Fishes.Any(fish => fish.Name == model.fishname));
+            if (!IsMapValid) { return BadRequest(); }
 
-            int info;
-            if (!int.TryParse(model.addInfo, out info)) { return BadRequest(); }
-            var spot = _context.SpotModel.FirstOrDefault(s => s.Map == model.mapname &&  s.XY == model.xyname && s.AdditionalInfo == info);
-            if (spot == null) 
+            //string info;
+            //if (!int.TryParse(model.addInfo, out info)) { return BadRequest(); }
+            var spot = _context.SpotModel.FirstOrDefault(s => s.Map == model.mapname && s.XY == model.xyname && s.AdditionalInfo == model.addInfo);
+            if (spot == null)
             {
                 spot = new SpotModel();
                 spot.Id = Guid.NewGuid().ToString();
                 spot.XY = model.xyname;
-                spot.AdditionalInfo = info;
-                spot.Map = model.mapname;  
+                spot.AdditionalInfo = model.addInfo;
+                spot.Map = model.mapname;
             }
 
             var method = _context.MethodModel.FirstOrDefault(met => met.Name == model.methodname);
@@ -56,8 +57,9 @@ namespace FishSpotter.Server.Controllers
             var bait = _context.BaitModel.FirstOrDefault(b => b.Name == model.methodname);
             if (bait == null || !bait.Methods.Contains(method)) { return BadRequest(); }
 
-            var groundbait = _context.GroundbaitModel.FirstOrDefault(g => g.Id == model.groundbaitid);
-            if (  groundbait != null! && !groundbait.Methods.Contains(method)) { return BadRequest(); }
+            var groundbait = _context.GroundbaitModel.FirstOrDefault(g => g.GBName == model.groundbaitid);
+            //if (  groundbait != null! && !groundbait.Methods.Contains(method)) { return BadRequest(); }
+            if (groundbait == null) { groundbait = _context.GroundbaitModel.Where(h => h.GBName == "none").FirstOrDefault(); }
 
 
 
@@ -71,16 +73,18 @@ namespace FishSpotter.Server.Controllers
             u.Method = method;
             u.BaitId = bait.Id;
             u.Bait = bait;
-            if (groundbait != null)
-            {
-                u.groundbaitId = groundbait.Id;
-                u.groundbait = groundbait;
-            }
+            u.groundbaitId = groundbait.GBName;
+            u.groundbait = groundbait;
+
             u.rateSum = 0;
             u.rateAmount = 0;
+            _context.PostModel.Add(u);
 
-            _context.SaveChanges();
-
+            _context.SaveChangesAsync();
+            editor.PostsCount++;
+            editor.Posts.Add(u);
+            _context.AccountModel.Update(editor);
+            _context.SaveChangesAsync();
             return Ok();
         }
 

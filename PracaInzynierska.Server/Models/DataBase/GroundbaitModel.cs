@@ -8,10 +8,10 @@ namespace FishSpotter.Server.Models.DataBase
         [Key]
         [DataType(DataType.Text)]
         [Column(TypeName = "varchar(36)")]
-        public string Id { get; set; }
+        public string GBName { get; set; }
 
-        public List<IngredientModel> Ingredients { get; set; }
+        public List<IngredientModel> Ingredients { get; set; } = new List<IngredientModel>();
 
-        public List<MethodModel> Methods { get; set; }
+        public List<MethodModel> Methods { get; set; } = new List<MethodModel> { };
     }
 }

@@ -14,11 +14,11 @@ namespace FishSpotter.Server.Models.DataBase
         [Column(TypeName = "varchar(36)")]
         public string Name { get; set; }
 
-        public List<string> BaitIds { get; set; }
+        public List<string> BaitIds { get; set; } = new List<string>();
 
 
-        [ForeignKey(nameof(GroundBaitId))]
-        public string GroundBaitId { get; set; }
+        //[ForeignKey(nameof(GroundBaitId))]
+        //public string GroundBaitId { get; set; }
 
         //public List<FishModel> Fish { get; set; }
 

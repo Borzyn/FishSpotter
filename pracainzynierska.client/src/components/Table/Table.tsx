@@ -2,7 +2,7 @@ import { IPost } from "../../stores/useUserStore";
 
 function Table({
   tableHeaders,
-  tableCells,
+  //tableCells,
   title,
 }: {
   tableHeaders: string[];

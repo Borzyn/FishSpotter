@@ -3,6 +3,7 @@ using FishSpotter.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FishSpotter.Server.Migrations
 {
     [DbContext(typeof(FishSpotterServerContext))]
-    partial class FishSpotterServerContextModelSnapshot : ModelSnapshot
+    [Migration("20250425123037_fix")]
+    partial class fix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,10 +95,10 @@ namespace FishSpotter.Server.Migrations
 
             modelBuilder.Entity("FishSpotter.Server.Models.DataBase.GroundbaitModel", b =>
                 {
-                    b.Property<string>("GBName")
+                    b.Property<string>("Id")
                         .HasColumnType("varchar(36)");
 
-                    b.HasKey("GBName");
+                    b.HasKey("Id");
 
                     b.ToTable("GroundbaitModel");
                 });
@@ -105,7 +108,8 @@ namespace FishSpotter.Server.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("varchar(36)");
 
-                    b.Property<string>("GroundbaitModelGBName")
+                    b.Property<string>("GroundbaitModelId")
+                        .IsRequired()
                         .HasColumnType("varchar(36)");
 
                     b.Property<string>("Name")
@@ -114,7 +118,7 @@ namespace FishSpotter.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GroundbaitModelGBName");
+                    b.HasIndex("GroundbaitModelId");
 
                     b.ToTable("IngredientModel");
                 });
@@ -141,7 +145,11 @@ namespace FishSpotter.Server.Migrations
                     b.Property<string>("BaitModelId")
                         .HasColumnType("varchar(36)");
 
-                    b.Property<string>("GroundbaitModelGBName")
+                    b.Property<string>("GroundBaitId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GroundbaitModelId")
                         .HasColumnType("varchar(36)");
 
                     b.Property<string>("Name")
@@ -152,7 +160,7 @@ namespace FishSpotter.Server.Migrations
 
                     b.HasIndex("BaitModelId");
 
-                    b.HasIndex("GroundbaitModelGBName");
+                    b.HasIndex("GroundbaitModelId");
 
                     b.ToTable("MethodModel");
                 });
@@ -183,12 +191,7 @@ namespace FishSpotter.Server.Migrations
                     b.Property<string>("MethodId")
                         .HasColumnType("varchar(36)");
 
-                    b.Property<string>("MethodName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SpotID")
-                        .IsRequired()
+                    b.Property<string>("SpotId")
                         .HasColumnType("varchar(36)");
 
                     b.Property<string>("UserId")
@@ -217,7 +220,7 @@ namespace FishSpotter.Server.Migrations
 
                     b.HasIndex("MethodId");
 
-                    b.HasIndex("SpotID");
+                    b.HasIndex("SpotId");
 
                     b.HasIndex("groundbaitId");
 
@@ -231,7 +234,7 @@ namespace FishSpotter.Server.Migrations
 
                     b.Property<string>("AdditionalInfo")
                         .IsRequired()
-                        .HasColumnType("varchar(80)");
+                        .HasColumnType("varchar(4)");
 
                     b.Property<string>("FishModelName")
                         .HasColumnType("varchar(36)");
@@ -275,7 +278,9 @@ namespace FishSpotter.Server.Migrations
                 {
                     b.HasOne("FishSpotter.Server.Models.DataBase.GroundbaitModel", null)
                         .WithMany("Ingredients")
-                        .HasForeignKey("GroundbaitModelGBName");
+                        .HasForeignKey("GroundbaitModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FishSpotter.Server.Models.DataBase.MethodModel", b =>
@@ -286,7 +291,7 @@ namespace FishSpotter.Server.Migrations
 
                     b.HasOne("FishSpotter.Server.Models.DataBase.GroundbaitModel", null)
                         .WithMany("Methods")
-                        .HasForeignKey("GroundbaitModelGBName");
+                        .HasForeignKey("GroundbaitModelId");
                 });
 
             modelBuilder.Entity("FishSpotter.Server.Models.DataBase.PostModel", b =>
@@ -311,9 +316,7 @@ namespace FishSpotter.Server.Migrations
 
                     b.HasOne("FishSpotter.Server.Models.DataBase.SpotModel", "Spot")
                         .WithMany()
-                        .HasForeignKey("SpotID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SpotId");
 
                     b.HasOne("FishSpotter.Server.Models.DataBase.GroundbaitModel", "groundbait")
                         .WithMany()
