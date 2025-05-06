@@ -7,14 +7,14 @@ function FishMapTableRow({
   mapName,
   fishName,
 }: {
-  mapName: string;
+  mapName: string | undefined;
   fishName: string;
 }) {
   const { isGettingsPosts, fishPosts, getFishMapPosts } = useGetFishMapPosts();
   const [openPosts, setOpenPosts] = useState(false);
 
   useEffect(() => {
-    getFishMapPosts({ fishName, mapName });
+    if (mapName) getFishMapPosts({ fishname: fishName, mapName: mapName });
   }, [fishName, getFishMapPosts, mapName]);
 
   console.log(fishPosts);
@@ -22,7 +22,7 @@ function FishMapTableRow({
   return (
     <li className="border-2">
       <div className="w-full grid grid-cols-[1fr_max-content] items-center gap-x-8 text-2xl font-medium bg-amber-400 py-2 px-4">
-        <p>Nazwa Ryby</p>
+        <p>{fishName}</p>
         {isGettingsPosts ? (
           "Ładowanie..."
         ) : (

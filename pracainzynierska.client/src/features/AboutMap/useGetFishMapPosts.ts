@@ -9,12 +9,12 @@ export function useGetFishMapPosts() {
     data: fishPosts,
   } = useMutation({
     mutationFn: ({
-      fishName,
+      fishname,
       mapName,
     }: {
-      fishName: string;
+      fishname: string;
       mapName: string;
-    }) => getFishMapPostsApi({ fishName, mapName }),
+    }) => getFishMapPostsApi({ fishname, mapName }),
   });
 
   return { isGettingsPosts, getFishMapPosts, fishPosts };

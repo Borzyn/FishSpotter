@@ -23,9 +23,13 @@ function FishMapTable() {
   return (
     <div className="w-full overflow-auto">
       <ul className="min-w-6xl overflow-hidden flex flex-col gap-2">
-        <FishMapTableRow mapName={mapName} fishName={fishName} />
-        <FishMapTableRow />
-        <FishMapTableRow />
+        {data.Fish.map((fish: { Name: string }) => (
+          <FishMapTableRow
+            key={fish.Name}
+            mapName={mapName}
+            fishName={fish.Name}
+          />
+        ))}
       </ul>
     </div>
   );
