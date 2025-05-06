@@ -23,7 +23,7 @@ function FishMapTable() {
   return (
     <div className="w-full overflow-auto">
       <ul className="min-w-6xl overflow-hidden flex flex-col gap-2">
-        <FishMapTableRow />
+        <FishMapTableRow mapName={mapName} fishName={fishName} />
         <FishMapTableRow />
         <FishMapTableRow />
       </ul>
