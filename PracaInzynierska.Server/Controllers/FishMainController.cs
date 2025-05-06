@@ -186,7 +186,20 @@ namespace FishSpotter.Server.Controllers
             // var fishes = map.Fishes.Select(fish => new { fishName = fish.Name }).ToList();
             var fishes = map.Fishes;
             //sprawdzić czy to trzeba na dictionary
-            return Ok(fishes.ToJson());
+            // return Ok(fishes.ToJson());
+            var result = new
+            {
+                map.Name,
+                Fish = map.Fishes.Select(m => new
+                {
+                    m.Name
+                }).ToList()
+            };
+            var res = JsonSerializer.Serialize(result, new JsonSerializerOptions
+            {
+                WriteIndented = true
+            });
+            return Ok(res);
         }
 
         [HttpPost]
