@@ -1,9 +1,18 @@
 import { useNavigate } from "react-router";
+import { useModalStore } from "../../stores/useModalStore";
+import { useUserStore } from "../../stores/useUserStore";
 
 function ListButton({ fish, map }: { fish?: string; map?: string }) {
   const navigate = useNavigate();
+  const { setModalStatus } = useModalStore();
+  const { user } = useUserStore();
 
   function handleNavigate() {
+    // if (!user) {
+    //   setModalStatus(true);
+    //   return;
+    // }
+
     if (fish) {
       navigate(`/fish/${fish}`);
       return;
