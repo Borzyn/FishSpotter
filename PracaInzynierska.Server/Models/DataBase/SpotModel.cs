@@ -15,11 +15,6 @@ namespace FishSpotter.Server.Models.DataBase
         [Column(TypeName = "varchar(10)")]
         public string XY { get; set; }
 
-
-        [DataType(DataType.Text)]
-        [Column(TypeName = "varchar(80)")]
-        public string AdditionalInfo { get; set; } = null;
-
         [DataType(DataType.Text)]
         [Required]
         [Column(TypeName = "varchar(36)")]

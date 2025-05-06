@@ -41,15 +41,15 @@ namespace FishSpotter.Server.Controllers
 
             //string info;
             //if (!int.TryParse(model.addInfo, out info)) { return BadRequest(); }
-            var spot = _context.SpotModel.FirstOrDefault(s => s.Map == model.mapname && s.XY == model.xyname && s.AdditionalInfo == model.addInfo);
-            if (spot == null)
-            {
-                spot = new SpotModel();
-                spot.Id = Guid.NewGuid().ToString();
-                spot.XY = model.xyname;
-                spot.AdditionalInfo = model.addInfo;
-                spot.Map = model.mapname;
-            }
+            //////var spot = _context.SpotModel.FirstOrDefault(s => s.Map == model.mapname && s.XY == model.xyname && s.AdditionalInfo == model.addInfo);
+            //////if (spot == null)
+            //////{
+            //////    spot = new SpotModel();
+            //////    spot.Id = Guid.NewGuid().ToString();
+            //////    //spot.XY = model.xyname;
+            //////    spot.AdditionalInfo = model.addInfo;
+            //////    //spot.Map = model.mapname;
+            //////}
 
             var method = _context.MethodModel.FirstOrDefault(met => met.Name == model.methodname);
             if (method == null) { return BadRequest(); }
@@ -69,7 +69,7 @@ namespace FishSpotter.Server.Controllers
             u.UserId = model.user;
             u.FishName = model.fishname;
             u.MapName = model.mapname;
-            u.Spot = spot;
+           // u.Spot = spot;
             u.Method = method;
             u.BaitId = bait.Id;
             u.Bait = bait;
