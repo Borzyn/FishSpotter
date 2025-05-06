@@ -2,6 +2,8 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import Select from "react-select";
 import FormRow from "../../components/FormRow/FormRow";
 import Button from "../../components/Button/Button";
+import { useCreatePost } from "./useCreatePost";
+import Loader from "../../components/Loaders/Loader/Loader";
 
 type OptionType = {
   value: string;
@@ -28,6 +30,7 @@ type PostInputs = {
 };
 
 function AddPost() {
+  const { isCreatingPost, createPost } = useCreatePost();
   const {
     register,
     handleSubmit,
@@ -41,151 +44,159 @@ function AddPost() {
 
   return (
     <form className="max-w-2xl mx-auto" onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col justify-start gap-2 text-xl font-medium relative mb-3 last:mb-0">
-        <label
-          htmlFor="map"
-          className="inline-block w-max tracking-wide text-slate-900"
-        >
-          Mapa
-        </label>
-        <Controller
-          name="map"
-          control={control}
-          rules={{ required: "Pole mapy jest wymagane" }}
-          render={({ field }) => (
-            <Select<OptionType>
-              className="basic-single"
-              classNamePrefix="select"
-              isClearable
-              isSearchable
-              inputId="map"
-              options={dummyOptions}
-              onChange={(selected) => field.onChange(selected?.value)}
-              name={field.name}
-              ref={field.ref}
+      {isCreatingPost ? (
+        <Loader />
+      ) : (
+        <>
+          <div className="flex flex-col justify-start gap-2 text-xl font-medium relative mb-3 last:mb-0">
+            <label
+              htmlFor="map"
+              className="inline-block w-max tracking-wide text-slate-900"
+            >
+              Mapa
+            </label>
+            <Controller
+              name="map"
+              control={control}
+              rules={{ required: "Pole mapy jest wymagane" }}
+              render={({ field }) => (
+                <Select<OptionType>
+                  className="basic-single"
+                  classNamePrefix="select"
+                  isClearable
+                  isSearchable
+                  inputId="map"
+                  options={dummyOptions}
+                  onChange={(selected) => field.onChange(selected?.value)}
+                  name={field.name}
+                  ref={field.ref}
+                />
+              )}
             />
-          )}
-        />
 
-        {errors.map?.message && (
-          <p className="text-base text-red-500 font-semibold tracking-wider">
-            {errors.map.message}
-          </p>
-        )}
-      </div>
+            {errors.map?.message && (
+              <p className="text-base text-red-500 font-semibold tracking-wider">
+                {errors.map.message}
+              </p>
+            )}
+          </div>
 
-      <FormRow label="Ryba" error={errors.fish?.message}>
-        <input
-          className={inputStyles}
-          type="text"
-          id="fish"
-          {...register("fish", { required: "Pole ryby musi być wpełnione" })}
-        />
-      </FormRow>
-
-      <div className="flex flex-col justify-start gap-2 text-xl font-medium relative mb-3 last:mb-0">
-        <label
-          htmlFor="method"
-          className="inline-block w-max tracking-wide text-slate-900"
-        >
-          Metoda
-        </label>
-        <Controller
-          name="method"
-          control={control}
-          rules={{ required: "Pole metody jest wymagane" }}
-          render={({ field }) => (
-            <Select<OptionType>
-              options={dummyOptions}
-              className="basic-single"
-              classNamePrefix="select"
-              isClearable
-              isSearchable
-              inputId="method"
-              onChange={(selected) => field.onChange(selected?.value)}
-              name={field.name}
-              ref={field.ref}
+          <FormRow label="Ryba" error={errors.fish?.message}>
+            <input
+              className={inputStyles}
+              type="text"
+              id="fish"
+              {...register("fish", {
+                required: "Pole ryby musi być wpełnione",
+              })}
             />
-          )}
-        />
+          </FormRow>
 
-        {errors.method?.message && (
-          <p className="text-base text-red-500 font-semibold tracking-wider">
-            {errors.method.message}
-          </p>
-        )}
-      </div>
+          <div className="flex flex-col justify-start gap-2 text-xl font-medium relative mb-3 last:mb-0">
+            <label
+              htmlFor="method"
+              className="inline-block w-max tracking-wide text-slate-900"
+            >
+              Metoda
+            </label>
+            <Controller
+              name="method"
+              control={control}
+              rules={{ required: "Pole metody jest wymagane" }}
+              render={({ field }) => (
+                <Select<OptionType>
+                  options={dummyOptions}
+                  className="basic-single"
+                  classNamePrefix="select"
+                  isClearable
+                  isSearchable
+                  inputId="method"
+                  onChange={(selected) => field.onChange(selected?.value)}
+                  name={field.name}
+                  ref={field.ref}
+                />
+              )}
+            />
 
-      <FormRow label="Przynęta" error={errors.bait?.message}>
-        <input
-          className={inputStyles}
-          type="text"
-          id="bait"
-          {...register("bait", {
-            required: "Pole przynęty musi być wpełnione",
-          })}
-        />
-      </FormRow>
+            {errors.method?.message && (
+              <p className="text-base text-red-500 font-semibold tracking-wider">
+                {errors.method.message}
+              </p>
+            )}
+          </div>
 
-      <FormRow
-        label="Dodatkowe informacje"
-        error={errors.additionalInformation?.message}
-      >
-        <textarea
-          className={textareaStyles}
-          id="additionalInformation"
-          {...register("additionalInformation")}
-        ></textarea>
-      </FormRow>
+          <FormRow label="Przynęta" error={errors.bait?.message}>
+            <input
+              className={inputStyles}
+              type="text"
+              id="bait"
+              {...register("bait", {
+                required: "Pole przynęty musi być wpełnione",
+              })}
+            />
+          </FormRow>
 
-      <div className="grid grid-cols-2 mb-4 gap-6">
-        <div className="flex flex-col justify-start gap-2 text-xl font-medium relative mb-3 last:mb-0">
-          <label
-            htmlFor="locationX"
-            className="inline-block w-max tracking-wide text-slate-900"
+          <FormRow
+            label="Dodatkowe informacje"
+            error={errors.additionalInformation?.message}
           >
-            Lokalizacja X
-          </label>
-          <input
-            className={inputStyles}
-            type="text"
-            id="locationX"
-            {...register("locationX", {
-              required: "Pole lokalizacji X musi być wpełnione",
-            })}
-          />
-          {errors.locationX?.message && (
-            <p className="text-base text-red-500 font-semibold tracking-wider">
-              {errors.locationX.message}
-            </p>
-          )}
-        </div>
-        <div className="flex flex-col justify-start gap-2 text-xl font-medium relative mb-3 last:mb-0">
-          <label
-            htmlFor="locationY"
-            className="inline-block w-max tracking-wide text-slate-900"
-          >
-            Lokalizacja Y
-          </label>
-          <input
-            className={inputStyles}
-            type="text"
-            id="locationY"
-            {...register("locationY", {
-              required: "Pole lokalizacji Y musi być wpełnione",
-            })}
-          />
-          {errors.locationY?.message && (
-            <p className="text-base text-red-500 font-semibold tracking-wider">
-              {errors.locationY.message}
-            </p>
-          )}
-        </div>
-      </div>
+            <textarea
+              className={textareaStyles}
+              id="additionalInformation"
+              {...register("additionalInformation")}
+            ></textarea>
+          </FormRow>
 
-      <Button type="full" buttonType="submit">
-        Dodaj Post
-      </Button>
+          <div className="grid grid-cols-2 mb-4 gap-6">
+            <div className="flex flex-col justify-start gap-2 text-xl font-medium relative mb-3 last:mb-0">
+              <label
+                htmlFor="locationX"
+                className="inline-block w-max tracking-wide text-slate-900"
+              >
+                Lokalizacja X
+              </label>
+              <input
+                className={inputStyles}
+                type="text"
+                id="locationX"
+                {...register("locationX", {
+                  required: "Pole lokalizacji X musi być wpełnione",
+                })}
+              />
+              {errors.locationX?.message && (
+                <p className="text-base text-red-500 font-semibold tracking-wider">
+                  {errors.locationX.message}
+                </p>
+              )}
+            </div>
+            <div className="flex flex-col justify-start gap-2 text-xl font-medium relative mb-3 last:mb-0">
+              <label
+                htmlFor="locationY"
+                className="inline-block w-max tracking-wide text-slate-900"
+              >
+                Lokalizacja Y
+              </label>
+              <input
+                className={inputStyles}
+                type="text"
+                id="locationY"
+                {...register("locationY", {
+                  required: "Pole lokalizacji Y musi być wpełnione",
+                })}
+              />
+              {errors.locationY?.message && (
+                <p className="text-base text-red-500 font-semibold tracking-wider">
+                  {errors.locationY.message}
+                </p>
+              )}
+            </div>
+          </div>
+
+          <Button type="full" buttonType="submit" isDisable={isCreatingPost}>
+            Dodaj Post
+          </Button>
+        </>
+      )}
     </form>
   );
 }
