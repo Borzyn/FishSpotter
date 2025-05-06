@@ -8,7 +8,8 @@ function FishRow({
   mapNameProp: string;
   fishNameProp: string;
 }) {
-  const { getMapPostNumber, numberOfPosts } = useMapPostsNumber();
+  const { getMapPostNumber, numberOfPosts, isCountingMapPosts } =
+    useMapPostsNumber();
 
   useEffect(() => {
     getMapPostNumber({ fishName: fishNameProp, mapName: mapNameProp });
@@ -17,7 +18,7 @@ function FishRow({
   return (
     <tr className="grid grid-cols-2 text-lg font-medium py-3">
       <td>{mapNameProp}</td>
-      <td>{numberOfPosts?.length}</td>
+      <td>{isCountingMapPosts ? "Ładowanie..." : numberOfPosts?.length}</td>
     </tr>
   );
 }
