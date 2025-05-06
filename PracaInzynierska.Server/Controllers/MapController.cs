@@ -53,7 +53,7 @@ namespace FishSpotter.Server.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetPostsMapWithFish(string mapName, string fishname)
+        public Task<IActionResult> GetPostsMapWithFish([FromBody]string mapName, string fishname)
         {
             string name = mapName.Replace("%20", " ");
             var map = _context.MapModel.FirstOrDefault(x => x.Name == name);
