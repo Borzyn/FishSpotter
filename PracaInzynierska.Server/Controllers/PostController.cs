@@ -69,7 +69,7 @@ namespace FishSpotter.Server.Controllers
             u.UserId = model.user;
             u.FishName = model.fishname;
             u.MapName = model.mapname;
-           // u.Spot = spot;
+            //u.Spot = spot;
             u.Method = method;
             u.BaitId = bait.Id;
             u.Bait = bait;
