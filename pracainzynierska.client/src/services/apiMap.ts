@@ -1,5 +1,6 @@
 export async function getFishMapApi(mapName?: string) {
   try {
+    console.log(mapName);
     const res = await fetch(`/api/FishMain/ShowFishOnMap?mapName=${mapName}`, {
       headers: {
         "Content-Type": "application/json",
