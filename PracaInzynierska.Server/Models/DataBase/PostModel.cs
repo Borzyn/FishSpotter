@@ -53,5 +53,9 @@ namespace FishSpotter.Server.Models.DataBase
         [Column(TypeName = "varchar(24)")]
         public int rateAmount { get; set; }
 
+        [DataType(DataType.Text)]
+        [Column(TypeName = "varchar(80)")]
+        public string AdditionalInfo { get; set; } = null;
+
     }
 }
