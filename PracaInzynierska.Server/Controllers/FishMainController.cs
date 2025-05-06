@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace FishSpotter.Server.Controllers
 {
@@ -129,7 +131,25 @@ namespace FishSpotter.Server.Controllers
             //if (maps == null) return BadRequest();
             //var maps = _context.MapModel.Select(map => map.Name).ToList();
             if (maps == null) return BadRequest();
-            return Ok(maps.ToJson());
+            // return Ok(maps.ToJson());
+            //return Ok(JsonSerializer.Serialize(maps, new JsonSerializerOptions
+            //{
+            //    ReferenceHandler = ReferenceHandler.Preserve,
+            //    WriteIndented = true
+            //}));
+            var result = new
+            {
+                fish.Name,
+                Maps = fish.Maps.Select(m => new
+                {
+                    m.Name
+                }).ToList()
+            };
+            var res = JsonSerializer.Serialize(result, new JsonSerializerOptions
+            {
+                WriteIndented = true
+            });
+            return Ok(res);
         }
 
         //[HttpPost]

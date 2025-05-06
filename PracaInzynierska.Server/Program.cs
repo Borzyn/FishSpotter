@@ -1,9 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
+//using System.Text.Json.Serialization;
+
 using Microsoft.Extensions.DependencyInjection;
 using FishSpotter.Server.Data;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<FishSpotterServerContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("FishSpotterServerContext") ?? throw new InvalidOperationException("Connection string 'FishSpotterServerContext' not found.")));
+//builder.Services.AddControllers()
+//    .AddJsonOptions(options =>
+//    {
+//        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+//    });
 
 // Add services to the container.
 

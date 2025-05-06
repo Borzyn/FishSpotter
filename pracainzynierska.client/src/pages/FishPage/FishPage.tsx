@@ -15,7 +15,7 @@ function FishPage() {
   if (isSearchingFishMaps) {
     return <Loader />;
   }
-
+    console.log(fishMaps);
   return (
     <section className="w-full h-full mx-auto max-w-7xl">
       <table className="m-auto min-w-80 text-center grid grid-cols-1 rounded-sm overflow-hidden">
@@ -31,7 +31,7 @@ function FishPage() {
         <tbody>
           {fishMaps &&
             fishName &&
-            fishMaps.map((map: string) => (
+            fishMaps?.map((map: string) => (
               <FishRow key={map} fishNameProp={fishName} mapNameProp={map} />
             ))}
         </tbody>

@@ -36,20 +36,22 @@ namespace FishSpotter.Server.Controllers
 
             //DO przetestowania TODO
             //var map = _context.MapModel.FirstOrDefault(m => m.Name == mapname && m.Fishes.Contains(fishname));
-            var IsMapValid = _context.MapModel.Any(map => map.Name == model.mapname && map.Fishes.Any(fish => fish.Name == model.fishname));
+            var IsMapValid = _context.MapModel.Include(map => map.Fishes).Any(map => map.Name == model.mapname && map.Fishes.Any(fish => fish.Name == model.fishname));
             if (!IsMapValid) { return BadRequest(); }
 
+            var spotCheck = _context.SpotModel.Include(x => x.Map).Where(spot => spot.Id == model.spotid).FirstOrDefault();
+            if (spotCheck == null) {return BadRequest(); }  
             //string info;
             //if (!int.TryParse(model.addInfo, out info)) { return BadRequest(); }
-            //////var spot = _context.SpotModel.FirstOrDefault(s => s.Map == model.mapname && s.XY == model.xyname && s.AdditionalInfo == model.addInfo);
-            //////if (spot == null)
-            //////{
-            //////    spot = new SpotModel();
-            //////    spot.Id = Guid.NewGuid().ToString();
-            //////    //spot.XY = model.xyname;
-            //////    spot.AdditionalInfo = model.addInfo;
-            //////    //spot.Map = model.mapname;
-            //////}
+            //var spot = _context.SpotModel.FirstOrDefault(s => s.Map == model.mapname && s.XY == model.xyname && s.AdditionalInfo == model.addInfo);
+            //if (spot == null)
+            //{
+            //    spot = new SpotModel();
+            //    spot.Id = Guid.NewGuid().ToString();
+            //    //spot.XY = model.xyname;
+            //    spot.AdditionalInfo = model.addInfo;
+            //    //spot.Map = model.mapname;
+            //}
 
             var method = _context.MethodModel.FirstOrDefault(met => met.Name == model.methodname);
             if (method == null) { return BadRequest(); }
@@ -75,6 +77,9 @@ namespace FishSpotter.Server.Controllers
             u.Bait = bait;
             u.groundbaitId = groundbait.GBName;
             u.groundbait = groundbait;
+            u.SpotID = model.spotid;
+            u.Spot = spotCheck; 
+            u.AdditionalInfo = model.addInfo;
 
             u.rateSum = 0;
             u.rateAmount = 0;
