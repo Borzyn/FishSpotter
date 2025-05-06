@@ -160,7 +160,8 @@ namespace FishSpotter.Server.Controllers
         [HttpGet]
         public IActionResult ShowFishOnMap(string mapName) // Do przetestowania relacji nowej
         {
-            var map = _context.MapModel.FirstOrDefault(x => x.Name == mapName);
+            string name = mapName.Replace("%20", " ");
+            var map = _context.MapModel.FirstOrDefault(x => x.Name == name);
             if (map == null) return BadRequest();
             // var fishes = map.Fishes.Select(fish => new { fishName = fish.Name }).ToList();
             var fishes = map.Fishes;
