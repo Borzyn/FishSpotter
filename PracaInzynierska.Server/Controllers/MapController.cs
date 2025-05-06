@@ -1,4 +1,5 @@
 ﻿using FishSpotter.Server.Data;
+using FishSpotter.Server.Models.AdditionalModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -53,14 +54,14 @@ namespace FishSpotter.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetPostsMapWithFish([FromBody]string mapName, string fishname)
+        public async Task<IActionResult> GetPostsMapWithFish(FishAndMapModel model)
         {
-            string name = mapName.Replace("%20", " ");
+            string name = model.mapName.Replace("%20", " ");
             var map = _context.MapModel.FirstOrDefault(x => x.Name == name);
             if (map == null) return BadRequest();
-            var fish = _context.FishModel.FirstOrDefault(y => y.Name == fishname);
+            var fish = _context.FishModel.FirstOrDefault(y => y.Name == model.fishName);
             if (fish == null) return BadRequest();
-            var posts = _context.PostModel.Include(p=> p.Spot).Where(f => f.FishName == fishname).Where(m => m.MapName == name).ToList();
+            var posts = _context.PostModel.Include(p=> p.Spot).Where(f => f.FishName == model.fishName).Where(m => m.MapName == name).ToList();
             return Ok(posts);
         }
     }
