@@ -2,6 +2,7 @@ import { ArrowDownCircle, ArrowUpCircle } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useGetFishMapPosts } from "./useGetFishMapPosts";
+import FishMapRow, { IPost } from "./FishMapRow";
 
 function FishMapTableRow({
   mapName,
@@ -14,7 +15,7 @@ function FishMapTableRow({
   const [openPosts, setOpenPosts] = useState(false);
 
   useEffect(() => {
-    if (mapName) getFishMapPosts({ fishname: fishName, mapName: mapName });
+    if (mapName) getFishMapPosts({ fishName: fishName, mapName: mapName });
   }, [fishName, getFishMapPosts, mapName]);
 
   console.log(fishPosts);
@@ -51,11 +52,11 @@ function FishMapTableRow({
             exit={{
               height: 0,
             }}
-            className="text-2xl font-medium overflow-hidden"
+            className="text-[22px] font-medium overflow-hidden flex flex-col gap-1.5"
           >
-            <div className="py-2 px-4">
-              <p>Show posts</p>
-            </div>
+            {fishPosts.map((post: IPost) => (
+              <FishMapRow key={post.id} post={post} />
+            ))}
           </motion.div>
         )}
       </AnimatePresence>

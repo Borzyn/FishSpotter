@@ -25,7 +25,7 @@ export async function getFishMapApi(mapName?: string) {
 }
 
 export async function getFishMapPostsApi(dataFish: {
-  fishname: string;
+  fishName: string;
   mapName: string;
 }) {
   try {
