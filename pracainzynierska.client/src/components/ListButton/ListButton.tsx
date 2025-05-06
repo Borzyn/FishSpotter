@@ -8,10 +8,10 @@ function ListButton({ fish, map }: { fish?: string; map?: string }) {
   const { user } = useUserStore();
 
   function handleNavigate() {
-    // if (!user) {
-    //   setModalStatus(true);
-    //   return;
-    // }
+    if (!user) {
+      setModalStatus(true);
+      return;
+    }
 
     if (fish) {
       navigate(`/fish/${fish}`);
