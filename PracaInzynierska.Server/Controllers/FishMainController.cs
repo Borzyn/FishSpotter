@@ -203,12 +203,12 @@ namespace FishSpotter.Server.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetFishName(string fishName, string mapName)
+        public IActionResult GetFishName(FishAndMapModel model)
         {
-            var map = _context.MapModel.FirstOrDefault(x => x.Name == mapName);
+            var map = _context.MapModel.FirstOrDefault(x => x.Name == model.mapName);
             if (map == null) return BadRequest();
 
-            string fish = map.Fishes.FirstOrDefault(f => f.Name == fishName).Name;
+            string fish = map.Fishes.FirstOrDefault(f => f.Name == model.fishName).Name;
             if (fish == null) return BadRequest();
 
             return Ok(fish);
