@@ -1,18 +1,19 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router";
-import LoaderFull from "./components/Loaders/LoaderFull/LoaderFull";
-import FishPage from "./pages/FishPage/FishPage";
-import ProfilePage from "./pages/ProfilePage/ProfilePage";
-import FishMapPage from "./pages/FishMapPage/FishMapPage";
-import AddPostPage from "./pages/AddPostPage/AddPostPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import PageNotFound from "./pages/PageNotFound/PageNotFound";
+
+import LoaderFull from "./components/Loaders/LoaderFull/LoaderFull";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 const Layout = lazy(() => import("./layouts/Layout/Layout"));
 const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
+const FishPage = lazy(() => import("./pages/FishPage/FishPage"));
+const ProfilePage = lazy(() => import("./pages/ProfilePage/ProfilePage"));
+const FishMapPage = lazy(() => import("./pages/FishMapPage/FishMapPage"));
+const AddPostPage = lazy(() => import("./pages/AddPostPage/AddPostPage"));
+const PageNotFound = lazy(() => import("./pages/PageNotFound/PageNotFound"));
 
 const queryClient = new QueryClient();
 
