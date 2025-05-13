@@ -12,6 +12,6 @@ namespace FishSpotter.Server.Models.DataBase
 
         public List<IngredientModel> Ingredients { get; set; } = new List<IngredientModel>();
 
-        public List<MethodModel> Methods { get; set; } = new List<MethodModel> { };
+        //public List<MethodModel> Methods { get; set; } = new List<MethodModel> { };
     }
 }

@@ -32,7 +32,7 @@ namespace FishSpotter.Server.Controllers
         public IActionResult ShowFishOnMap(string mapName) // Do przetestowania relacji nowej
         {
             string name = mapName.Replace("%20", " ");
-            var map = _context.MapModel.Include(m => m.Fishes).Where(m=> m.Name == name).FirstOrDefault();
+            var map = _context.MapModel.Include(m => m.Fishes).ThenInclude(m=>m.Posts).Where(m=> m.Name == name).FirstOrDefault();
             if (map == null) return BadRequest();
             // var fishes = map.Fishes.Select(fish => new { fishName = fish.Name }).ToList();
             var fishes = map.Fishes;
@@ -53,6 +53,7 @@ namespace FishSpotter.Server.Controllers
             return Ok(res);
         }
 
+        //to jest to na co przekierowuje z ekranu głównego po wybraniu mapy
         [HttpPost]
         public async Task<IActionResult> GetPostsMapWithFish(FishAndMapModel model)
         {

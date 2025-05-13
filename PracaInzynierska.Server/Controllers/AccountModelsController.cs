@@ -47,7 +47,7 @@ namespace FishSpotter.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> CheckProfile([FromBody] string accountCheckedName)
         {
-            var accountToCheck = _context.AccountModel.FirstOrDefault(acc => acc.Username == accountCheckedName);
+            var accountToCheck = _context.AccountModel.Include(acc=>acc.Posts).FirstOrDefault(acc => acc.Username == accountCheckedName);
             if (accountToCheck == null || accountCheckedName == null) { return BadRequest(); }
 
             return Ok(accountToCheck);
@@ -60,7 +60,7 @@ namespace FishSpotter.Server.Controllers
             if (model.user == null || model.user == model.ratedUser || model.ratedUser == null) { return BadRequest(); }
             int rating;
             if (!int.TryParse(model.rate, out rating) || rating > 5 || rating < 1) { return BadRequest(); }
-            var account = _context.AccountModel.FirstOrDefault(u => u.Username == model.ratedUser);
+            var account = _context.AccountModel.Include(acc => acc.Posts).FirstOrDefault(u => u.Username == model.ratedUser);
             if (account == null) { return BadRequest(); }
             account.RateSum += rating;
             account.RateAmount++;
@@ -71,7 +71,7 @@ namespace FishSpotter.Server.Controllers
         [HttpPost]
         public IActionResult ShowPosts([FromBody] string accountName)
         {
-            var accountToCheck = _context.AccountModel.FirstOrDefault(acc => acc.Username == accountName);
+            var accountToCheck = _context.AccountModel.Include(acc=>acc.Posts).FirstOrDefault(acc => acc.Username == accountName);
             if (accountName == null || accountToCheck == null) { return BadRequest(); }
 
             var posts = _context.PostModel.Where(id => id.UserId == accountName).ToList();

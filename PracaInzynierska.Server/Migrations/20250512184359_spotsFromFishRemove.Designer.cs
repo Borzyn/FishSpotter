@@ -3,6 +3,7 @@ using FishSpotter.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FishSpotter.Server.Migrations
 {
     [DbContext(typeof(FishSpotterServerContext))]
-    partial class FishSpotterServerContextModelSnapshot : ModelSnapshot
+    [Migration("20250512184359_spotsFromFishRemove")]
+    partial class spotsFromFishRemove
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,6 +144,9 @@ namespace FishSpotter.Server.Migrations
                     b.Property<string>("BaitModelId")
                         .HasColumnType("varchar(36)");
 
+                    b.Property<string>("GroundbaitModelGBName")
+                        .HasColumnType("varchar(36)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(36)");
@@ -148,6 +154,8 @@ namespace FishSpotter.Server.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BaitModelId");
+
+                    b.HasIndex("GroundbaitModelGBName");
 
                     b.ToTable("MethodModel");
                 });
@@ -273,6 +281,10 @@ namespace FishSpotter.Server.Migrations
                     b.HasOne("FishSpotter.Server.Models.DataBase.BaitModel", null)
                         .WithMany("Methods")
                         .HasForeignKey("BaitModelId");
+
+                    b.HasOne("FishSpotter.Server.Models.DataBase.GroundbaitModel", null)
+                        .WithMany("Methods")
+                        .HasForeignKey("GroundbaitModelGBName");
                 });
 
             modelBuilder.Entity("FishSpotter.Server.Models.DataBase.PostModel", b =>
@@ -341,6 +353,8 @@ namespace FishSpotter.Server.Migrations
             modelBuilder.Entity("FishSpotter.Server.Models.DataBase.GroundbaitModel", b =>
                 {
                     b.Navigation("Ingredients");
+
+                    b.Navigation("Methods");
                 });
 
             modelBuilder.Entity("FishSpotter.Server.Models.DataBase.MapModel", b =>
