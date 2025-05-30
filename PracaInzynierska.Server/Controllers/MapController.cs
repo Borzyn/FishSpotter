@@ -62,7 +62,7 @@ namespace FishSpotter.Server.Controllers
             if (map == null) return BadRequest();
             var fish = _context.FishModel.FirstOrDefault(y => y.Name == model.fishName);
             if (fish == null) return BadRequest();
-            var posts = _context.PostModel.Include(p=> p.Spot).Where(f => f.FishName == model.fishName).Where(m => m.MapName == name).ToList();
+            var posts = _context.PostModel.Include(p=> p.Spot).Include(p=> p.Bait).Include(p=>p.groundbait).Include(p=>p.Method).Where(f => f.FishName == model.fishName).Where(m => m.MapName == name).ToList();
             return Ok(posts);
         }
     }

@@ -74,7 +74,7 @@ namespace FishSpotter.Server.Controllers
             var accountToCheck = _context.AccountModel.Include(acc=>acc.Posts).FirstOrDefault(acc => acc.Username == accountName);
             if (accountName == null || accountToCheck == null) { return BadRequest(); }
 
-            var posts = _context.PostModel.Where(id => id.UserId == accountName).ToList();
+            var posts = _context.PostModel.Include(p=> p.Spot).Include(p=> p.Method).Include(p=>p.Bait).Include(p=>p.groundbait).Where(id => id.UserId == accountName).ToList();
             return Ok(posts);
         }
 
