@@ -4,32 +4,34 @@ import FormRow from "../../components/FormRow/FormRow";
 import Button from "../../components/Button/Button";
 import { useCreatePost } from "./useCreatePost";
 import Loader from "../../components/Loaders/Loader/Loader";
+import useGetMapsAndMethods from "./useGetMapsAndMethods";
+import Error from "../../components/Error/Error";
 
 type OptionType = {
   value: string;
   label: string;
 };
 
-const dummyOptions: OptionType[] = [
-  { value: "coffee1", label: "Coffee" },
-  { value: "coffee2", label: "Coffee2" },
-];
-
 const inputStyles = `bg-white text-slate-900 placeholder:text-slate-400 border-2 border-blue-200 focus:border-sky-500 px-1.5 py-0.5 text-semibold rounded-[0.125rem] transition-all duration-500 outline-2 outline-offset-1 outline-transparent focus-within:outline-2 focus-within:outline-offset-1 focus-within:outline-amber-50 text-xl shadow-sm shadow-slate-900/50 w-full`;
 
 const textareaStyles = `bg-white text-slate-900 placeholder:text-slate-400 border-2 border-blue-200 focus:border-sky-500 px-1.5 py-0.5 text-semibold rounded-[0.125rem] transition-all duration-500 outline-2 outline-offset-1 outline-transparent focus-within:outline-2 focus-within:outline-offset-1 focus-within:outline-amber-50 text-xl shadow-sm shadow-slate-900/50 w-full resize-y min-h-[100px]`;
 
 type PostInputs = {
-  map: string;
-  fish: string;
-  method: string;
-  bait: string;
-  additionalInformation: string;
+  mapname: string;
+  fishname: string;
+  methodname: string;
+  baitname: string;
+  groundbaitid: string;
+  addInfo: string;
   locationX: string;
   locationY: string;
 };
 
 function AddPost() {
+  const { isError, error, isPending, data } = useGetMapsAndMethods();
+
+  console.log(data);
+
   const { isCreatingPost, createPost } = useCreatePost();
   const {
     register,
@@ -37,6 +39,14 @@ function AddPost() {
     control,
     formState: { errors },
   } = useForm<PostInputs>();
+
+  if (isPending) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <Error error={error?.message} />;
+  }
 
   const onSubmit: SubmitHandler<PostInputs> = (data) => {
     console.log(data);
@@ -56,7 +66,7 @@ function AddPost() {
               Mapa
             </label>
             <Controller
-              name="map"
+              name="mapname"
               control={control}
               rules={{ required: "Pole mapy jest wymagane" }}
               render={({ field }) => (
@@ -65,8 +75,8 @@ function AddPost() {
                   classNamePrefix="select"
                   isClearable
                   isSearchable
-                  inputId="map"
-                  options={dummyOptions}
+                  inputId="mapname"
+                  options={data?.maps}
                   onChange={(selected) => field.onChange(selected?.value)}
                   name={field.name}
                   ref={field.ref}
@@ -74,19 +84,19 @@ function AddPost() {
               )}
             />
 
-            {errors.map?.message && (
+            {errors.mapname?.message && (
               <p className="text-base text-red-500 font-semibold tracking-wider">
-                {errors.map.message}
+                {errors.mapname.message}
               </p>
             )}
           </div>
 
-          <FormRow label="Ryba" error={errors.fish?.message}>
+          <FormRow label="Ryba" error={errors.fishname?.message}>
             <input
               className={inputStyles}
               type="text"
-              id="fish"
-              {...register("fish", {
+              id="fishname"
+              {...register("fishname", {
                 required: "Pole ryby musi być wpełnione",
               })}
             />
@@ -100,17 +110,17 @@ function AddPost() {
               Metoda
             </label>
             <Controller
-              name="method"
+              name="methodname"
               control={control}
               rules={{ required: "Pole metody jest wymagane" }}
               render={({ field }) => (
                 <Select<OptionType>
-                  options={dummyOptions}
+                  options={data?.methods}
                   className="basic-single"
                   classNamePrefix="select"
                   isClearable
                   isSearchable
-                  inputId="method"
+                  inputId="methodname"
                   onChange={(selected) => field.onChange(selected?.value)}
                   name={field.name}
                   ref={field.ref}
@@ -118,32 +128,40 @@ function AddPost() {
               )}
             />
 
-            {errors.method?.message && (
+            {errors.methodname?.message && (
               <p className="text-base text-red-500 font-semibold tracking-wider">
-                {errors.method.message}
+                {errors.methodname.message}
               </p>
             )}
           </div>
 
-          <FormRow label="Przynęta" error={errors.bait?.message}>
+          <FormRow label="Przynęta" error={errors.baitname?.message}>
             <input
               className={inputStyles}
               type="text"
-              id="bait"
-              {...register("bait", {
+              id="baitname"
+              {...register("baitname", {
                 required: "Pole przynęty musi być wpełnione",
               })}
             />
           </FormRow>
 
-          <FormRow
-            label="Dodatkowe informacje"
-            error={errors.additionalInformation?.message}
-          >
+          <FormRow label="Zanęta" error={errors.groundbaitid?.message}>
+            <input
+              className={inputStyles}
+              type="text"
+              id="groundbaitid"
+              {...register("groundbaitid", {
+                required: "Pole zanęty musi być wpełnione",
+              })}
+            />
+          </FormRow>
+
+          <FormRow label="Dodatkowe informacje" error={errors.addInfo?.message}>
             <textarea
               className={textareaStyles}
-              id="additionalInformation"
-              {...register("additionalInformation")}
+              id="addInfo"
+              {...register("addInfo")}
             ></textarea>
           </FormRow>
 

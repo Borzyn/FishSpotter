@@ -144,8 +144,8 @@ namespace FishSpotter.Server.Controllers
             return Ok();
         }
 
-        [HttpPost]
-        public IActionResult StartCreatingPost ()
+        [HttpGet]
+        public IActionResult StartCreatingPost()
         {
             var maps = _context.MapModel.ToList();
             var methods = _context.MethodModel.ToList();

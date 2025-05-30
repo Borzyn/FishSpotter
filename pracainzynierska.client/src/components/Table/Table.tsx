@@ -43,7 +43,7 @@ function Table({
                       ? 0
                       : entry.rateSum / entry.rateAmount}
                   </td>
-                  <td>4</td>
+                  <td>{entry.spot}</td>
                   <td>4</td>
                 </tr>
               );
