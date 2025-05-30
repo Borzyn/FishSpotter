@@ -19,6 +19,7 @@ export interface IPost {
   bait: IBait;
   groundbaitId: string;
   groundbait: IGroundBait;
+  methodName: string;
   rateSum: number;
   rateAmount: number;
 }
