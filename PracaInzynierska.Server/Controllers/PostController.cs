@@ -4,6 +4,7 @@ using FishSpotter.Server.Models.DataBase;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace FishSpotter.Server.Controllers
 {
@@ -141,6 +142,23 @@ namespace FishSpotter.Server.Controllers
             correctuser.PostsCount--;
             _context.SaveChanges();
             return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult StartCreatingPost ()
+        {
+            var maps = _context.MapModel.ToList();
+            var methods = _context.MethodModel.ToList();
+            var result = new
+            {
+                maps,
+                methods
+            };
+            //var res = JsonSerializer.Serialize(result, new JsonSerializerOptions)
+            //    {
+
+            //}
+            return Ok(result);
         }
 
         //[HttpPost]
