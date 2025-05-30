@@ -29,9 +29,12 @@ function Table({
           </thead>
 
           <tbody>
-            {tableCells.map((entry) => {
+            {tableCells.map((entry, index) => {
               return (
-                <tr className="grid grid-cols-6 text-lg font-medium py-3">
+                <tr
+                  key={index}
+                  className="grid grid-cols-6 text-lg font-medium py-3"
+                >
                   <td>{entry.fishName}</td>
                   <td>{entry.mapName}</td>
                   <td>{entry.methodName}</td>
