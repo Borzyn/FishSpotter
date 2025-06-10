@@ -79,7 +79,7 @@ namespace FishSpotter.Server.Controllers
         [HttpPost]
         public IActionResult Rate([FromBody] RatePostModel model)
         {
-            StartCreatingPost();
+           
             if (model.rate > 5 || model.rate < 1) { return BadRequest(); }
 
             var validUser = _context.AccountModel.FirstOrDefault(u => u.Username == model.user);

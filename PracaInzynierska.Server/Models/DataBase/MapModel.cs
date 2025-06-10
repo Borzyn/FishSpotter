@@ -6,9 +6,6 @@ namespace FishSpotter.Server.Models.DataBase
     public class MapModel
     {
         [Key]
-        //[DataType(DataType.Text)]
-        //[Column(TypeName = "varchar(36)")]
-        //public String Id {  get; set; }
 
         [DataType(DataType.Text)]
         [Column(TypeName = "varchar(36)")]
@@ -18,12 +15,5 @@ namespace FishSpotter.Server.Models.DataBase
 
         public List<SpotModel> Spots { get; set; } = new List<SpotModel>();
 
-        //[DataType(DataType.Text)]
-        //[Column(TypeName = "varchar(4)")]
-        //public int X { get; set; }
-
-        //[DataType(DataType.Text)]
-        //[Column(TypeName = "varchar(4)")]
-        //public int Y { get; set; }
     }
 }
