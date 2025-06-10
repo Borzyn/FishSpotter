@@ -1,9 +1,11 @@
 ﻿using FishSpotter.Server.Data;
+using FishSpotter.Server.Migrations;
 using FishSpotter.Server.Models.AdditionalModels;
 using FishSpotter.Server.Models.DataBase;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 using System.Text.Json;
 
 namespace FishSpotter.Server.Controllers
@@ -23,14 +25,8 @@ namespace FishSpotter.Server.Controllers
 
         public IActionResult Create([FromBody] CreatePostModel model)
         {
-            var editor = _context.AccountModel.Include(x=> x.Posts).Where(u=> u.Username == model.user).FirstOrDefault();
+            var editor = _context.AccountModel.Include(x => x.Posts).Where(u => u.Username == model.user).FirstOrDefault();
             if (model.user == null || editor == null) { return BadRequest(); }
-
-            //    public IActionResult Create(string fishname, string mapname, string xyname, string addInfo,string methodname,string groundbaitid)
-            //{
-            //    string UserID = Request.Cookies["Username"];
-            //    if (UserID == null || UserID == "0") { return BadRequest() ; }
-
 
             var fish = _context.FishModel.FirstOrDefault(f => f.Name == model.fishname);
             if (fish == null) { return BadRequest(); }
@@ -38,21 +34,10 @@ namespace FishSpotter.Server.Controllers
             //DO przetestowania TODO
             //var map = _context.MapModel.FirstOrDefault(m => m.Name == mapname && m.Fishes.Contains(fishname));
             var IsMapValid = _context.MapModel.Include(map => map.Fishes).Any(map => map.Name == model.mapname && map.Fishes.Any(fish => fish.Name == model.fishname));
-            if (!IsMapValid) { return BadRequest(); }
+            if (IsMapValid == null) { return BadRequest(); }
 
-            var spotCheck = _context.SpotModel.Include(x => x.Map).Where(spot => spot.Id == model.spotid).FirstOrDefault();
-            if (spotCheck == null) {return BadRequest(); }  
-            //string info;
-            //if (!int.TryParse(model.addInfo, out info)) { return BadRequest(); }
-            //var spot = _context.SpotModel.FirstOrDefault(s => s.Map == model.mapname && s.XY == model.xyname && s.AdditionalInfo == model.addInfo);
-            //if (spot == null)
-            //{
-            //    spot = new SpotModel();
-            //    spot.Id = Guid.NewGuid().ToString();
-            //    //spot.XY = model.xyname;
-            //    spot.AdditionalInfo = model.addInfo;
-            //    //spot.Map = model.mapname;
-            //}
+            var spotCheck = _context.SpotModel.Include(x => x.Map).Where(spot => spot.Map == model.mapname && spot.XY == model.spotXY).FirstOrDefault();
+            if (spotCheck == null) { return BadRequest(); }
 
             var method = _context.MethodModel.FirstOrDefault(met => met.Name == model.methodname);
             if (method == null) { return BadRequest(); }
@@ -61,25 +46,22 @@ namespace FishSpotter.Server.Controllers
             if (bait == null || !bait.Methods.Contains(method)) { return BadRequest(); }
 
             var groundbait = _context.GroundbaitModel.FirstOrDefault(g => g.GBName == model.groundbaitid);
-            //if (  groundbait != null! && !groundbait.Methods.Contains(method)) { return BadRequest(); }
             if (groundbait == null) { groundbait = _context.GroundbaitModel.Where(h => h.GBName == "none").FirstOrDefault(); }
 
 
 
             var u = new PostModel();
             u.Id = Guid.NewGuid().ToString();
-            //u.UserId = UserID ;
             u.UserId = model.user;
             u.FishName = model.fishname;
             u.MapName = model.mapname;
-            //u.Spot = spot;
             u.Method = method;
             u.BaitId = bait.Id;
             u.Bait = bait;
             u.groundbaitId = groundbait.GBName;
             u.groundbait = groundbait;
-            u.SpotID = model.spotid;
-            u.Spot = spotCheck; 
+            u.SpotID = spotCheck.Id; ;
+            u.Spot = spotCheck;
             u.AdditionalInfo = model.addInfo;
 
             u.rateSum = 0;
@@ -95,27 +77,9 @@ namespace FishSpotter.Server.Controllers
         }
 
         [HttpPost]
-
-        //public IActionResult Rate(string postId, int rate)
-        //{
-        //    string UserID = Request.Cookies["Username"];
-        //    if (UserID == null || UserID == "0") { return BadRequest(); }
-        //    if (rate >5 || rate<1) { return BadRequest(); }
-
-        //    var validUser = _context.AccountModel.FirstOrDefault(u => u.Username == UserID);
-        //    if (validUser == null) { return BadRequest(); }
-
-        //    var post = _context.PostModel.FirstOrDefault(x => x.Id == postId);
-        //    if (post == null || post.UserId == UserID) { return BadRequest(); }
-        //    post.rateSum += rate;
-        //    post.rateAmount++;
-
-        //    _context.SaveChanges();
-
-        //    return Ok();
-        //}
         public IActionResult Rate([FromBody] RatePostModel model)
         {
+            StartCreatingPost();
             if (model.rate > 5 || model.rate < 1) { return BadRequest(); }
 
             var validUser = _context.AccountModel.FirstOrDefault(u => u.Username == model.user);
@@ -123,10 +87,30 @@ namespace FishSpotter.Server.Controllers
 
             var post = _context.PostModel.FirstOrDefault(x => x.Id == model.postId);
             if (post == null || post.UserId == model.user) { return BadRequest(); }
-            post.rateSum += model.rate;
-            post.rateAmount++;
+            var author = _context.AccountModel.Where(p => p.Username == post.UserId).FirstOrDefault();
+            var ratemodel = _context.RateModel.Where(r => r.Username == model.user && r.PostId == post.Id).FirstOrDefault();
+            if (ratemodel != null)
+            {
+                author.RateSum -= ratemodel.Rate;
+                post.rateSum -= ratemodel.Rate;
+            }
+            else
+            {
+                post.rateAmount++;
+                author.RateAmount++;
+                ratemodel = new RateModel();
+                ratemodel.PostId = post.Id;
+                ratemodel.Username = model.user;
+                ratemodel.Id = Guid.NewGuid().ToString();
+            }
+            ratemodel.Rate = model.rate;
+            author.RateSum += ratemodel.Rate;
+            post.rateSum += ratemodel.Rate;
+            _context.Update(ratemodel);
+            _context.Update(author);
+            _context.Update(post);
+            _context.SaveChangesAsync();
 
-            _context.SaveChanges();
 
             return Ok();
         }
@@ -145,7 +129,7 @@ namespace FishSpotter.Server.Controllers
         }
 
         [HttpPost]
-        public IActionResult StartCreatingPost ()
+        public IActionResult StartCreatingPost()
         {
             var maps = _context.MapModel.ToList();
             var methods = _context.MethodModel.ToList();
@@ -154,27 +138,7 @@ namespace FishSpotter.Server.Controllers
                 maps,
                 methods
             };
-            //var res = JsonSerializer.Serialize(result, new JsonSerializerOptions)
-            //    {
-
-            //}
-            return Ok(result);
+            return Ok(result.ToJson());
         }
-
-        //[HttpPost]
-        //public IActionResult Remove( string postId)
-        //{
-        //    string UserID = Request.Cookies["Username"];
-        //    if (UserID == null || UserID == "0") { return BadRequest(); }
-        //    var post = _context.PostModel.FirstOrDefault(x => x.Id == postId);
-        //    if (post == null) { return BadRequest(); }
-        //    if (post.UserId != UserID) { return BadRequest(); }
-        //    var correctuser = _context.AccountModel.Where(x => x.Username == UserID).FirstOrDefault();
-        //    correctuser.Posts.Remove(post);
-        //    _context.PostModel.Remove(post);
-        //    _context.SaveChanges();    
-        //    return Ok();
-        //}
-
     }
 }

@@ -3,6 +3,7 @@ using FishSpotter.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FishSpotter.Server.Migrations
 {
     [DbContext(typeof(FishSpotterServerContext))]
-    partial class FishSpotterServerContextModelSnapshot : ModelSnapshot
+    [Migration("20250610145358_UserAndPostUpdate2")]
+    partial class UserAndPostUpdate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -221,28 +224,6 @@ namespace FishSpotter.Server.Migrations
                     b.HasIndex("groundbaitId");
 
                     b.ToTable("PostModel");
-                });
-
-            modelBuilder.Entity("FishSpotter.Server.Models.DataBase.RateModel", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(36)");
-
-                    b.Property<string>("PostId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36)");
-
-                    b.Property<string>("Rate")
-                        .IsRequired()
-                        .HasColumnType("varchar(5)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("varchar(32)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RateModel");
                 });
 
             modelBuilder.Entity("FishSpotter.Server.Models.DataBase.SpotModel", b =>

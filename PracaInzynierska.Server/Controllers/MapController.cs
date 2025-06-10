@@ -57,6 +57,8 @@ namespace FishSpotter.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> GetPostsMapWithFish(FishAndMapModel model)
         {
+
+            
             string name = model.mapName.Replace("%20", " ");
             var map = _context.MapModel.FirstOrDefault(x => x.Name == name);
             if (map == null) return BadRequest();

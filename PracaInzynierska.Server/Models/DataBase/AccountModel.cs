@@ -28,5 +28,6 @@ namespace FishSpotter.Server.Models.DataBase
         [DataType(DataType.Password)]
         [Column(TypeName = "varchar(32)")]
         public string Password { get; set; }
+
     }
 }
