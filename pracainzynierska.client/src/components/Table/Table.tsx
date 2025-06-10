@@ -2,7 +2,7 @@ import { IPost } from "../../stores/useUserStore";
 
 function Table({
   tableHeaders,
-  //tableCells,
+  tableCells,
   title,
 }: {
   tableHeaders: string[];
@@ -29,14 +29,25 @@ function Table({
           </thead>
 
           <tbody>
-            <tr className="grid grid-cols-6 text-lg font-medium py-3">
-              <td>Pond</td>
-              <td>4</td>
-              <td>4</td>
-              <td>4</td>
-              <td>4</td>
-              <td>4</td>
-            </tr>
+            {tableCells.map((entry, index) => {
+              return (
+                <tr
+                  key={index}
+                  className="grid grid-cols-6 text-lg font-medium py-3"
+                >
+                  <td>{entry.fishName}</td>
+                  <td>{entry.mapName}</td>
+                  <td>{entry.methodName}</td>
+                  <td>
+                    {entry.rateAmount === 0
+                      ? 0
+                      : entry.rateSum / entry.rateAmount}
+                  </td>
+                  <td>{entry.spot}</td>
+                  <td>4</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
