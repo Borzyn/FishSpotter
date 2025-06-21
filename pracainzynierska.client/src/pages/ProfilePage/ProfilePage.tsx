@@ -41,8 +41,6 @@ function ProfilePage() {
 
   const { rateSum, postsCount, posts } = userInformationsData;
 
-  console.log(posts);
-
   return (
     <section className="w-full h-full mx-auto max-w-7xl">
       <div className="flex gap-1 justify-between items-center border-2 border-slate-900 bg-slate-900 text-sky-50 rounded-md py-4 px-8 mb-6">

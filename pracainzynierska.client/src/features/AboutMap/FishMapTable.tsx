@@ -8,8 +8,6 @@ function FishMapTable() {
   const { mapName } = useParams();
   const { isError, error, data, isPending } = useFishOnMap(mapName);
 
-  console.log(mapName);
-
   if (isPending) {
     return <Loader />;
   }
@@ -23,7 +21,7 @@ function FishMapTable() {
   return (
     <div className="w-full overflow-auto">
       <ul className="min-w-6xl overflow-hidden flex flex-col gap-2">
-        {data.Fish.map((fish: { Name: string }) => (
+        {data?.Fish.map((fish: { Name: string }) => (
           <FishMapTableRow
             key={fish.Name}
             mapName={mapName}

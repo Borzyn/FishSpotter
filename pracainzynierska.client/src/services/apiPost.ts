@@ -2,8 +2,6 @@ import { ICreatePost } from "../features/AddPost/useCreatePost";
 
 export async function createPostApi(postData: ICreatePost) {
   try {
-    console.log(postData);
-
     const res = await fetch("/api/Post/Create", {
       headers: {
         "Content-Type": "application/json",
