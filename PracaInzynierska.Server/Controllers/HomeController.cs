@@ -55,7 +55,7 @@ namespace FishSpotter.Server.Controllers
         [HttpPost]
         public IActionResult Searchuser(string userName)
         {
-            var user = _context.AccountModel.Where(usero => usero.Username == userName).FirstOrDefault();
+            var user = _context.AccountModel.Include(u => u.Posts).Where(usero => usero.Username == userName).FirstOrDefault();
             if  (user == null)
             {
                 return BadRequest();

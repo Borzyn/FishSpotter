@@ -40,6 +40,30 @@ namespace FishSpotter.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> ShowFishMain([FromBody] string fishName)
         {
+            //var user = _context.AccountModel.Where(x => x.Username == "Admin").FirstOrDefault();
+            //user.RatedPosts = new Dictionary<string, string>();
+            //var usero = _context.AccountModel.Where(x => x.Username == "test").FirstOrDefault();
+            //usero.RatedPosts = new Dictionary<string, string>();
+            //_context.AccountModel.Update(user);
+            //_context.AccountModel.Update(usero);
+            //await _context.SaveChangesAsync();
+            //var jazgarz = _context.FishModel.Include(fish => fish.Maps).Where(x => x.Name == "Jazgarz").FirstOrDefault();
+            //jazgarz.Maps = new List<MapModel>();
+            //jazgarz.Maps.Add(_context.MapModel.Where(y => y.Name == "Jezioro Komarowka").FirstOrDefault());
+
+            //var user = _context.AccountModel.Include(x=> x.Posts).ThenInclude(x=>x.Spot).Where(x => x.Username == "test").FirstOrDefault();
+            //var post = _context.PostModel.Include(x=>x.Spot).Where(x => x.Id == "321").FirstOrDefault();
+            //var spot = _context.SpotModel.Where(x => x.Id == "10").FirstOrDefault();
+            //var method = _context.MethodModel.Where(x=> x.Id == "1").FirstOrDefault();
+            //var bait = _context.BaitModel.Where(x => x.Id == post.BaitId).FirstOrDefault();
+            //post.Spot = spot;
+            //post.Method = method;
+            //post.Bait = bait;
+            //post.groundbait = _context.GroundbaitModel.Where(x => x.GBName == post.groundbaitId).FirstOrDefault();
+            //_context.PostModel.Update(post);
+            //_context.AccountModel.Update(user);
+            //await _context.SaveChangesAsync();
+            
             string fname = fishName.ToLower();
             var fish = _context.FishModel.Include(h=>h.Maps).Where(fish => fish.Name.ToLower() == fname).FirstOrDefault();
             if (fish == null) return BadRequest();

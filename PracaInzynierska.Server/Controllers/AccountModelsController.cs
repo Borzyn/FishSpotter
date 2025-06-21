@@ -47,7 +47,7 @@ namespace FishSpotter.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> CheckProfile([FromBody] string accountCheckedName)
         {
-            var accountToCheck = _context.AccountModel.Include(acc=>acc.Posts).FirstOrDefault(acc => acc.Username == accountCheckedName);
+            var accountToCheck = _context.AccountModel.Include(acc=>acc.Posts).ThenInclude(acc =>acc.Spot).FirstOrDefault(acc => acc.Username == accountCheckedName);
             if (accountToCheck == null || accountCheckedName == null) { return BadRequest(); }
 
             return Ok(accountToCheck);
@@ -71,11 +71,13 @@ namespace FishSpotter.Server.Controllers
         [HttpPost]
         public IActionResult ShowPosts([FromBody] string accountName)
         {
-            var accountToCheck = _context.AccountModel.Include(acc=>acc.Posts).FirstOrDefault(acc => acc.Username == accountName);
-            if (accountName == null || accountToCheck == null) { return BadRequest(); }
+            if (accountName == null) { return BadRequest(); }
+            var accountToCheck = _context.AccountModel.Include(acc=>acc.Posts).ThenInclude(a=>a.Spot).FirstOrDefault(acc => acc.Username == accountName);
+            if ( accountToCheck == null) { return BadRequest(); }
 
-            var posts = _context.PostModel.Include(p=> p.Spot).Include(p=> p.Method).Include(p=>p.Bait).Include(p=>p.groundbait).Where(id => id.UserId == accountName).ToList();
-            return Ok(posts);
+            // var posts = _context.PostModel.Include(p=> p.Spot).Include(p=> p.Method).Include(p=>p.Bait).Include(p=>p.groundbait).Where(id => id.UserId == accountName).ToList();
+            //  return Ok(posts);
+            return Ok(accountToCheck.Posts);
         }
 
         //public IActionResult DownloadUserInfo (string accountName)

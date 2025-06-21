@@ -28,24 +28,25 @@ namespace FishSpotter.Server.Controllers
             var editor = _context.AccountModel.Include(x => x.Posts).Where(u => u.Username == model.user).FirstOrDefault();
             if (model.user == null || editor == null) { return BadRequest(); }
 
-            var fish = _context.FishModel.FirstOrDefault(f => f.Name == model.fishname);
+            var fish = _context.FishModel.FirstOrDefault(f => f.Name.ToLower() == model.fishname.ToLower());
             if (fish == null) { return BadRequest(); }
 
             //DO przetestowania TODO
             //var map = _context.MapModel.FirstOrDefault(m => m.Name == mapname && m.Fishes.Contains(fishname));
-            var IsMapValid = _context.MapModel.Include(map => map.Fishes).Any(map => map.Name == model.mapname && map.Fishes.Any(fish => fish.Name == model.fishname));
+           //var IsMapValid = _context.MapModel.FirstOrDefault(m=>m.Name.ToLower() == model.mapname.ToLower());
+             var IsMapValid = _context.MapModel.Include(map => map.Fishes).Any(map => map.Name == model.mapname && map.Fishes.Any(fish => fish.Name == model.fishname));
             if (IsMapValid == null) { return BadRequest(); }
 
-            var spotCheck = _context.SpotModel.Include(x => x.Map).Where(spot => spot.Map == model.mapname && spot.Id == model.spotID).FirstOrDefault();
+            var spotCheck = _context.SpotModel.Include(x => x.Map).Where(spot => spot.Map.ToLower() == model.mapname.ToLower() && spot.Id.ToLower() == model.spotID.ToLower()).FirstOrDefault();
             if (spotCheck == null) { return BadRequest(); }
 
             var method = _context.MethodModel.FirstOrDefault(met => met.Name == model.methodname);
             if (method == null) { return BadRequest(); }
 
-            var bait = _context.BaitModel.FirstOrDefault(b => b.Name == model.methodname);
+            var bait = _context.BaitModel.FirstOrDefault(b => b.Name.ToLower() == model.baitname.ToLower());
             if (bait == null || !bait.Methods.Contains(method)) { return BadRequest(); }
 
-            var groundbait = _context.GroundbaitModel.FirstOrDefault(g => g.GBName == model.groundbaitid);
+            var groundbait = _context.GroundbaitModel.FirstOrDefault(g => g.GBName.ToLower() == model.groundbaitid.ToLower());
             if (groundbait == null) { groundbait = _context.GroundbaitModel.Where(h => h.GBName == "none").FirstOrDefault(); }
 
 
