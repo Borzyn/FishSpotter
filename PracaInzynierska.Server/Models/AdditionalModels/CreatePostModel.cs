@@ -8,7 +8,7 @@
         public string methodname { get; set; }
         public string baitname { get; set; }
         public string groundbaitid { get; set; } = "none";
-        public string spotXY { get; set; }
+        public string spotID { get; set; }
         public string addInfo { get; set; }
 
 

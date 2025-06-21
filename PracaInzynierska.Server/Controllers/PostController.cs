@@ -36,7 +36,7 @@ namespace FishSpotter.Server.Controllers
             var IsMapValid = _context.MapModel.Include(map => map.Fishes).Any(map => map.Name == model.mapname && map.Fishes.Any(fish => fish.Name == model.fishname));
             if (IsMapValid == null) { return BadRequest(); }
 
-            var spotCheck = _context.SpotModel.Include(x => x.Map).Where(spot => spot.Map == model.mapname && spot.XY == model.spotXY).FirstOrDefault();
+            var spotCheck = _context.SpotModel.Include(x => x.Map).Where(spot => spot.Map == model.mapname && spot.Id == model.spotID).FirstOrDefault();
             if (spotCheck == null) { return BadRequest(); }
 
             var method = _context.MethodModel.FirstOrDefault(met => met.Name == model.methodname);
@@ -131,7 +131,7 @@ namespace FishSpotter.Server.Controllers
         [HttpGet]
         public IActionResult StartCreatingPost()
         {
-            var maps = _context.MapModel.ToList();
+            var maps = _context.MapModel.Include(m=>m.Spots).ToList();
             var methods = _context.MethodModel.ToList();
             var result = new
             {
