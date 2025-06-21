@@ -34,22 +34,21 @@ namespace FishSpotter.Server.Controllers
 
             //DO przetestowania TODO
             //var map = _context.MapModel.FirstOrDefault(m => m.Name == mapname && m.Fishes.Contains(fishname));
-           //var IsMapValid = _context.MapModel.FirstOrDefault(m=>m.Name.ToLower() == model.mapname.ToLower());
-             var IsMapValid = _context.MapModel.Include(map => map.Fishes).Any(map => map.Name == model.mapname && map.Fishes.Any(fish => fish.Name == model.fishname));
-            if (IsMapValid == null) { return BadRequest(); }
+            //var IsMapValid = _context.MapModel.FirstOrDefault(m=>m.Name.ToLower() == model.mapname.ToLower());
+            var IsMapValid = _context.MapModel.Include(map => map.Fishes).Any(map => map.Name == model.mapname && map.Fishes.Any(fish => fish.Name == model.fishname));
+            if (IsMapValid == false) { return BadRequest(); }
 
-            var spotCheck = _context.SpotModel.Include(x => x.Map).Where(spot => spot.Map.ToLower() == model.mapname.ToLower() && spot.Id.ToLower() == model.spotID.ToLower()).FirstOrDefault();
+            var spotCheck = _context.SpotModel.Where(spot => spot.Map.ToLower() == model.mapname.ToLower() && spot.Id.ToLower() == model.spotID.ToLower()).FirstOrDefault();
             if (spotCheck == null) { return BadRequest(); }
 
             var method = _context.MethodModel.FirstOrDefault(met => met.Name == model.methodname);
             if (method == null) { return BadRequest(); }
 
             var bait = _context.BaitModel.FirstOrDefault(b => b.Name.ToLower() == model.baitname.ToLower());
-            if (bait == null || !bait.Methods.Contains(method)) { return BadRequest(); }
-
+            if (bait == null ) { return BadRequest(); }
             var groundbait = _context.GroundbaitModel.FirstOrDefault(g => g.GBName.ToLower() == model.groundbaitid.ToLower());
             if (groundbait == null) { groundbait = _context.GroundbaitModel.Where(h => h.GBName == "none").FirstOrDefault(); }
-
+            
 
 
             var u = new PostModel();
@@ -58,9 +57,10 @@ namespace FishSpotter.Server.Controllers
             u.FishName = model.fishname;
             u.MapName = model.mapname;
             u.Method = method;
+            u.MethodName = method.Name;
             u.BaitId = bait.Id;
             u.Bait = bait;
-            u.groundbaitId = groundbait.GBName;
+                u.groundbaitId = groundbait.GBName;
             u.groundbait = groundbait;
             u.SpotID = spotCheck.Id; ;
             u.Spot = spotCheck;
@@ -69,12 +69,12 @@ namespace FishSpotter.Server.Controllers
             u.rateAmount = 0;
             _context.PostModel.Add(u);
 
-            _context.SaveChangesAsync();
+            //_context.SaveChanges();
             editor.PostsCount++;
             editor.Posts.Add(u);
             _context.AccountModel.Update(editor);
-            _context.SaveChangesAsync();
-            return Ok();
+            _context.SaveChanges();
+            return Ok(u);
         }
 
         [HttpGet]
