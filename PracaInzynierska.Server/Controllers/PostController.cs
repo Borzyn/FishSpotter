@@ -62,8 +62,7 @@ namespace FishSpotter.Server.Controllers
             u.groundbait = groundbait;
             u.SpotID = spotCheck.Id; ;
             u.Spot = spotCheck;
-            u.AdditionalInfo = model.addInfo;
-
+                u.AdditionalInfo = model.addInfo;
             u.rateSum = 0;
             u.rateAmount = 0;
             _context.PostModel.Add(u);
