@@ -127,7 +127,7 @@ namespace FishSpotter.Server.Controllers
             return Ok();
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult StartCreatingPost()
         {
             var maps = _context.MapModel.Include(m=>m.Spots).ToList();
