@@ -10,9 +10,5 @@
         public string groundbaitid { get; set; } = "none";
         public string spotID { get; set; }
         public string addInfo { get; set; }
-
-
-
-
     }
 }

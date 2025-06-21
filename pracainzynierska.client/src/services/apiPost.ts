@@ -2,6 +2,8 @@ import { ICreatePost } from "../features/AddPost/useCreatePost";
 
 export async function createPostApi(postData: ICreatePost) {
   try {
+    console.log(postData);
+
     const res = await fetch("/api/Post/Create", {
       headers: {
         "Content-Type": "application/json",
@@ -40,13 +42,13 @@ export async function getMapsAndMethodsApi() {
 
     const data = await res.json();
 
-    console.log(data);
-
-    const maps = data.maps.map((map: { name: string }) => {
-      return { label: map.name, value: map.name };
-    });
-    const methods = data.methods.map((method: { name: string }) => {
-      return { label: method.name, value: method.name };
+    const maps = data.maps.map(
+      (map: { Name: string; Spots: { Id: string; XY: string }[] }) => {
+        return { label: map.Name, value: map.Name, spots: [...map.Spots] };
+      }
+    );
+    const methods = data.methods.map((method: { Name: string }) => {
+      return { label: method.Name, value: method.Name };
     });
 
     return { maps, methods };
