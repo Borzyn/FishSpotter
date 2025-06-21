@@ -37,8 +37,6 @@ export async function getFishMapPostsApi(dataFish: {
       body: JSON.stringify(dataFish),
     });
 
-    console.log(res);
-
     if (!res.ok) {
       const data = await res.json();
       console.log(data);
@@ -54,7 +52,26 @@ export async function getFishMapPostsApi(dataFish: {
   }
 }
 
-export async function getPostRateApi(postData: {
+export async function getPostRateApi(username: string, postId: string) {
+  const res = await fetch(
+    `/api/Post/RateCheck?PostID=${postId}&username=${username}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+    }
+  );
+
+  if (!res.ok) {
+    return null;
+  }
+
+  const data = await res.json();
+  return data.rate;
+}
+
+export async function setPostRateApi(postData: {
   user: string;
   postId: string;
   rate: number;
@@ -71,7 +88,7 @@ export async function getPostRateApi(postData: {
     console.log(res);
 
     if (!res.ok) {
-      throw new Error("Rate not founded");
+      throw new Error("Wrong rate");
     }
 
     const data = await res.json();

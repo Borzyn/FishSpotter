@@ -2,6 +2,7 @@ import { MapPinned } from "lucide-react";
 import StarRating from "../../components/Rating/Rating";
 import { useRatePost } from "./useRatePost";
 import { useUserStore } from "../../stores/useUserStore";
+import { useGetPostRate } from "./useGetPostRate";
 
 export interface IPost {
   id: string;
@@ -18,6 +19,7 @@ export interface IPost {
 function FishMapRow({ post }: { post: IPost }) {
   const { user } = useUserStore();
   const { ratePost, isRating } = useRatePost();
+  const { data: rate } = useGetPostRate(user?.username ?? "", post.id);
 
   function handleChangeRate(rate: number) {
     if (!user?.username) return;
@@ -25,6 +27,8 @@ function FishMapRow({ post }: { post: IPost }) {
 
     ratePost({ user: user?.username, postId: post.id, rate });
   }
+
+  console.log(rate);
 
   return (
     <div className="py-2 px-4 grid grid-cols-7 bg-amber-50">
@@ -42,7 +46,7 @@ function FishMapRow({ post }: { post: IPost }) {
         Ocena: {post.rateAmount === 0 ? 0 : post.rateSum / post.rateAmount}
       </p>
 
-      <StarRating onChange={handleChangeRate} />
+      <StarRating initialRating={rate ?? 0} onChange={handleChangeRate} />
     </div>
   );
 }

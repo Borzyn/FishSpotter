@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { getPostRateApi } from "../../services/apiMap";
+import { setPostRateApi } from "../../services/apiMap";
 
 export interface IPostRateData {
   user: string;
@@ -9,7 +9,7 @@ export interface IPostRateData {
 
 export function useRatePost() {
   const { mutate: ratePost, isPending: isRating } = useMutation({
-    mutationFn: (rateData: IPostRateData) => getPostRateApi(rateData),
+    mutationFn: (rateData: IPostRateData) => setPostRateApi(rateData),
   });
 
   return { ratePost, isRating };

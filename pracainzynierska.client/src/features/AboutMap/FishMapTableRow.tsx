@@ -18,8 +18,6 @@ function FishMapTableRow({
     if (mapName) getFishMapPosts({ fishName: fishName, mapName: mapName });
   }, [fishName, getFishMapPosts, mapName]);
 
-  console.log(fishPosts);
-
   return (
     <li className="border-2">
       <div className="w-full grid grid-cols-[1fr_max-content] items-center gap-x-8 text-2xl font-medium bg-amber-400 py-2 px-4">

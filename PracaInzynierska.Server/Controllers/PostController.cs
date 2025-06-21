@@ -4,6 +4,7 @@ using FishSpotter.Server.Models.AdditionalModels;
 using FishSpotter.Server.Models.DataBase;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol;
 using System.Text.Json;
@@ -75,13 +76,15 @@ namespace FishSpotter.Server.Controllers
             _context.SaveChangesAsync();
             return Ok();
         }
+
         [HttpGet]
-        public string RateCheck(string PostID, string username)
+        public IActionResult RateCheck(string PostID, string username)
         {
-            var rate = _context.RateModel.Where(x => x.Username == username && x.PostId == PostID).FirstOrDefault();
+            var rate = _context.RateModel.FirstOrDefault(x => x.Username == username && x.PostId == PostID);
             if (rate == null)
-                return null;
-            else return rate.Rate.ToString();
+             return NotFound(new { message = "Rate not found" });
+
+             return Ok(new { rate = rate.Rate });
         }
 
         [HttpPost]
@@ -120,7 +123,7 @@ namespace FishSpotter.Server.Controllers
             _context.SaveChangesAsync();
 
 
-            return Ok();
+            return Ok(new {message = "Post rated successfully"});
         }
 
         [HttpPost]
