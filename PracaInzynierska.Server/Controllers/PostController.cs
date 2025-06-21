@@ -75,6 +75,14 @@ namespace FishSpotter.Server.Controllers
             _context.SaveChangesAsync();
             return Ok();
         }
+        [HttpGet]
+        public string RateCheck(string PostID, string username)
+        {
+            var rate = _context.RateModel.Where(x => x.Username == username && x.PostId == PostID).FirstOrDefault();
+            if (rate == null)
+                return null;
+            else return rate.Rate.ToString();
+        }
 
         [HttpPost]
         public IActionResult Rate([FromBody] RatePostModel model)
