@@ -40,6 +40,8 @@ export async function getMapsAndMethodsApi() {
 
     const data = await res.json();
 
+    console.log(data);
+
     const maps = data.maps.map((map: { name: string }) => {
       return { label: map.name, value: map.name };
     });
