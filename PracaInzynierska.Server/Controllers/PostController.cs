@@ -131,7 +131,7 @@ namespace FishSpotter.Server.Controllers
         [HttpPost]
         public IActionResult StartCreatingPost()
         {
-            var maps = _context.MapModel.ToList();
+            var maps = _context.MapModel.Include(m=>m.Spots).ToList();
             var methods = _context.MethodModel.ToList();
             var result = new
             {
