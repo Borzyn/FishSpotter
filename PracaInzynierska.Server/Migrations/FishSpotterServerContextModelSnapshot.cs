@@ -33,7 +33,7 @@ namespace FishSpotter.Server.Migrations
 
                     b.HasIndex("MapsName");
 
-                    b.ToTable("FishModelMapModel");
+                    b.ToTable("FishModelMapModel", (string)null);
                 });
 
             modelBuilder.Entity("FishSpotter.Server.Models.DataBase.AccountModel", b =>
@@ -59,7 +59,7 @@ namespace FishSpotter.Server.Migrations
 
                     b.HasKey("Username");
 
-                    b.ToTable("AccountModel");
+                    b.ToTable("AccountModel", (string)null);
                 });
 
             modelBuilder.Entity("FishSpotter.Server.Models.DataBase.BaitModel", b =>
@@ -77,7 +77,7 @@ namespace FishSpotter.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BaitModel");
+                    b.ToTable("BaitModel", (string)null);
                 });
 
             modelBuilder.Entity("FishSpotter.Server.Models.DataBase.FishModel", b =>
@@ -87,7 +87,7 @@ namespace FishSpotter.Server.Migrations
 
                     b.HasKey("Name");
 
-                    b.ToTable("FishModel");
+                    b.ToTable("FishModel", (string)null);
                 });
 
             modelBuilder.Entity("FishSpotter.Server.Models.DataBase.GroundbaitModel", b =>
@@ -97,7 +97,7 @@ namespace FishSpotter.Server.Migrations
 
                     b.HasKey("GBName");
 
-                    b.ToTable("GroundbaitModel");
+                    b.ToTable("GroundbaitModel", (string)null);
                 });
 
             modelBuilder.Entity("FishSpotter.Server.Models.DataBase.IngredientModel", b =>
@@ -116,7 +116,7 @@ namespace FishSpotter.Server.Migrations
 
                     b.HasIndex("GroundbaitModelGBName");
 
-                    b.ToTable("IngredientModel");
+                    b.ToTable("IngredientModel", (string)null);
                 });
 
             modelBuilder.Entity("FishSpotter.Server.Models.DataBase.MapModel", b =>
@@ -126,7 +126,7 @@ namespace FishSpotter.Server.Migrations
 
                     b.HasKey("Name");
 
-                    b.ToTable("MapModel");
+                    b.ToTable("MapModel", (string)null);
                 });
 
             modelBuilder.Entity("FishSpotter.Server.Models.DataBase.MethodModel", b =>
@@ -149,7 +149,7 @@ namespace FishSpotter.Server.Migrations
 
                     b.HasIndex("BaitModelId");
 
-                    b.ToTable("MethodModel");
+                    b.ToTable("MethodModel", (string)null);
                 });
 
             modelBuilder.Entity("FishSpotter.Server.Models.DataBase.PostModel", b =>
@@ -220,7 +220,7 @@ namespace FishSpotter.Server.Migrations
 
                     b.HasIndex("groundbaitId");
 
-                    b.ToTable("PostModel");
+                    b.ToTable("PostModel", (string)null);
                 });
 
             modelBuilder.Entity("FishSpotter.Server.Models.DataBase.RateModel", b =>
@@ -242,7 +242,7 @@ namespace FishSpotter.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RateModel");
+                    b.ToTable("RateModel", (string)null);
                 });
 
             modelBuilder.Entity("FishSpotter.Server.Models.DataBase.SpotModel", b =>
@@ -265,7 +265,7 @@ namespace FishSpotter.Server.Migrations
 
                     b.HasIndex("MapModelName");
 
-                    b.ToTable("SpotModel");
+                    b.ToTable("SpotModel", (string)null);
                 });
 
             modelBuilder.Entity("FishModelMapModel", b =>
