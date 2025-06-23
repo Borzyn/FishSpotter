@@ -29,7 +29,7 @@ namespace FishSpotter.Server.Controllers
             var editor = _context.AccountModel.Include(x => x.Posts).Where(u => u.Username == model.user).FirstOrDefault();
             if (model.user == null || editor == null) { return BadRequest(); }
 
-            var fish = _context.FishModel.FirstOrDefault(f => f.Name.ToLower() == model.fishname.ToLower());
+            var fish = _context.FishModel.Include(f=> f.Posts).FirstOrDefault(f => f.Name.ToLower() == model.fishname.ToLower());
             if (fish == null) { return BadRequest(); }
 
             //DO przetestowania TODO
@@ -69,6 +69,8 @@ namespace FishSpotter.Server.Controllers
             u.rateAmount = 0;
             _context.PostModel.Add(u);
 
+            fish.Posts.Add(u);
+           
             //_context.SaveChanges();
             editor.PostsCount++;
             editor.Posts.Add(u);
