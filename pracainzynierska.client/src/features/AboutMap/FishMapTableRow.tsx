@@ -52,7 +52,7 @@ function FishMapTableRow({
             }}
             className="text-[22px] font-medium overflow-hidden flex flex-col gap-1.5"
           >
-            {fishPosts.map((post: IPost) => (
+            {fishPosts?.map((post: IPost) => (
               <FishMapRow key={post.id} post={post} />
             ))}
           </motion.div>

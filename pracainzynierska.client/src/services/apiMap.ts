@@ -37,6 +37,8 @@ export async function getFishMapPostsApi(dataFish: {
       body: JSON.stringify(dataFish),
     });
 
+    console.log(res);
+
     if (!res.ok) {
       const data = await res.json();
       console.log(data);
@@ -44,6 +46,8 @@ export async function getFishMapPostsApi(dataFish: {
     }
 
     const data = await res.json();
+
+    console.log(data);
 
     return data;
   } catch (error) {
