@@ -10,12 +10,12 @@ export async function getFishMapApi(mapName?: string) {
     console.log(res);
 
     if (!res.ok) {
-      const data = await res.json();
-      console.log(data);
       throw new Error("Fish on map not found!");
     }
 
     const data = await res.json();
+
+    console.log(data);
 
     return data;
   } catch (error) {
