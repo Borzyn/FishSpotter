@@ -31,8 +31,6 @@ export async function getAccountPostsApi(accountName: string) {
     });
 
     if (!res.ok) {
-      const data = await res.json();
-      console.log(data);
       throw new Error("Fetching account posts went wrong!");
     }
 

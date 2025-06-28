@@ -8,13 +8,11 @@ function FishMapTableRow({
   mapName,
   fishName,
 }: {
-  mapName: string | undefined;
+  mapName: string;
   fishName: string;
 }) {
-  const { data, isPending } = useGetFishMapPosts(fishName, mapName ?? "");
+  const { data, isPending } = useGetFishMapPosts(fishName, mapName);
   const [openPosts, setOpenPosts] = useState(false);
-
-  console.log(data);
 
   return (
     <li className="border-2">
@@ -51,7 +49,7 @@ function FishMapTableRow({
             className="text-[22px] font-medium overflow-hidden flex flex-col gap-1.5"
           >
             {data?.map((post: IPost) => (
-              <FishMapRow key={post.id} post={post} />
+              <FishMapRow key={post.id} post={post} fishName={fishName} />
             ))}
           </motion.div>
         )}

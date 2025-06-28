@@ -16,15 +16,13 @@ function FishMapTable() {
     return <Error error={error?.message} />;
   }
 
-  console.log(data);
-
   return (
     <div className="w-full overflow-auto">
       <ul className="min-w-6xl overflow-hidden flex flex-col gap-2">
         {data?.Fish.map((fish: { Name: string }) => (
           <FishMapTableRow
             key={fish.Name}
-            mapName={mapName}
+            mapName={data.Name}
             fishName={fish.Name}
           />
         ))}

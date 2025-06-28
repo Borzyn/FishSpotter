@@ -7,15 +7,11 @@ export async function getFishMapApi(mapName?: string) {
       method: "GET",
     });
 
-    console.log(res);
-
     if (!res.ok) {
       throw new Error("Fish on map not found!");
     }
 
     const data = await res.json();
-
-    console.log(data);
 
     return data;
   } catch (error) {
@@ -35,6 +31,8 @@ export async function getFishMapPostsApi(fishName: string, mapName: string) {
         method: "GET",
       }
     );
+
+    console.log(res);
 
     if (!res.ok) {
       throw new Error("Fish on map not found!");
@@ -82,10 +80,8 @@ export async function setPostRateApi(postData: {
       body: JSON.stringify(postData),
     });
 
-    console.log(res);
-
     if (!res.ok) {
-      throw new Error("Wrong rate");
+      throw new Error("Something went wrong with rating");
     }
 
     const data = await res.json();

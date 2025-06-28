@@ -7,8 +7,6 @@ export async function getListMapsApi() {
       method: "GET",
     });
     if (!res.ok) {
-      const error = await res.json();
-      console.log(error);
       throw new Error("Fetching maps went wrong!");
     }
 
