@@ -23,8 +23,8 @@ namespace FishSpotter.Server.Controllers
         public IActionResult showMapMain(string mapName)
         {
            
-            var map = _context.MapModel.FirstOrDefault(x => x.Name == mapName);
-            if (map == null) return BadRequest();
+            var map = _context.MapModel.Include(x=>x.Spots).FirstOrDefault(x => x.Name == mapName);
+            if (map == null) return BadRequest("Incorrect map");
             return Ok(map);
         }
 
@@ -35,7 +35,7 @@ namespace FishSpotter.Server.Controllers
             
             string name = mapName.Replace("%20", " ");
             var map = _context.MapModel.Include(m => m.Fishes).ThenInclude(m=>m.Posts).Where(m=> m.Name == name).FirstOrDefault();
-            if (map == null) return BadRequest();
+            if (map == null) return BadRequest("Incorrect map");
             var fishes = map.Fishes;
             var result = new
             {

@@ -25,20 +25,12 @@ namespace FishSpotter.Server.Controllers
             _context = context;
         }
 
-        //public IActionResult LoginCheck()
-        //{
-        //    string UserID = Request.Cookies["Username"];
-        //    if (UserID != null)
-        //        return DownloadUserInfo(UserID);
-        //    return BadRequest();
-
-        //}
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
-            if (model.login == null || model.password == null) { return BadRequest(); }
+            if (model.login == null || model.password == null) { return BadRequest("Not enough login data"); }
             var account = _context.AccountModel.Where(acc => acc.Username == model.login).FirstOrDefault();
-            if (account == null || account.Password != model.password) { return BadRequest(); }
+            if (account == null || account.Password != model.password) { return BadRequest("Incorrect login or passowrd"); }
             account.Posts= _context.PostModel.Where(p => p.UserId == model.login).ToList();
             //var acc = _context.AccountModel.FirstOrDefault(ac => ac.Username == login);
             return Ok(account);
@@ -48,7 +40,7 @@ namespace FishSpotter.Server.Controllers
         public async Task<IActionResult> CheckProfile([FromBody] string accountCheckedName)
         {
             var accountToCheck = _context.AccountModel.Include(acc=>acc.Posts).ThenInclude(acc =>acc.Spot).FirstOrDefault(acc => acc.Username == accountCheckedName);
-            if (accountToCheck == null || accountCheckedName == null) { return BadRequest(); }
+            if (accountToCheck == null || accountCheckedName == null) { return BadRequest("Not logged in or wrong account to check"); }
 
             return Ok(accountToCheck);
         }
@@ -57,11 +49,12 @@ namespace FishSpotter.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> RateProfile([FromBody] RateProfileModel model)
         {
-            if (model.user == null || model.user == model.ratedUser || model.ratedUser == null) { return BadRequest(); }
+            var u = _context.AccountModel.FirstOrDefault(u => u.Username == model.user);
+            if (model.user == null || model.user == model.ratedUser || model.ratedUser == null || u ==null) { return BadRequest("Incorrect user"); }
             int rating;
-            if (!int.TryParse(model.rate, out rating) || rating > 5 || rating < 1) { return BadRequest(); }
+            if (!int.TryParse(model.rate, out rating) || rating > 5 || rating < 1) { return BadRequest("Wrong rate"); }
             var account = _context.AccountModel.Include(acc => acc.Posts).FirstOrDefault(u => u.Username == model.ratedUser);
-            if (account == null) { return BadRequest(); }
+            if (account == null) { return BadRequest("Something went wrong"); }
             account.RateSum += rating;
             account.RateAmount++;
             await _context.SaveChangesAsync();
@@ -71,27 +64,12 @@ namespace FishSpotter.Server.Controllers
         [HttpPost]
         public IActionResult ShowPosts([FromBody] string accountName)
         {
-            if (accountName == null) { return BadRequest(); }
+            if (accountName == null) { return BadRequest("No account name"); }
             var accountToCheck = _context.AccountModel.Include(acc=>acc.Posts).ThenInclude(a=>a.Spot).FirstOrDefault(acc => acc.Username == accountName);
-            if ( accountToCheck == null) { return BadRequest(); }
-
-            // var posts = _context.PostModel.Include(p=> p.Spot).Include(p=> p.Method).Include(p=>p.Bait).Include(p=>p.groundbait).Where(id => id.UserId == accountName).ToList();
-            //  return Ok(posts);
+            if ( accountToCheck == null) { return BadRequest("No account to show posts"); }
             return Ok(accountToCheck.Posts);
         }
 
-        //public IActionResult DownloadUserInfo (string accountName)
-        //{
-        //    var user = _context.AccountModel.Where(u => u.Username == accountName).FirstOrDefault();
-        //    if (user == null) { return BadRequest(); }
-        //    return Ok(user);
-        //    }
-
-        //public IActionResult Logout()
-        //{
-        //    Response.Cookies.Append("Username", "0");
-        //    return Ok();
-        //}
 
         //rejestracja
 
@@ -122,13 +100,6 @@ namespace FishSpotter.Server.Controllers
                 model.ErrorCode = ErrorCode.PasswordWrong;
                 return BadRequest(model);
             }
-
-
-            //if (!model.Email.Contains("@"))
-            //{
-            //    model.ErrorCode = ErrorCode.EmailWrong;
-            //    return BadRequest(model);
-            //}
             if (model.TermsAccept != true)
             {
                 model.ErrorCode = ErrorCode.TermsNotAccepted;
@@ -141,14 +112,6 @@ namespace FishSpotter.Server.Controllers
                 model.ErrorCode = ErrorCode.UsernameUsed;
                 return BadRequest(model);
             }
-            //Models.DataBase.AccountModel usere = _context.User.Where(g => g.PhoneNumber == model.PhoneNumber).FirstOrDefault();
-            //if (usere != null)
-            //{
-            //    model.ErrorCode = ErrorCode.PhoneUsed;
-            //    return View("/Views/MainPage/MainContent/Register/RegisterPage.cshtml", model);
-            //}
-
-            //  return RedirectToAction("register", "AccountModels", model);
             AccountModel user = new AccountModel();
 
             user.Username = model.Username;

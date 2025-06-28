@@ -31,7 +31,7 @@ namespace FishSpotter.Server.Controllers
 
             var fish = _context.FishModel.Where(fish => fish.Name.ToLower() == fname).FirstOrDefault();
 
-            if (fish == null) return BadRequest();
+            if (fish == null) return BadRequest("Incorrect fish name");
 
             var posts = _context.PostModel.Where(p => p.FishName == fname).ToList();
             return Ok(posts);
@@ -142,9 +142,9 @@ namespace FishSpotter.Server.Controllers
 
             string fname = fishName.ToLower();
             var fish = _context.FishModel.Include(h=>h.Maps).Where(fish => fish.Name.ToLower() == fname).FirstOrDefault();
-            if (fish == null) return BadRequest();
+            if (fish == null) return BadRequest("Wrong fish name");
             var maps = fish.Maps;
-            if (maps == null) return BadRequest();
+            if (maps == null) return BadRequest("Wrong map");
             var result = new
             {
                 fish.Name,
@@ -166,7 +166,7 @@ namespace FishSpotter.Server.Controllers
         {
             var fish = _context.FishModel.FirstOrDefault(f => f.Name == model.fishName);
             var map = _context.MapModel.FirstOrDefault(x => x.Name == model.mapName);
-            if (fish == null || map == null) return BadRequest();
+            if (fish == null || map == null) return BadRequest("Some data is wrong!");
             var m= map.Name.ToLower();
             var f = fish.Name.ToLower();
             List<PostModel> posts = _context.PostModel.Where(p => p.FishName.ToLower() == f & p.MapName.ToLower() == m).ToList();
@@ -178,7 +178,7 @@ namespace FishSpotter.Server.Controllers
         {
             string name = mapName.Replace("%20", " ");
             var map = _context.MapModel.Include(x=> x.Fishes).Include(x=> x.Spots).FirstOrDefault(x => x.Name == name);
-            if (map == null) return BadRequest();
+            if (map == null) return BadRequest( "Incorrect map");
             // var fishes = map.Fishes.Select(fish => new { fishName = fish.Name }).ToList();
             var fishes = map.Fishes;
             //sprawdzić czy to trzeba na dictionary
@@ -201,11 +201,11 @@ namespace FishSpotter.Server.Controllers
         [HttpPost]
         public IActionResult GetFishName(FishAndMapModel model)
         {
-            var map = _context.MapModel.FirstOrDefault(x => x.Name == model.mapName);
-            if (map == null) return BadRequest();
+            var map = _context.MapModel.Include(x=> x.Fishes).FirstOrDefault(x => x.Name == model.mapName);
+            if (map == null) return BadRequest("Incorrect map");
 
             string fish = map.Fishes.FirstOrDefault(f => f.Name == model.fishName).Name;
-            if (fish == null) return BadRequest();
+            if (fish == null) return BadRequest("Theres no fish like that");
 
             return Ok(fish);
         }

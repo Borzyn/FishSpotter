@@ -78,7 +78,7 @@ namespace FishSpotter.Server.Controllers
             _context.SaveChanges();
             return Ok(u);
         }
-
+        // po co to?
         [HttpGet]
         public IActionResult RateCheck(string PostID, string username)
         {
@@ -93,13 +93,13 @@ namespace FishSpotter.Server.Controllers
         public IActionResult Rate([FromBody] RatePostModel model)
         {
            
-            if (model.rate > 5 || model.rate < 1) { return BadRequest(); }
+            if (model.rate > 5 || model.rate < 1) { return BadRequest("Wrong rate"); }
 
             var validUser = _context.AccountModel.FirstOrDefault(u => u.Username == model.user);
-            if (validUser == null) { return BadRequest(); }
+            if (validUser == null) { return BadRequest("Invalid user"); }
 
             var post = _context.PostModel.FirstOrDefault(x => x.Id == model.postId);
-            if (post == null || post.UserId == model.user) { return BadRequest(); }
+            if (post == null || post.UserId == model.user) { return BadRequest("Invalid post"); }
             var author = _context.AccountModel.Where(p => p.Username == post.UserId).FirstOrDefault();
             var ratemodel = _context.RateModel.Where(r => r.Username == model.user && r.PostId == post.Id).FirstOrDefault();
             if (ratemodel != null)
