@@ -1,6 +1,6 @@
 import { ArrowDownCircle, ArrowUpCircle } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useGetFishMapPosts } from "./useGetFishMapPosts";
 import FishMapRow, { IPost } from "./FishMapRow";
 
@@ -11,18 +11,16 @@ function FishMapTableRow({
   mapName: string | undefined;
   fishName: string;
 }) {
-  const { isGettingsPosts, fishPosts, getFishMapPosts } = useGetFishMapPosts();
+  const { data, isPending } = useGetFishMapPosts(fishName, mapName ?? "");
   const [openPosts, setOpenPosts] = useState(false);
 
-  useEffect(() => {
-    if (mapName) getFishMapPosts({ fishName: fishName, mapName: mapName });
-  }, [fishName, getFishMapPosts, mapName]);
+  console.log(data);
 
   return (
     <li className="border-2">
       <div className="w-full grid grid-cols-[1fr_max-content] items-center gap-x-8 text-2xl font-medium bg-amber-400 py-2 px-4">
         <p>{fishName}</p>
-        {isGettingsPosts ? (
+        {isPending ? (
           "Ładowanie..."
         ) : (
           <button
@@ -52,7 +50,7 @@ function FishMapTableRow({
             }}
             className="text-[22px] font-medium overflow-hidden flex flex-col gap-1.5"
           >
-            {fishPosts?.map((post: IPost) => (
+            {data?.map((post: IPost) => (
               <FishMapRow key={post.id} post={post} />
             ))}
           </motion.div>

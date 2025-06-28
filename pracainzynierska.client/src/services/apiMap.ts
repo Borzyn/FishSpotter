@@ -24,30 +24,23 @@ export async function getFishMapApi(mapName?: string) {
   }
 }
 
-export async function getFishMapPostsApi(dataFish: {
-  fishName: string;
-  mapName: string;
-}) {
+export async function getFishMapPostsApi(fishName: string, mapName: string) {
   try {
-    const res = await fetch(`/api/Map/GetPostsMapWithFish`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify(dataFish),
-    });
-
-    console.log(res);
+    const res = await fetch(
+      `/api/Map/GetPostsMapWithFish?fishName=${fishName}&mapName=${mapName}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "GET",
+      }
+    );
 
     if (!res.ok) {
-      const data = await res.json();
-      console.log(data);
       throw new Error("Fish on map not found!");
     }
 
     const data = await res.json();
-
-    console.log(data);
 
     return data;
   } catch (error) {
