@@ -4,7 +4,7 @@ import { getFishMapPostsApi } from "../../services/apiMap";
 
 export function useGetFishMapPosts(fishName: string, mapName: string) {
   const { data, isError, error, isPending } = useQuery({
-    queryKey: ["getFishMapPosts"],
+    queryKey: ["getFishMapPosts", fishName],
     queryFn: () => getFishMapPostsApi(fishName, mapName),
   });
 

@@ -34,8 +34,6 @@ export async function getFishMapPostsNumberApi(dataFish: IFishMapPosts) {
     });
 
     if (!res.ok) {
-      const data = await res.json();
-      console.log(data);
       throw new Error("Fetching fish maps went wrong!");
     }
 

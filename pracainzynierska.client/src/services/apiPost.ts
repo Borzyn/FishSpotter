@@ -11,8 +11,6 @@ export async function createPostApi(postData: ICreatePost) {
     });
 
     if (!res.ok) {
-      const error = await res.json();
-      console.log(error);
       throw new Error("Invalid credentials");
     }
 
