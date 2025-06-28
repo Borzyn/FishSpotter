@@ -169,7 +169,7 @@ namespace FishSpotter.Server.Controllers
             if (fish == null || map == null) return BadRequest();
             var m= map.Name.ToLower();
             var f = fish.Name.ToLower();
-            var posts = _context.PostModel.Where(p => p.FishName.ToLower() == f & p.MapName.ToLower() == m);
+            List<PostModel> posts = _context.PostModel.Where(p => p.FishName.ToLower() == f & p.MapName.ToLower() == m).ToList();
             return Ok(posts);
         }
 
