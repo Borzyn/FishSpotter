@@ -53,15 +53,24 @@ namespace FishSpotter.Server.Controllers
         }
 
         //to jest to na co przekierowuje z ekranu głównego po wybraniu mapy
-        [HttpPost]
-        public async Task<IActionResult> GetPostsMapWithFish(FishAndMapModel model)
-        { 
-            string name = model.mapName.Replace("%20", " ");
+        [HttpGet]
+        public async Task<IActionResult> GetPostsMapWithFish([FromQuery] string fishName, [FromQuery] string mapName)
+        {
+            string name = mapName.Replace("%20", " ");
             var map = _context.MapModel.FirstOrDefault(x => x.Name == name);
-            if (map == null) return BadRequest();
-            var fish = _context.FishModel.FirstOrDefault(y => y.Name == model.fishName);
-            if (fish == null) return BadRequest();
-            var posts = _context.PostModel.Include(p=> p.Spot).Include(p=> p.Bait).Include(p=>p.groundbait).Include(p=>p.Method).Where(f => f.FishName == model.fishName).Where(m => m.MapName == name).ToList();
+            if (map == null) return BadRequest("Map not found");
+
+            var fish = _context.FishModel.FirstOrDefault(y => y.Name == fishName);
+            if (fish == null) return BadRequest("Fish not found");
+
+            var posts = _context.PostModel
+                .Include(p => p.Spot)
+                .Include(p => p.Bait)
+                .Include(p => p.groundbait)
+                .Include(p => p.Method)
+                .Where(f => f.FishName == fishName && f.MapName == name)
+                .ToList();
+
             return Ok(posts);
         }
     }
