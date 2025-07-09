@@ -47,8 +47,8 @@ namespace FishSpotter.Server.Controllers
         [HttpPost]
         public IActionResult SearchFish(string fishname)
         {
-            var fish = _context.FishModel.Where(fishh => fishh.Name == fishname).FirstOrDefault();
-            if (fish == null) return BadRequest();
+            var fish = _context.FishModel.Include(fish => fish.Maps).Include(fish => fish.Posts).Where(fishh => fishh.Name == fishname).FirstOrDefault();
+            if (fish == null) return BadRequest("Wrong fish name");
             return Ok(fish);
         }
 
@@ -58,7 +58,7 @@ namespace FishSpotter.Server.Controllers
             var user = _context.AccountModel.Include(u => u.Posts).Where(usero => usero.Username == userName).FirstOrDefault();
             if  (user == null)
             {
-                return BadRequest();
+                return BadRequest("Wrong username");
             }
             return Ok(user);
         }
