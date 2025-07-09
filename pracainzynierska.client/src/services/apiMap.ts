@@ -90,3 +90,25 @@ export async function setPostRateApi(postData: {
     throw new Error(error as string);
   }
 }
+
+export async function getMapPointsApi(mapName?: string) {
+  try {
+    const res = await fetch(`/api/Map/Map?mapName=${mapName}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+    });
+
+    if (!res.ok) {
+      throw new Error("Map doesn't exist!");
+    }
+
+    const data = await res.json();
+
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error as string);
+  }
+}

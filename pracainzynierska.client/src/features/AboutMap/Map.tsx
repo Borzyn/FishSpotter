@@ -2,6 +2,8 @@ import L, { LatLngBoundsExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useState } from "react";
 import { ImageOverlay, MapContainer, Marker, Popup } from "react-leaflet";
+import { useGetMapPoints } from "./useGetMapPoints";
+import Loader from "../../components/Loaders/Loader/Loader";
 
 const defaultIcon = new L.Icon({
   iconUrl:
@@ -31,6 +33,17 @@ function formatName(mapName: string) {
 }
 
 function Map({ mapName }: { mapName: string }) {
+  const { data, isPending, isError } = useGetMapPoints(mapName);
+  const [selectedMarker, setSelectedMarker] = useState(false);
+
+  if (isPending) {
+    return <Loader />;
+  }
+
+  if (isError || !data) {
+    return null;
+  }
+
   const imageWidth = 850;
   const imageHeight = 850;
 
@@ -41,7 +54,7 @@ function Map({ mapName }: { mapName: string }) {
 
   const formattedMapName = formatName(mapName);
 
-  const [selectedMarker, setSelectedMarker] = useState(false);
+  console.log(data);
 
   return (
     <div>
