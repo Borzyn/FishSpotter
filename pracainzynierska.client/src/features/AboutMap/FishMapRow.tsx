@@ -30,6 +30,8 @@ function FishMapRow({ post, fishName }: { post: IPost; fishName: string }) {
     if (!user?.username) return;
     if (isRating) return;
 
+    return null;
+
     ratePost(
       { user: user?.username, postId: post.id, rate },
       {

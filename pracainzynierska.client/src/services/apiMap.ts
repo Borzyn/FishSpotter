@@ -32,8 +32,6 @@ export async function getFishMapPostsApi(fishName: string, mapName: string) {
       }
     );
 
-    console.log(res);
-
     if (!res.ok) {
       throw new Error("Fish on map not found!");
     }
