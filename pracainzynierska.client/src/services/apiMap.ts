@@ -93,7 +93,7 @@ export async function setPostRateApi(postData: {
 
 export async function getMapPointsApi(mapName?: string) {
   try {
-    const res = await fetch(`/api/Map/Map?mapName=${mapName}`, {
+    const res = await fetch(`/api/Map/GetPointsOnMap?mapName=${mapName}`, {
       headers: {
         "Content-Type": "application/json",
       },
