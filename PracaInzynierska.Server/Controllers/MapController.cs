@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 using System.Text.Json;
 
 namespace FishSpotter.Server.Controllers
@@ -102,7 +103,7 @@ namespace FishSpotter.Server.Controllers
                 strings = help.Split(":");
                 points[i] = new Point(strings[0], strings[1]);
             }
-            return Ok(points);
+            return Ok(points.ToJson());
         }
     }
 }
