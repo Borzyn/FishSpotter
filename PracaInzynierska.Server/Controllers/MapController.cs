@@ -1,5 +1,6 @@
 ﻿using FishSpotter.Server.Data;
 using FishSpotter.Server.Models.AdditionalModels;
+using FishSpotter.Server.Models.DataBase;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -72,6 +73,36 @@ namespace FishSpotter.Server.Controllers
                 .ToList();
 
             return Ok(posts);
+        }
+        
+        class Point
+        {
+            public string x, y;
+            public Point(string a, string b)
+            {
+                x = a;
+                y = b;
+            }
+            
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPointsOnMap([FromQuery] string mapName)
+        {
+
+            var map = _context.MapModel.Include(x=> x.Spots).FirstOrDefault(p => p.Name == mapName);
+            if (map == null) return BadRequest("Wrong map name");
+            var spots = map.Spots.ToArray();
+            string help;
+            string[] strings;
+            Point[] points = new Point[spots.Length];
+            for (int i = 0; i < spots.Length; i++)
+            {
+                help = spots[i].XY;
+                strings = help.Split(":");
+                points[i] = new Point(strings[0], strings[1]);
+            }
+            return Ok(points);
         }
     }
 }
