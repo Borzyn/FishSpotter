@@ -7,7 +7,7 @@ function FishMapPage() {
 
   return (
     <section className="w-full h-full mx-auto max-w-7xl">
-      <Map />
+      <Map mapName={mapName as string} />
 
       <div className="mt-6 mb-10 text-center">
         <p className="text-lg font-medium">Łowisko</p>
