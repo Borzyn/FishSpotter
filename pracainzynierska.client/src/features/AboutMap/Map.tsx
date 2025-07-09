@@ -34,7 +34,6 @@ function formatName(mapName: string) {
 
 function Map({ mapName }: { mapName: string }) {
   const { data, isPending, isError } = useGetMapPoints(mapName);
-  const [selectedMarker, setSelectedMarker] = useState(false);
 
   if (isPending) {
     return <Loader />;
@@ -70,18 +69,30 @@ function Map({ mapName }: { mapName: string }) {
       >
         <ImageOverlay url={`/${formattedMapName}.png`} bounds={bounds} />
 
-        <Marker
-          icon={selectedMarker ? selectedIcon : defaultIcon}
-          position={[200, 200]}
-          eventHandlers={{
-            popupopen: () => setSelectedMarker(true),
-            popupclose: () => setSelectedMarker(false),
-          }}
-        >
-          <Popup>Współrzędne: [200, 200]</Popup>
-        </Marker>
+        {data?.map((marker: { x: string; y: string }) => (
+          <NewMarker key={marker.x + marker.y} marker={marker} />
+        ))}
       </MapContainer>
     </div>
+  );
+}
+
+function NewMarker({ marker }: { marker: { x: string; y: string } }) {
+  const [selectedMarker, setSelectedMarker] = useState(false);
+
+  return (
+    <Marker
+      icon={selectedMarker ? selectedIcon : defaultIcon}
+      position={[+marker.x, +marker.y]}
+      eventHandlers={{
+        popupopen: () => setSelectedMarker(true),
+        popupclose: () => setSelectedMarker(false),
+      }}
+    >
+      <Popup>
+        Współrzędne: [{marker.x}, {marker.y}]
+      </Popup>
+    </Marker>
   );
 }
 
