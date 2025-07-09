@@ -119,9 +119,11 @@ namespace FishSpotter.Server.Controllers
             ratemodel.Rate = model.rate;
             author.RateSum += ratemodel.Rate;
             post.rateSum += ratemodel.Rate;
+
             _context.Update(ratemodel);
             _context.Update(author);
             _context.Update(post);
+            _context.RateModel.Update(ratemodel);
             _context.SaveChangesAsync();
 
 
