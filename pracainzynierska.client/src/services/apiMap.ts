@@ -70,6 +70,8 @@ export async function setPostRateApi(postData: {
   rate: number;
 }) {
   try {
+    console.log(postData);
+
     const res = await fetch(`/api/Post/Rate`, {
       headers: {
         "Content-Type": "application/json",
