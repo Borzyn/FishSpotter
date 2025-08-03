@@ -115,7 +115,7 @@ namespace FishSpotter.Server.Controllers
 
             //_context.MapModel.Update(k);
             //await _context.SaveChangesAsync();
-            var rates = _context.RateModel.Where(x=> x.Rate<20).FirstOrDefault();
+            var rates = _context.RateModel.Where(x=> x.Id == "111").FirstOrDefault();
         
             //var k = _context.MapModel.Include(f => f.Fishes).Where(x => x.Name == "Jezioro Kuori").FirstOrDefault();
             //var l = _context.MapModel.Include(f => f.Fishes).Where(x => x.Name == "Jezioro Ladoga").FirstOrDefault();

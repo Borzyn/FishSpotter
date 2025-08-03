@@ -78,21 +78,21 @@ namespace FishSpotter.Server.Controllers
             _context.SaveChanges();
             return Ok(u);
         }
-        // po co to?
-        [HttpGet]
+        //po co to?
+       [HttpGet]
         public IActionResult RateCheck(string PostID, string username)
         {
             var rate = _context.RateModel.FirstOrDefault(x => x.Username == username && x.PostId == PostID);
             if (rate == null)
-             return NotFound(new { message = "Rate not found" });
-
-             return Ok(new { rate = rate.Rate });
+                return NotFound(new { message = "Rate not found" });
+            
+            return Ok(new { rate = rate.Rate });
         }
 
         [HttpPost]
         public IActionResult Rate([FromBody] RatePostModel model)
         {
-           
+
             if (model.rate > 5 || model.rate < 1) { return BadRequest("Wrong rate"); }
 
             var validUser = _context.AccountModel.FirstOrDefault(u => u.Username == model.user);
@@ -127,7 +127,7 @@ namespace FishSpotter.Server.Controllers
             _context.SaveChangesAsync();
 
 
-            return Ok(new {message = "Post rated successfully"});
+            return Ok(new { message = "Post rated successfully" });
         }
 
         [HttpPost]
