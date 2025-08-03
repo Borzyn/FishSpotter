@@ -14,6 +14,8 @@ function FishMapTableRow({
   const { data, isPending } = useGetFishMapPosts(fishName, mapName);
   const [openPosts, setOpenPosts] = useState(false);
 
+  console.log(data);
+
   return (
     <li className="border-2">
       <div className="w-full grid grid-cols-[1fr_max-content] items-center gap-x-8 text-2xl font-medium bg-amber-400 py-2 px-4">

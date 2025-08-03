@@ -26,11 +26,11 @@ function FishMapRow({ post, fishName }: { post: IPost; fishName: string }) {
     post.id
   );
 
+  console.log(user?.username);
+
   function handleChangeRate(rate: number) {
     if (!user?.username) return;
     if (isRating) return;
-
-    
 
     ratePost(
       { user: user?.username, postId: post.id, rate },
@@ -39,6 +39,9 @@ function FishMapRow({ post, fishName }: { post: IPost; fishName: string }) {
           queryClient.invalidateQueries({
             queryKey: ["getFishMapPosts", fishName],
           }),
+        onError: (error) => {
+          console.log(error);
+        },
       }
     );
   }
