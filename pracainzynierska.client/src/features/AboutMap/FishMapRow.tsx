@@ -33,10 +33,15 @@ function FishMapRow({ post, fishName }: { post: IPost; fishName: string }) {
     ratePost(
       { user: user?.username, postId: post.id, rate },
       {
-        onSuccess: () =>
+        onSuccess: () => {
           queryClient.invalidateQueries({
             queryKey: ["getFishMapPosts", fishName],
-          }),
+          });
+
+          queryClient.invalidateQueries({
+            queryKey: ["postRate", post.id],
+          });
+        },
         onError: (error) => {
           console.log(error);
         },

@@ -3,7 +3,7 @@ import { getPostRateApi } from "../../services/apiMap";
 
 export function useGetPostRate(username: string, postId: string) {
   const { data, isPending } = useQuery({
-    queryKey: ["postRate"],
+    queryKey: ["postRate", postId],
     queryFn: () => getPostRateApi(username, postId),
   });
 
