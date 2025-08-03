@@ -90,7 +90,7 @@ namespace FishSpotter.Server.Controllers
         }
 
         [HttpPost]
-        public IActionResult Rate([FromBody] RatePostModel model)
+        public async Task<IActionResult> Rate([FromBody] RatePostModel model)
         {
 
             if (model.rate > 5 || model.rate < 1) { return BadRequest("Wrong rate"); }
@@ -124,7 +124,7 @@ namespace FishSpotter.Server.Controllers
             _context.Update(author);
             _context.Update(post);
             _context.RateModel.Update(ratemodel);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
 
             return Ok(new { message = "Post rated successfully" });

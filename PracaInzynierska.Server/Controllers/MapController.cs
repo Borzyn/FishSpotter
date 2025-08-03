@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol;
+using System.Diagnostics;
 using System.Text.Json;
 
 namespace FishSpotter.Server.Controllers
@@ -56,23 +57,21 @@ namespace FishSpotter.Server.Controllers
 
         //to jest to na co przekierowuje z ekranu głównego po wybraniu mapy
         [HttpGet]
-        public async Task<IActionResult> GetPostsMapWithFish([FromQuery] string fishName, [FromQuery] string mapName)
+        public async  Task<IActionResult> GetPostsMapWithFish([FromQuery] string fishName, [FromQuery] string mapName)
         {
             string name = mapName.Replace("%20", " ");
-            var map = _context.MapModel.FirstOrDefault(x => x.Name == name);
-            if (map == null) return BadRequest("Map not found");
 
-            var fish = _context.FishModel.FirstOrDefault(y => y.Name == fishName);
-            if (fish == null) return BadRequest("Fish not found");
+            //if (!_context.MapModel.Any(y => y.Name == name)) return BadRequest("Map not found");
+            //if (!_context.FishModel.Any(y => y.Name == fishName)) return BadRequest("Fish not found "+ fishName);
 
-            var posts = _context.PostModel
+            var posts = await _context.PostModel
                 .Include(p => p.Spot)
                 .Include(p => p.Bait)
                 .Include(p => p.groundbait)
                 .Include(p => p.Method)
-                .Where(f => f.FishName == fishName && f.MapName == name)
-                .ToList();
-
+                .Where(f => f.FishName == fishName && f.MapName == name).Take(1)
+                .ToListAsync();
+            Debug.WriteLine(fishName);
             return Ok(posts);
         }
         
