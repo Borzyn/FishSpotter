@@ -26,8 +26,6 @@ function FishMapRow({ post, fishName }: { post: IPost; fishName: string }) {
     post.id
   );
 
-  console.log(user?.username);
-
   function handleChangeRate(rate: number) {
     if (!user?.username) return;
     if (isRating) return;
