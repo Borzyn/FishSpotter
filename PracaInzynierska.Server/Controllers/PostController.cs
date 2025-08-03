@@ -92,7 +92,6 @@ namespace FishSpotter.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Rate([FromBody] RatePostModel model)
         {
-
             if (model.rate > 5 || model.rate < 1) { return BadRequest("Wrong rate"); }
 
             var validUser = _context.AccountModel.FirstOrDefault(u => u.Username == model.user);
@@ -106,6 +105,8 @@ namespace FishSpotter.Server.Controllers
             {
                 author.RateSum -= ratemodel.Rate;
                 post.rateSum -= ratemodel.Rate;
+                ratemodel.Rate = model.rate;
+                _context.RateModel.Update(ratemodel);
             }
             else
             {
@@ -115,17 +116,16 @@ namespace FishSpotter.Server.Controllers
                 ratemodel.PostId = post.Id;
                 ratemodel.Username = model.user;
                 ratemodel.Id = Guid.NewGuid().ToString();
+                ratemodel.Rate = model.rate;
+
+                _context.RateModel.Add(ratemodel);
             }
-            ratemodel.Rate = model.rate;
             author.RateSum += ratemodel.Rate;
             post.rateSum += ratemodel.Rate;
 
-            _context.Update(ratemodel);
             _context.Update(author);
             _context.Update(post);
-            _context.RateModel.Update(ratemodel);
             await _context.SaveChangesAsync();
-
 
             return Ok(new { message = "Post rated successfully" });
         }
