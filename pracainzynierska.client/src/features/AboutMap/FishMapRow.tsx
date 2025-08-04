@@ -50,11 +50,11 @@ function FishMapRow({ post, fishName }: { post: IPost; fishName: string }) {
   }
 
   return (
-    <div className="py-2 px-4 grid grid-cols-7 bg-amber-50">
+    <div className="py-2 px-4 grid grid-cols-6 grid-rows-2 gap-y-2 bg-amber-50">
       <p>{post.methodName}</p>
       <p className="text-center">{post.bait.name}</p>
       <p className="text-center">{post.groundbait.gbName}</p>
-      <p className="text-center">{post.additionalInfo}</p>
+
       <p className="flex items-center justify-center gap-4">
         XY: {post.spot.xy}{" "}
         <button className="cursor-pointer">
@@ -69,6 +69,8 @@ function FishMapRow({ post, fishName }: { post: IPost; fishName: string }) {
       {!isPending && (
         <StarRating initialRating={rate ?? 0} onChange={handleChangeRate} />
       )}
+
+      <p className="col-span-full">{post.additionalInfo}</p>
     </div>
   );
 }
