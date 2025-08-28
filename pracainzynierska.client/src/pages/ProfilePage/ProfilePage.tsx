@@ -44,16 +44,18 @@ function ProfilePage() {
   return (
     <section className="w-full h-full mx-auto max-w-7xl">
       <div className="flex gap-1 justify-between items-center border-2 border-slate-900 bg-slate-900 text-sky-50 rounded-md py-4 px-8 mb-6">
-        <h2 className="text-3xl">{username}</h2>
+              <h2 className="text-3xl">{username}</h2>
+              
         {isOwnProfile && (
           <Button
             onClick={() => navigate("/profile/addpost")}
             buttonType="button"
             type="primary"
           >
-            Add post
+            Dodaj wpis
           </Button>
-        )}
+              )}
+             
       </div>
 
       <div className="flex gap-5 flex-col items-center mb-8.5 sm:flex-row justify-between sm:mb-15">

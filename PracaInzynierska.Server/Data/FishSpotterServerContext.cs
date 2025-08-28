@@ -20,7 +20,7 @@ namespace FishSpotter.Server.Data
         public DbSet<FishSpotter.Server.Models.DataBase.BaitModel> BaitModel { get; set; } = default!;
         //public DbSet<FishSpotter.Server.Models.DataBase.GroundbaitModel> GroundbaitModel { get; set; } = default!;
         //public DbSet<FishSpotter.Server.Models.DataBase.IngredientModel> IngredientModel { get; set; } = default!;
-        //public DbSet<FishSpotter.Server.Models.DataBase.MethodModel> MethodModel { get; set; } = default!;
+        public DbSet<FishSpotter.Server.Models.DataBase.MethodModel> MethodModel { get; set; } = default!;
         public DbSet<FishSpotter.Server.Models.DataBase.PostModel> PostModel { get; set; } = default!;
         public DbSet<FishSpotter.Server.Models.DataBase.SpotModel> SpotModel { get; set; } = default!;
         public DbSet<FishSpotter.Server.Models.DataBase.RateModel> RateModel { get; set; } = default!;
