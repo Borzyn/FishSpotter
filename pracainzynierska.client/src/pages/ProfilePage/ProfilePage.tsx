@@ -46,13 +46,31 @@ function ProfilePage() {
       <div className="flex gap-1 justify-between items-center border-2 border-slate-900 bg-slate-900 text-sky-50 rounded-md py-4 px-8 mb-6">
         <h2 className="text-3xl">{username}</h2>
         {isOwnProfile && (
-          <Button
-            onClick={() => navigate("/profile/addpost")}
-            buttonType="button"
-            type="primary"
-          >
-            Add post
-          </Button>
+          <div className="flex gap-4">
+            <Button
+              onClick={() => navigate("/profile/addpost")}
+              buttonType="button"
+              type="primary"
+            >
+              Dodaj Post
+            </Button>
+
+            <Button
+              onClick={() => navigate("/profile/addpost")}
+              buttonType="button"
+              type="primary"
+            >
+              Edytuj Post
+            </Button>
+
+            <Button
+              onClick={() => navigate("/profile/addpost")}
+              buttonType="button"
+              type="primary"
+            >
+              Usuń Post
+            </Button>
+          </div>
         )}
       </div>
 
