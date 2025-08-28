@@ -15,7 +15,7 @@ function ListFish() {
   }
 
   return (
-    <ul className="flex flex-col gap-4 max-h-[584px] overflow-y-auto">
+    <ul className="flex flex-col gap-4 max-h-[480px]  overflow-y-auto">
       {listFishData.map((fish: string) => (
         <ListButton key={fish} fish={fish} />
       ))}

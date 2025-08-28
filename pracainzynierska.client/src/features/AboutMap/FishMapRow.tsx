@@ -50,7 +50,7 @@ function FishMapRow({ post, fishName }: { post: IPost; fishName: string }) {
   }
 
   return (
-    <div className="py-2 px-4 grid grid-cols-6 grid-rows-2 gap-y-2 bg-amber-50">
+    <div className="py-2 px-4 grid grid-cols-6 grid-rows-2 gap-y-2 bg-sky-800 text-white">
       <p>{post.methodName}</p>
       <p className="text-center">{post.bait.name}</p>
       <p className="text-center">{post.groundbait.gbName}</p>
