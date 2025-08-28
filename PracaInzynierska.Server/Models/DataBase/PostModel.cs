@@ -31,9 +31,9 @@ namespace FishSpotter.Server.Models.DataBase
 
         public SpotModel Spot { get; set; }
 
-        [ForeignKey(nameof(MethodModel))]
-        public string MethodName { get; set; }
-        public MethodModel Method { get; set; }
+        //[ForeignKey(nameof(MethodModel))]
+        //public string MethodName { get; set; }
+        //public MethodModel Method { get; set; }
 
         [ForeignKey(nameof(BaitModel))]
         public string BaitId { get; set; }
@@ -41,9 +41,9 @@ namespace FishSpotter.Server.Models.DataBase
         public BaitModel Bait { get; set; }
 
         
-        [ForeignKey(nameof(GroundbaitModel))]
-        public string groundbaitId { get; set; } = "0";
-        public GroundbaitModel groundbait { get; set; } 
+        //[ForeignKey(nameof(GroundbaitModel))]
+        //public string groundbaitId { get; set; } = "0";
+        //public GroundbaitModel groundbait { get; set; } 
 
         [DataType(DataType.Text)]
         [Column(TypeName = "varchar(24)")]

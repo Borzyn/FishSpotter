@@ -67,8 +67,8 @@ namespace FishSpotter.Server.Controllers
             var posts = await _context.PostModel
                 .Include(p => p.Spot)
                 .Include(p => p.Bait)
-                .Include(p => p.groundbait)
-                .Include(p => p.Method)
+                //.Include(p => p.groundbait)
+                //.Include(p => p.Method)
                 .Where(f => f.FishName == fishName && f.MapName == name).Take(1)
                 .ToListAsync();
             Debug.WriteLine(fishName);

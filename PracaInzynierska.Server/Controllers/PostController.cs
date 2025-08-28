@@ -41,13 +41,13 @@ namespace FishSpotter.Server.Controllers
             var spotCheck = _context.SpotModel.Where(spot => spot.Map.ToLower() == model.mapname.ToLower() && spot.Id.ToLower() == model.spotID.ToLower()).FirstOrDefault();
             if (spotCheck == null) { return BadRequest(); }
 
-            var method = _context.MethodModel.FirstOrDefault(met => met.Name == model.methodname);
-            if (method == null) { return BadRequest(); }
+            //var method = _context.MethodModel.FirstOrDefault(met => met.Name == model.methodname);
+            //if (method == null) { return BadRequest(); }
 
             var bait = _context.BaitModel.FirstOrDefault(b => b.Name.ToLower() == model.baitname.ToLower());
             if (bait == null ) { return BadRequest(); }
-            var groundbait = _context.GroundbaitModel.FirstOrDefault(g => g.GBName.ToLower() == model.groundbaitid.ToLower());
-            if (groundbait == null) { groundbait = _context.GroundbaitModel.Where(h => h.GBName == "none").FirstOrDefault(); }
+            //var groundbait = _context.GroundbaitModel.FirstOrDefault(g => g.GBName.ToLower() == model.groundbaitid.ToLower());
+            //if (groundbait == null) { groundbait = _context.GroundbaitModel.Where(h => h.GBName == "none").FirstOrDefault(); }
             
 
 
@@ -56,12 +56,12 @@ namespace FishSpotter.Server.Controllers
             u.UserId = model.user;
             u.FishName = model.fishname;
             u.MapName = model.mapname;
-            u.Method = method;
-            u.MethodName = method.Name;
-            u.BaitId = bait.Id;
-            u.Bait = bait;
-                u.groundbaitId = groundbait.GBName;
-            u.groundbait = groundbait;
+            //u.Method = method;
+            //u.MethodName = method.Name;
+            //u.BaitId = bait.Id;
+            //u.Bait = bait;
+            //    u.groundbaitId = groundbait.GBName;
+            //u.groundbait = groundbait;
             u.SpotID = spotCheck.Id; ;
             u.Spot = spotCheck;
                 u.AdditionalInfo = model.addInfo;
@@ -147,11 +147,11 @@ namespace FishSpotter.Server.Controllers
         public IActionResult StartCreatingPost()
         {
             var maps = _context.MapModel.Include(m=>m.Spots).ToList();
-            var methods = _context.MethodModel.ToList();
+            //var methods = _context.MethodModel.ToList();
             var result = new
             {
                 maps,
-                methods
+               // methods
             };
             return Ok(result.ToJson());
         }

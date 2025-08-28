@@ -18,6 +18,6 @@ namespace FishSpotter.Server.Models.DataBase
         [Column(TypeName = "varchar(4)")]
         public double Size { get; set; }
 
-        public List<MethodModel> Methods { get; set; } = new List<MethodModel>();
+        //public List<MethodModel> Methods { get; set; } = new List<MethodModel>();
     }
 }
