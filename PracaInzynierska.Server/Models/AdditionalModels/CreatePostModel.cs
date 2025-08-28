@@ -7,7 +7,6 @@
          public string mapname { get; set; }
          public string methodname { get; set; }
          public string baitname { get; set; }
-         public string groundbaitid { get; set; } = "none";
          public string spotID { get; set; }
         public string addInfo { get; set; }
     }

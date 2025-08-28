@@ -31,9 +31,9 @@ namespace FishSpotter.Server.Models.DataBase
 
         public SpotModel Spot { get; set; }
 
-        //[ForeignKey(nameof(MethodModel))]
-        //public string MethodName { get; set; }
-        //public MethodModel Method { get; set; }
+        [ForeignKey(nameof(MethodModel))]
+        public string MethodName { get; set; }
+        public MethodModel Method { get; set; }
 
         [ForeignKey(nameof(BaitModel))]
         public string BaitId { get; set; }
