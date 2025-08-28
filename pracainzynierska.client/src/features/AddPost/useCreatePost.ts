@@ -8,7 +8,6 @@ export interface ICreatePost {
   fishname: string;
   methodname: string;
   baitname: string;
-  groundbaitid: string;
   addInfo: string;
   spotID: string;
 }

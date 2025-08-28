@@ -36,7 +36,6 @@ type PostInputs = {
   fishname: string;
   methodname: string;
   baitname: string;
-  groundbaitid: string;
   addInfo: string;
   spotID: string;
 };
@@ -220,15 +219,6 @@ function AddPost() {
               {...register("baitname", {
                 required: "Pole przynęty musi być wpełnione",
               })}
-            />
-          </FormRow>
-
-          <FormRow label="Zanęta" error={errors.groundbaitid?.message}>
-            <input
-              className={inputStyles}
-              type="text"
-              id="groundbaitid"
-              {...register("groundbaitid")}
             />
           </FormRow>
 
