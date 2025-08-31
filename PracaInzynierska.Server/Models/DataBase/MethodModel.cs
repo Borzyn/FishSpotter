@@ -14,7 +14,7 @@ namespace FishSpotter.Server.Models.DataBase
         [Column(TypeName = "varchar(36)")]
         public string Name { get; set; }
 
-        public List<string> BaitIds { get; set; } = new List<string>();
+        //public List<string> BaitIds { get; set; } = new List<string>();
 
 
         //[ForeignKey(nameof(GroundBaitId))]

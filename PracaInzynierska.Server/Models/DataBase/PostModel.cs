@@ -15,7 +15,6 @@ namespace FishSpotter.Server.Models.DataBase
         [Column(TypeName = "varchar(36)")]
         public string UserId { get; set; }
 
-        // public FishModel fish { get; set; }
         [DataType(DataType.Text)]
         [Required]
         [Column(TypeName = "varchar(24)")]
@@ -39,11 +38,6 @@ namespace FishSpotter.Server.Models.DataBase
         public string BaitId { get; set; }
         
         public BaitModel Bait { get; set; }
-
-        
-        //[ForeignKey(nameof(GroundbaitModel))]
-        //public string groundbaitId { get; set; } = "0";
-        //public GroundbaitModel groundbait { get; set; } 
 
         [DataType(DataType.Text)]
         [Column(TypeName = "varchar(24)")]
